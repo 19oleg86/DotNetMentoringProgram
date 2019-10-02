@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.29306.81
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.705
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNetCoreConsoleApp", "DotNetCoreConsoleApp\DotNetCoreConsoleApp.csproj", "{2DFBE05E-EC06-447F-863D-1730286862DE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotNetCoreConsoleApp", "DotNetCoreConsoleApp\DotNetCoreConsoleApp.csproj", "{2DFBE05E-EC06-447F-863D-1730286862DE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinFormsApp", "WinFormsApp\WinFormsApp.csproj", "{CD6B6E06-22CA-4E74-883E-FA9F68F81FCA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{2DFBE05E-EC06-447F-863D-1730286862DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2DFBE05E-EC06-447F-863D-1730286862DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2DFBE05E-EC06-447F-863D-1730286862DE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CD6B6E06-22CA-4E74-883E-FA9F68F81FCA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CD6B6E06-22CA-4E74-883E-FA9F68F81FCA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CD6B6E06-22CA-4E74-883E-FA9F68F81FCA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CD6B6E06-22CA-4E74-883E-FA9F68F81FCA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,7 +1,8 @@
 {
   "profiles": {
     "DotNetCoreConsoleApp": {
-      "commandName": "Project"
+      "commandName": "Project",
+      "commandLineArgs": "-Name Oleg"
     }
   }
 }
