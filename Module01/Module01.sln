@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotNetCoreConsoleApp", "Dot
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinFormsApp", "WinFormsApp\WinFormsApp.csproj", "{CD6B6E06-22CA-4E74-883E-FA9F68F81FCA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XamarinAndroidApp", "XamarinAndroidApp\XamarinAndroidApp.csproj", "{D06BCF98-C577-4D72-A744-A583DB9DD40E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,12 @@ Global
 		{CD6B6E06-22CA-4E74-883E-FA9F68F81FCA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CD6B6E06-22CA-4E74-883E-FA9F68F81FCA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CD6B6E06-22CA-4E74-883E-FA9F68F81FCA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D06BCF98-C577-4D72-A744-A583DB9DD40E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D06BCF98-C577-4D72-A744-A583DB9DD40E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D06BCF98-C577-4D72-A744-A583DB9DD40E}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{D06BCF98-C577-4D72-A744-A583DB9DD40E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D06BCF98-C577-4D72-A744-A583DB9DD40E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D06BCF98-C577-4D72-A744-A583DB9DD40E}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
