@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.Extensions.Configuration;
+using DotNetStandardClassLibrary;
 
 namespace DotNetCoreConsoleApp
 {
@@ -18,7 +19,7 @@ namespace DotNetCoreConsoleApp
 
             var name = config["Name"];
 
-            Console.WriteLine($"Hello {name}");
+            Console.WriteLine(DisplayClass.DisplayInfo(name));
         }
     }
 }

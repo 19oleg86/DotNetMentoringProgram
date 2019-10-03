@@ -3,6 +3,7 @@ using Android.OS;
 using Android.Support.V7.App;
 using Android.Runtime;
 using Android.Widget;
+using DotNetStandardClassLibrary;
 
 namespace XamarinAndroidApp
 {
@@ -24,7 +25,7 @@ namespace XamarinAndroidApp
         {
             EditText et = FindViewById<EditText>(Resource.Id.editText1);
             TextView tv = FindViewById<TextView>(Resource.Id.textView1);
-            tv.Text = "Hello " + et.Text;
+            tv.Text = DisplayClass.DisplayInfo(et.Text);
         }
     }
 }

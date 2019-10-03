@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using DotNetStandardClassLibrary;
 
 namespace WinFormsApp
 {
@@ -20,7 +21,8 @@ namespace WinFormsApp
         private void button1_Click(object sender, EventArgs e)
         {
             var name = textBox1.Text;
-            MessageBox.Show($"Hello {name}!");
+            label2.Text = DisplayClass.DisplayInfo(name);
+            MessageBox.Show(DisplayClass.DisplayInfo(name));
         }
     }
 }
