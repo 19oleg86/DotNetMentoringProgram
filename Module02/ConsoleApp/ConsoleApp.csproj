@@ -1,0 +1,87 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{C8486661-108E-4543-AFB4-E6E1363B716D}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>ConsoleApp</RootNamespace>
+    <AssemblyName>ConsoleApp</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="FileSystemVisitor.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="BaseDirectory\BaseDirectoryArchive2.rar" />
+    <None Include="BaseDirectory\BaseDirectoryArchive1.rar" />
+    <None Include="BaseDirectory\Catalog1\Catalog1Archive1.rar" />
+    <None Include="BaseDirectory\Catalog1\Catalog2\Catalog2Archive3.rar" />
+    <None Include="BaseDirectory\Catalog1\Catalog2\Catalog2Archive2.rar" />
+    <None Include="BaseDirectory\Catalog1\Catalog2\Catalog2Archive1.rar" />
+    <None Include="BaseDirectory\Catalog1\Catalog2\Catalog3\Catalog3Archive1.rar" />
+    <None Include="BaseDirectory\Catalog1\Catalog2\Catalog3\Catalog4\Catalog4Archive1.rar" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Content Include="BaseDirectory\BaseDirectoryPicture1.jpg" />
+    <Content Include="BaseDirectory\BaseDirectoryPicture2.jpg" />
+    <Content Include="BaseDirectory\BaseDirectoryPicture3.jpg" />
+    <Content Include="BaseDirectory\BaseDirectoryTextFile1.txt" />
+    <Content Include="BaseDirectory\BaseDirectoryTextFile2.txt" />
+    <Content Include="BaseDirectory\Catalog1\Catalog1TextFile3.txt" />
+    <Content Include="BaseDirectory\Catalog1\Catalog1TextFile2.txt" />
+    <Content Include="BaseDirectory\Catalog1\Catalog1TextFile1.txt" />
+    <Content Include="BaseDirectory\Catalog1\Catalog1Picture2.jpg" />
+    <Content Include="BaseDirectory\Catalog1\Catalog1Picture1.jpg" />
+    <Content Include="BaseDirectory\Catalog1\Catalog2\Catalog2Picture1.jpg" />
+    <Content Include="BaseDirectory\Catalog1\Catalog2\Catalog2Picture2.jpg" />
+    <Content Include="BaseDirectory\Catalog1\Catalog2\Catalog2TextFile1.txt" />
+    <Content Include="BaseDirectory\Catalog1\Catalog2\Catalog2TextFile2.txt" />
+    <Content Include="BaseDirectory\Catalog1\Catalog2\Catalog2TextFile3.txt" />
+    <Content Include="BaseDirectory\Catalog1\Catalog2\Catalog3\Catalog3Picture1.jpg" />
+    <Content Include="BaseDirectory\Catalog1\Catalog2\Catalog3\Catalog3TextFile1.txt" />
+    <Content Include="BaseDirectory\Catalog1\Catalog2\Catalog3\Catalog4\Catalog4Picture2.jpg" />
+    <Content Include="BaseDirectory\Catalog1\Catalog2\Catalog3\Catalog4\Catalog4Picture1.jpg" />
+    <Content Include="BaseDirectory\Catalog1\Catalog2\Catalog3\Catalog4\Catalog4TextFile3.txt" />
+    <Content Include="BaseDirectory\Catalog1\Catalog2\Catalog3\Catalog4\Catalog4TextFile2.txt" />
+    <Content Include="BaseDirectory\Catalog1\Catalog2\Catalog3\Catalog4\Catalog4TextFile1.txt" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
