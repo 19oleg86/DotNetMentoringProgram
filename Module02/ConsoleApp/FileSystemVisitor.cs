@@ -9,6 +9,19 @@ namespace ConsoleApp
 {
     class FileSystemVisitor
     {
-  
+        DirectoryInfo directoryInfo;
+        private string path;
+        public FileSystemVisitor(string path)
+        {
+            directoryInfo = new DirectoryInfo(path);
+            this.path = path;
+        }
+
+        public FileSystemInfo[] GetCatalogsAndFiles(string searchPattern)
+        {
+            return directoryInfo.GetFileSystemInfos(searchPattern);
+        }
+
+    
     }
 }

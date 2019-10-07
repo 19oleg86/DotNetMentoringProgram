@@ -19,8 +19,17 @@ namespace ConsoleApp
     {
         static void Main(string[] args)
         {
-            string directoryName = @"d:\Programming\CSharp\DotNetMentoringProgram\Module02\ConsoleApp\BaseDirectory\";
-            IEnumerable<string> directiesAndFiles =  Directory.EnumerateFileSystemEntries(directoryName);
+            string directoryName = @"d:\Programming\DotNetMentoringProgram\Module02\ConsoleApp\BaseDirectory\";
+            FileSystemVisitor fileSystemVisitor = new FileSystemVisitor(directoryName);
+
+            //FileSystemInfo[] catalogsAndFiles = fileSystemVisitor.GetCatalogsAndFiles("*");
+
+            foreach (var v in fileSystemVisitor.GetCatalogsAndFiles("*"))
+            {
+                Console.WriteLine(v.FullName);
+            }
+                
+                IEnumerable<string> directiesAndFiles =  Directory.EnumerateFileSystemEntries(directoryName);
             foreach (var directoryAndFile in directiesAndFiles)
             {
                 Console.WriteLine(directoryAndFile);
