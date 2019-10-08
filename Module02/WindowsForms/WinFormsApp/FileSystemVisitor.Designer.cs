@@ -36,18 +36,17 @@
             this.treeListBox.FormattingEnabled = true;
             this.treeListBox.Location = new System.Drawing.Point(12, 12);
             this.treeListBox.Name = "treeListBox";
-            this.treeListBox.Size = new System.Drawing.Size(244, 303);
+            this.treeListBox.Size = new System.Drawing.Size(414, 537);
             this.treeListBox.TabIndex = 0;
             // 
             // FileSystemVisitor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(964, 639);
             this.Controls.Add(this.treeListBox);
             this.Name = "FileSystemVisitor";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Form1";
+            this.Text = "FileSystemVisitor";
             this.ResumeLayout(false);
 
         }
