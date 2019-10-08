@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -19,12 +20,16 @@ namespace WinFormsApp
             InitializeComponent();
             this.path = path;
             ScanDirectoies(this.path);
+            BuildTreeWithEnumerator();
         }
-        
+        public FileSystemVisitor()
+        {
+        }
+
         public void ScanDirectoies(string wayToDirOrFile)
         {
             string[] dirsAndFiles = Directory.GetFileSystemEntries(wayToDirOrFile);
-            foreach(string dirOrFile in dirsAndFiles)
+            foreach (string dirOrFile in dirsAndFiles)
             {
                 int index = dirOrFile.IndexOf("BaseDirectory");
                 treeListBox.Items.Add(dirOrFile.Substring(index));
@@ -35,7 +40,29 @@ namespace WinFormsApp
 
             }
         }
+        string basePath = @"d:\Programming\CSharp\DotNetMentoringProgram\Module02\WinFormsApp\BaseDirectory\";
+        int i;
+        public IEnumerator GetEnumerator()
+        {
+            string[] dirsAndFiles = Directory.GetFileSystemEntries(basePath);
+            for (i = 0; i < dirsAndFiles.Length; i++)
+            {
+                if(Directory.Exists(dirsAndFiles[i]))
+                {
+                    basePath = dirsAndFiles[i];
+                }
+                yield return dirsAndFiles[i];
+            }
+        }
 
+        public void BuildTreeWithEnumerator()
+        {
+            FileSystemVisitor fsv = new FileSystemVisitor();
+            foreach (string result in fsv)
+            {
+                treeIteratorListBox.Items.Add(result);
+            }
 
+        }
     }
 }

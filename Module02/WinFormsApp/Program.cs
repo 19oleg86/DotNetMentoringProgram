@@ -14,14 +14,10 @@ namespace WinFormsApp
         [STAThread]
         static void Main()
         {
-            string path = @"d:\Programming\CSharp\DotNetMentoringProgram\Module02\WindowsForms\WinFormsApp\BaseDirectory\";
+            string path = @"d:\Programming\CSharp\DotNetMentoringProgram\Module02\WinFormsApp\BaseDirectory\";
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new FileSystemVisitor(path));
-
-            //string path = @"d:\Programming\CSharp\DotNetMentoringProgram\Module02\WindowsForms\WinFormsApp\BaseDirectory\";
-            //FileSystemVisitor fileSystemVisitor = new FileSystemVisitor(path);
-            //fileSystemVisitor.ScanDirectoies();
         }
     }
 }
