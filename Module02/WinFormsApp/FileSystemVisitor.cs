@@ -15,53 +15,75 @@ namespace WinFormsApp
     public partial class FileSystemVisitor : Form
     {
         private string path;
+
+        public delegate void TreeStateHandler (string message);
+
+        public delegate void TreeStateHandlerWithInfo(object sender, AccountEventArgs e);
+
+        public event TreeStateHandler LogStart;
+
+        public event TreeStateHandler LogFinish;
+
+        public event TreeStateHandlerWithInfo LogFoundItem;
         public FileSystemVisitor(string path)
         {
             InitializeComponent();
             this.path = path;
+            LogStart += ShowLogMessage;
+            LogFinish += ShowLogMessage;
+            LogFoundItem += ShowLogMessageWithInfo;
             ScanDirectoies(this.path);
-            BuildTreeWithEnumerator();
-        }
-        public FileSystemVisitor()
-        {
         }
 
         public void ScanDirectoies(string wayToDirOrFile)
         {
+            if (LogStart != null && logListBox.Items.Count == 0)
+            {
+                LogStart("Search has started");
+            }
             string[] dirsAndFiles = Directory.GetFileSystemEntries(wayToDirOrFile);
             foreach (string dirOrFile in dirsAndFiles)
             {
                 int index = dirOrFile.IndexOf("BaseDirectory");
+
                 treeListBox.Items.Add(dirOrFile.Substring(index));
+
+                LogFoundItem?.Invoke(this, new AccountEventArgs("New directory or file founded: ", dirOrFile.Substring(index)));
                 if (Directory.Exists(dirOrFile))
                 {
                     ScanDirectoies(dirOrFile);
-                }
-
+                }  
             }
-        }
-        string basePath = @"d:\Programming\CSharp\DotNetMentoringProgram\Module02\WinFormsApp\BaseDirectory\";
-        int i;
-        public IEnumerator GetEnumerator()
-        {
-            string[] dirsAndFiles = Directory.GetFileSystemEntries(basePath);
-            for (i = 0; i < dirsAndFiles.Length; i++)
+            if (LogFinish != null && !logListBox.Items.Contains("Search has finished"))
             {
-                if(Directory.Exists(dirsAndFiles[i]))
-                {
-                    basePath = dirsAndFiles[i];
-                }
-                yield return dirsAndFiles[i];
+                LogFinish("Search has finished");
             }
         }
 
-        public void BuildTreeWithEnumerator()
+        public void ShowLogMessage(string message)
         {
-            FileSystemVisitor fsv = new FileSystemVisitor();
-            foreach (string result in fsv)
+            logListBox.Items.Add(message);
+        }
+
+        public void ShowLogMessageWithInfo(object sender, AccountEventArgs e)
+        {
+            logListBox.Items.Add($"{e.Message} {e.ItemInfo}");
+        }
+
+        public class AccountEventArgs
+        {
+            public string Message { get; }
+            public string ItemInfo { get; }
+
+            public AccountEventArgs(string mes, string info)
             {
-                treeIteratorListBox.Items.Add(result);
+                Message = mes;
+                ItemInfo = info;
             }
+        }
+
+        private void FileSystemVisitor_Load(object sender, EventArgs e)
+        {
 
         }
     }
