@@ -20,11 +20,16 @@ namespace WinFormsApp
 
         public delegate void TreeStateHandlerWithInfo(object sender, AccountEventArgs e);
 
+        public delegate void FilteredTreeStateHandler(object sender, AccountEventArgs e);
+
         public event TreeStateHandler LogStart;
 
         public event TreeStateHandler LogFinish;
 
         public event TreeStateHandlerWithInfo LogFoundItem;
+
+        public event FilteredTreeStateHandler FilterResults;
+
         public FileSystemVisitor(string path)
         {
             InitializeComponent();
@@ -80,11 +85,6 @@ namespace WinFormsApp
                 Message = mes;
                 ItemInfo = info;
             }
-        }
-
-        private void FileSystemVisitor_Load(object sender, EventArgs e)
-        {
-
         }
     }
 }
