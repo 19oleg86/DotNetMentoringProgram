@@ -30,10 +30,10 @@
         {
             this.treeListBox = new System.Windows.Forms.ListBox();
             this.logListBox = new System.Windows.Forms.ListBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.FilteredResultsListBox = new System.Windows.Forms.ListBox();
-            this.label3 = new System.Windows.Forms.Label();
+            this.lblTreeDirectoriesBinding = new System.Windows.Forms.Label();
+            this.lblLogging = new System.Windows.Forms.Label();
+            this.filteredResultsListBox = new System.Windows.Forms.ListBox();
+            this.lblFilteredResults = new System.Windows.Forms.Label();
             this.filerButton = new System.Windows.Forms.Button();
             this.filterTextBox = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
@@ -41,6 +41,7 @@
             // treeListBox
             // 
             this.treeListBox.FormattingEnabled = true;
+            this.treeListBox.HorizontalScrollbar = true;
             this.treeListBox.Location = new System.Drawing.Point(12, 32);
             this.treeListBox.Name = "treeListBox";
             this.treeListBox.Size = new System.Drawing.Size(374, 537);
@@ -49,48 +50,50 @@
             // logListBox
             // 
             this.logListBox.FormattingEnabled = true;
-            this.logListBox.Location = new System.Drawing.Point(904, 32);
+            this.logListBox.HorizontalScrollbar = true;
+            this.logListBox.Location = new System.Drawing.Point(879, 32);
             this.logListBox.Name = "logListBox";
-            this.logListBox.Size = new System.Drawing.Size(514, 537);
+            this.logListBox.Size = new System.Drawing.Size(553, 537);
             this.logListBox.TabIndex = 1;
             // 
-            // label1
+            // lblTreeDirectoriesBinding
             // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(100, 9);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(164, 17);
-            this.label1.TabIndex = 2;
-            this.label1.Text = "Tree Directories Building";
+            this.lblTreeDirectoriesBinding.AutoSize = true;
+            this.lblTreeDirectoriesBinding.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTreeDirectoriesBinding.Location = new System.Drawing.Point(100, 9);
+            this.lblTreeDirectoriesBinding.Name = "lblTreeDirectoriesBinding";
+            this.lblTreeDirectoriesBinding.Size = new System.Drawing.Size(164, 17);
+            this.lblTreeDirectoriesBinding.TabIndex = 2;
+            this.lblTreeDirectoriesBinding.Text = "Tree Directories Building";
             // 
-            // label2
+            // lblLogging
             // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(1142, 9);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(59, 17);
-            this.label2.TabIndex = 3;
-            this.label2.Text = "Logging";
+            this.lblLogging.AutoSize = true;
+            this.lblLogging.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblLogging.Location = new System.Drawing.Point(1107, 9);
+            this.lblLogging.Name = "lblLogging";
+            this.lblLogging.Size = new System.Drawing.Size(59, 17);
+            this.lblLogging.TabIndex = 3;
+            this.lblLogging.Text = "Logging";
             // 
-            // FilteredResultsListBox
+            // filteredResultsListBox
             // 
-            this.FilteredResultsListBox.FormattingEnabled = true;
-            this.FilteredResultsListBox.Location = new System.Drawing.Point(416, 32);
-            this.FilteredResultsListBox.Name = "FilteredResultsListBox";
-            this.FilteredResultsListBox.Size = new System.Drawing.Size(436, 537);
-            this.FilteredResultsListBox.TabIndex = 4;
+            this.filteredResultsListBox.FormattingEnabled = true;
+            this.filteredResultsListBox.HorizontalScrollbar = true;
+            this.filteredResultsListBox.Location = new System.Drawing.Point(416, 32);
+            this.filteredResultsListBox.Name = "filteredResultsListBox";
+            this.filteredResultsListBox.Size = new System.Drawing.Size(436, 537);
+            this.filteredResultsListBox.TabIndex = 4;
             // 
-            // label3
+            // lblFilteredResults
             // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(561, 9);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(106, 17);
-            this.label3.TabIndex = 5;
-            this.label3.Text = "Filtered Results";
+            this.lblFilteredResults.AutoSize = true;
+            this.lblFilteredResults.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblFilteredResults.Location = new System.Drawing.Point(561, 9);
+            this.lblFilteredResults.Name = "lblFilteredResults";
+            this.lblFilteredResults.Size = new System.Drawing.Size(106, 17);
+            this.lblFilteredResults.TabIndex = 5;
+            this.lblFilteredResults.Text = "Filtered Results";
             // 
             // filerButton
             // 
@@ -101,6 +104,7 @@
             this.filerButton.TabIndex = 6;
             this.filerButton.Text = "Filter";
             this.filerButton.UseVisualStyleBackColor = true;
+            this.filerButton.Click += new System.EventHandler(this.filterButton_Click);
             // 
             // filterTextBox
             // 
@@ -116,10 +120,10 @@
             this.ClientSize = new System.Drawing.Size(1444, 639);
             this.Controls.Add(this.filterTextBox);
             this.Controls.Add(this.filerButton);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.FilteredResultsListBox);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.lblFilteredResults);
+            this.Controls.Add(this.filteredResultsListBox);
+            this.Controls.Add(this.lblLogging);
+            this.Controls.Add(this.lblTreeDirectoriesBinding);
             this.Controls.Add(this.logListBox);
             this.Controls.Add(this.treeListBox);
             this.Name = "FileSystemVisitor";
@@ -133,10 +137,10 @@
 
         private System.Windows.Forms.ListBox treeListBox;
         private System.Windows.Forms.ListBox logListBox;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.ListBox FilteredResultsListBox;
-        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label lblTreeDirectoriesBinding;
+        private System.Windows.Forms.Label lblLogging;
+        private System.Windows.Forms.ListBox filteredResultsListBox;
+        private System.Windows.Forms.Label lblFilteredResults;
         private System.Windows.Forms.Button filerButton;
         private System.Windows.Forms.TextBox filterTextBox;
     }
