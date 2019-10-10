@@ -1,20 +1,24 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace WinFormsApp
 {
-    public partial class FileSystemVisitor : Form
+    class FileSystemVisitor
     {
-        private string path;
+        MainForm mainForm;
 
         public delegate void TreeStateHandler(string message);
 
-        public delegate void TreeStateHandlerWithInfo(object sender, AccountEventArgs e);
+        public delegate void TreeStateHandlerWithInfo(object sender, EventArgs e);
 
         public delegate void FilteredTreeStateHandler(string unit);
 
-        public delegate void FilteredTreeStateHandlerWithInfo(object sender, AccountEventArgs e);
+        public delegate void FilteredTreeStateHandlerWithInfo(object sender, EventArgs e);
 
         public event TreeStateHandler LogStart;
 
@@ -24,19 +28,14 @@ namespace WinFormsApp
 
         public event FilteredTreeStateHandlerWithInfo LogFoundFilteredItem;
 
-        public FileSystemVisitor(string path)
+        public FileSystemVisitor()
         {
-            InitializeComponent();
-            this.path = path;
-            LogStart += ShowLogMessage;
-            LogFinish += ShowLogMessage;
-            LogFoundItem += ShowLogMessageWithInfo;
-            LogFoundFilteredItem += ShowLogMessageWithInfo;
-            ScanDirectoies(this.path);
+            mainForm = new MainForm();
         }
-        public void ScanDirectoies(string wayToDirOrFile)
+
+        public void ScanDirectoies(string wayToDirOrFile, Func<string, bool> predicate)
         {
-            if (LogStart != null && logListBox.Items.Count == 0)
+            if (LogStart != null &&  mainForm.LogListBox.Items.Count == 0)
             {
                 LogStart("Search has started");
             }
@@ -44,56 +43,47 @@ namespace WinFormsApp
             foreach (string dirOrFile in dirsAndFiles)
             {
                 int index = dirOrFile.IndexOf("BaseDirectory");
+                if (predicate(dirOrFile))
+                {
+                    mainForm.TreeListBox.Items.Add(dirOrFile.Substring(index));
+                }
 
-                treeListBox.Items.Add(dirOrFile.Substring(index));
-
-                LogFoundItem?.Invoke(this, new AccountEventArgs("New directory or file founded: ", dirOrFile.Substring(index)));
+                LogFoundItem?.Invoke(this, new EventArgs("New directory or file founded: ", dirOrFile.Substring(index)));
                 if (Directory.Exists(dirOrFile))
                 {
-                    ScanDirectoies(dirOrFile);
+                    ScanDirectoies(dirOrFile, predicate);
                 }
             }
-            if (LogFinish != null && !logListBox.Items.Contains("Search has finished"))
+            if (LogFinish != null && !mainForm.LogListBox.Items.Contains("Search has finished"))
             {
                 LogFinish("Search has finished");
             }
         }
-
-        public void ShowLogMessage(string message)
+        private void filterButton_Click(object sender, System.EventArgs e)
         {
-            logListBox.Items.Add(message);
-        }
-
-        public void ShowLogMessageWithInfo(object sender, AccountEventArgs e)
-        {
-            logListBox.Items.Add($"{e.Message} {e.ItemInfo}");
-        }
-
-        private void filterButton_Click(object sender, EventArgs e)
-        {
-            filteredResultsListBox.Items.Clear();
-            logListBox.Items.Clear();
+            mainForm.FilteredResultsListBox.Items.Clear();
+            mainForm.LogListBox.Items.Clear();
             FilteredTreeStateHandler filteredTreeStateHandler = mes =>
             {
-                foreach (string fileOrDirectory in treeListBox.Items)
+                foreach (string fileOrDirectory in mainForm.TreeListBox.Items)
                 {
                     if (fileOrDirectory.ToUpper().Contains(mes.ToUpper()))
                     {
                         int index = fileOrDirectory.IndexOf("BaseDirectory");
-                        filteredResultsListBox.Items.Add(fileOrDirectory);
-                        LogFoundFilteredItem?.Invoke(this, new AccountEventArgs("Filtered directory or file founded: ", fileOrDirectory.Substring(index)));
+                        mainForm.FilteredResultsListBox.Items.Add(fileOrDirectory);
+                        LogFoundFilteredItem?.Invoke(this, new EventArgs("Filtered directory or file founded: ", fileOrDirectory.Substring(index)));
                     }
                 }
             };
-            filteredTreeStateHandler(filterTextBox.Text);
+            filteredTreeStateHandler(mainForm.FilterTextBox.Text);
         }
     }
-    public class AccountEventArgs
+    public class EventArgs
     {
         public string Message { get; }
         public string ItemInfo { get; }
 
-        public AccountEventArgs(string mes, string info)
+        public EventArgs(string mes, string info)
         {
             Message = mes;
             ItemInfo = info;
