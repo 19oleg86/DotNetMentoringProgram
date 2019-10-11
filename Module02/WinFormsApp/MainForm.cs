@@ -23,12 +23,12 @@ namespace WinFormsApp
             visitor.LogFinish += ShowLogMessage;
             visitor.LogFoundItem += ShowLogMessageWithInfo;
             visitor.LogFoundFilteredItem += ShowLogMessageWithInfo;
+            visitor.DisplayBaseFiltration += ShowBaseFiltration;
             InvokeFolderBrowserDialog();
             returnedPathes.AddRange(visitor.StartSearch(path, MyCondition));
             foreach (string path in returnedPathes)
             {
                 treeListBox.Items.Add(path);
-                logListBox.Items.Add(path);
             }
         }
 
@@ -42,23 +42,19 @@ namespace WinFormsApp
                 pathTextBox.Text = FBD.SelectedPath;
             }
         }
-        //public bool MyCondition(string path)
-        //{
-        //    var info = new DirectoryInfo(path);
-        //    string[] allFilesAndDirs = Directory.GetFileSystemEntries(path);
-
-        //    foreach (string st in allFilesAndDirs)
-        //    {
-        //        if (st == path)
-        //        {
-        //            return true;
-        //        }
-        //    }
-        //}
+        public bool MyCondition(string returnedPath)
+        {
+            bool result = false;
+            //if (File.Exists(returnedPath) || Directory.Exists(returnedPath))
+            if (returnedPath.EndsWith(".txt"))
+            {
+                result = true;
+            }
+            return result;
+        }
         private void filterButton_Click(object sender, System.EventArgs e)
         {
             filteredResultsListBox.Items.Clear();
-            logListBox.Items.Clear();
             FilteredTreeStateHandler filteredTreeStateHandler = mes =>
             {
                 foreach (string fileOrDirectory in treeListBox.Items)
@@ -82,10 +78,26 @@ namespace WinFormsApp
         {
             logListBox.Items.Add($"{e.Message} {e.ItemInfo}");
         }
+        public void ShowBaseFiltration(object sender, EventArgs e)
+        {
+            filteredResultsListBox.Items.Add($"{e.Message} {e.ItemInfo}");
+        }
 
         private void PathButton_Click(object sender, System.EventArgs e)
         {
             InvokeFolderBrowserDialog();
+        }
+
+        private void btnStart_Click(object sender, System.EventArgs e)
+        {
+            filteredResultsListBox.Items.Clear();
+            returnedPathes.Clear();
+            returnedPathes.AddRange(visitor.StartSearch(path, MyCondition));
+            treeListBox.Items.Clear();
+            foreach (string pathToAdd in returnedPathes)
+            {
+                treeListBox.Items.Add(pathToAdd);
+            }
         }
     }
 }

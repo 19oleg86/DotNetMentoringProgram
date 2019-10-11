@@ -34,11 +34,12 @@
             this.lblLogging = new System.Windows.Forms.Label();
             this.filteredResultsListBox = new System.Windows.Forms.ListBox();
             this.lblFilteredResults = new System.Windows.Forms.Label();
-            this.filerButton = new System.Windows.Forms.Button();
+            this.filterButton = new System.Windows.Forms.Button();
             this.filterTextBox = new System.Windows.Forms.TextBox();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.pathTextBox = new System.Windows.Forms.TextBox();
             this.pathButton = new System.Windows.Forms.Button();
+            this.btnStart = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // treeListBox
@@ -98,15 +99,16 @@
             this.lblFilteredResults.TabIndex = 5;
             this.lblFilteredResults.Text = "Filtered Results";
             // 
-            // filerButton
+            // filterButton
             // 
-            this.filerButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.filerButton.Location = new System.Drawing.Point(12, 583);
-            this.filerButton.Name = "filerButton";
-            this.filerButton.Size = new System.Drawing.Size(128, 20);
-            this.filerButton.TabIndex = 6;
-            this.filerButton.Text = "Filter";
-            this.filerButton.UseVisualStyleBackColor = true;
+            this.filterButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.filterButton.Location = new System.Drawing.Point(12, 583);
+            this.filterButton.Name = "filterButton";
+            this.filterButton.Size = new System.Drawing.Size(128, 20);
+            this.filterButton.TabIndex = 6;
+            this.filterButton.Text = "Filter";
+            this.filterButton.UseVisualStyleBackColor = true;
+            this.filterButton.Click += new System.EventHandler(this.filterButton_Click);
             // 
             // filterTextBox
             // 
@@ -117,7 +119,7 @@
             // 
             // pathTextBox
             // 
-            this.pathTextBox.Location = new System.Drawing.Point(273, 13);
+            this.pathTextBox.Location = new System.Drawing.Point(265, 9);
             this.pathTextBox.Name = "pathTextBox";
             this.pathTextBox.Size = new System.Drawing.Size(793, 20);
             this.pathTextBox.TabIndex = 8;
@@ -132,15 +134,26 @@
             this.pathButton.UseVisualStyleBackColor = true;
             this.pathButton.Click += new System.EventHandler(this.PathButton_Click);
             // 
+            // btnStart
+            // 
+            this.btnStart.Location = new System.Drawing.Point(1094, 9);
+            this.btnStart.Name = "btnStart";
+            this.btnStart.Size = new System.Drawing.Size(121, 23);
+            this.btnStart.TabIndex = 10;
+            this.btnStart.Text = "Start";
+            this.btnStart.UseVisualStyleBackColor = true;
+            this.btnStart.Click += new System.EventHandler(this.btnStart_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1444, 615);
+            this.Controls.Add(this.btnStart);
             this.Controls.Add(this.pathButton);
             this.Controls.Add(this.pathTextBox);
             this.Controls.Add(this.filterTextBox);
-            this.Controls.Add(this.filerButton);
+            this.Controls.Add(this.filterButton);
             this.Controls.Add(this.lblFilteredResults);
             this.Controls.Add(this.filteredResultsListBox);
             this.Controls.Add(this.lblLogging);
@@ -163,11 +176,12 @@
         private System.Windows.Forms.Label lblLogging;
         private System.Windows.Forms.ListBox filteredResultsListBox;
         private System.Windows.Forms.Label lblFilteredResults;
-        private System.Windows.Forms.Button filerButton;
+        private System.Windows.Forms.Button filterButton;
         private System.Windows.Forms.TextBox filterTextBox;
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
         private System.Windows.Forms.TextBox pathTextBox;
         private System.Windows.Forms.Button pathButton;
+        private System.Windows.Forms.Button btnStart;
     }
 }
 
