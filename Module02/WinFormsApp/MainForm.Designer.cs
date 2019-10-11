@@ -38,6 +38,7 @@
             this.filterTextBox = new System.Windows.Forms.TextBox();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.pathTextBox = new System.Windows.Forms.TextBox();
+            this.pathButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // treeListBox
@@ -121,11 +122,22 @@
             this.pathTextBox.Size = new System.Drawing.Size(793, 20);
             this.pathTextBox.TabIndex = 8;
             // 
+            // pathButton
+            // 
+            this.pathButton.Location = new System.Drawing.Point(50, 9);
+            this.pathButton.Name = "pathButton";
+            this.pathButton.Size = new System.Drawing.Size(181, 23);
+            this.pathButton.TabIndex = 9;
+            this.pathButton.Text = "Choose the Path";
+            this.pathButton.UseVisualStyleBackColor = true;
+            this.pathButton.Click += new System.EventHandler(this.PathButton_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1444, 615);
+            this.Controls.Add(this.pathButton);
             this.Controls.Add(this.pathTextBox);
             this.Controls.Add(this.filterTextBox);
             this.Controls.Add(this.filerButton);
@@ -155,6 +167,7 @@
         private System.Windows.Forms.TextBox filterTextBox;
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
         private System.Windows.Forms.TextBox pathTextBox;
+        private System.Windows.Forms.Button pathButton;
     }
 }
 
