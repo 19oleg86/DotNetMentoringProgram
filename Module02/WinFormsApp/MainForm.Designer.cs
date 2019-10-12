@@ -123,6 +123,7 @@
             this.pathTextBox.Name = "pathTextBox";
             this.pathTextBox.Size = new System.Drawing.Size(793, 20);
             this.pathTextBox.TabIndex = 8;
+            this.pathTextBox.TextChanged += new System.EventHandler(this.pathTextBox_TextChanged);
             // 
             // pathButton
             // 

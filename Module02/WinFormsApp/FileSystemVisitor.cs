@@ -42,6 +42,7 @@ namespace WinFormsApp
         public List<string> StartSearch(string wayToDirOrFile, Func<string, bool> predicate)
         {
             allPathes.Clear();
+            allDeepPathes.Clear();
             LogStart("Search has started");
             allPathes.AddRange(ScanDirectoies(wayToDirOrFile, predicate));
             LogFinish("Search has finished");

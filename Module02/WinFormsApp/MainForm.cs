@@ -45,7 +45,6 @@ namespace WinFormsApp
         public bool MyCondition(string returnedPath)
         {
             bool result = false;
-            //if (File.Exists(returnedPath) || Directory.Exists(returnedPath))
             if (returnedPath.EndsWith(".txt"))
             {
                 result = true;
@@ -90,14 +89,19 @@ namespace WinFormsApp
 
         private void btnStart_Click(object sender, System.EventArgs e)
         {
-            filteredResultsListBox.Items.Clear();
             returnedPathes.Clear();
-            returnedPathes.AddRange(visitor.StartSearch(path, MyCondition));
             treeListBox.Items.Clear();
+            filteredResultsListBox.Items.Clear();
+            returnedPathes.AddRange(visitor.StartSearch(path, MyCondition));
             foreach (string pathToAdd in returnedPathes)
             {
                 treeListBox.Items.Add(pathToAdd);
             }
+        }
+
+        private void pathTextBox_TextChanged(object sender, System.EventArgs e)
+        {
+            path = pathTextBox.Text;
         }
     }
 }
