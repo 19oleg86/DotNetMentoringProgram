@@ -23,13 +23,6 @@ namespace WinFormsApp
             visitor.LogFinish += ShowLogMessage;
             visitor.LogFoundItem += ShowLogMessageWithInfo;
             visitor.LogFoundFilteredItem += ShowLogMessageWithInfo;
-            visitor.DisplayBaseFiltration += ShowBaseFiltration;
-            InvokeFolderBrowserDialog();
-            returnedPathes.AddRange(visitor.StartSearch(path, MyCondition));
-            foreach (string path in returnedPathes)
-            {
-                treeListBox.Items.Add(path);
-            }
         }
 
         public void InvokeFolderBrowserDialog()
@@ -45,7 +38,7 @@ namespace WinFormsApp
         public bool MyCondition(string returnedPath)
         {
             bool result = false;
-            if (returnedPath.EndsWith(".txt"))
+            if (returnedPath.ToUpper().Contains(filterTextBox.Text.ToUpper()) && filterTextBox.Text != "")
             {
                 result = true;
             }
@@ -53,19 +46,20 @@ namespace WinFormsApp
         }
         private void filterButton_Click(object sender, System.EventArgs e)
         {
-            filteredResultsListBox.Items.Clear();
-            FilteredTreeStateHandler filteredTreeStateHandler = mes =>
+            if (Directory.Exists(path))
             {
-                foreach (string fileOrDirectory in treeListBox.Items)
+                returnedPathes.Clear();
+                treeListBox.Items.Clear();
+                returnedPathes.AddRange(visitor.StartSearch(path, MyCondition));
+                foreach (string path in returnedPathes)
                 {
-                    if (fileOrDirectory.ToUpper().Contains(mes.ToUpper()))
-                    {
-                        filteredResultsListBox.Items.Add(fileOrDirectory);
-                        visitor.CheckAndLogFilteredData(fileOrDirectory);
-                    }
+                    treeListBox.Items.Add(path);
                 }
-            };
-            filteredTreeStateHandler(filterTextBox.Text);
+            }
+            else
+            {
+                MessageBox.Show("Wrong or Empty Directory, Choose the real Directory first!");
+            }
         }
 
         public void ShowLogMessage(string message)
@@ -77,28 +71,10 @@ namespace WinFormsApp
         {
             logListBox.Items.Add($"{e.Message} {e.ItemInfo}");
         }
-        public void ShowBaseFiltration(object sender, EventArgs e)
-        {
-            filteredResultsListBox.Items.Add($"{e.Message} {e.ItemInfo}");
-        }
-
         private void PathButton_Click(object sender, System.EventArgs e)
         {
             InvokeFolderBrowserDialog();
         }
-
-        private void btnStart_Click(object sender, System.EventArgs e)
-        {
-            returnedPathes.Clear();
-            treeListBox.Items.Clear();
-            filteredResultsListBox.Items.Clear();
-            returnedPathes.AddRange(visitor.StartSearch(path, MyCondition));
-            foreach (string pathToAdd in returnedPathes)
-            {
-                treeListBox.Items.Add(pathToAdd);
-            }
-        }
-
         private void pathTextBox_TextChanged(object sender, System.EventArgs e)
         {
             path = pathTextBox.Text;

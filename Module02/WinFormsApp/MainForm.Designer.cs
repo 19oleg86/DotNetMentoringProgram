@@ -32,14 +32,11 @@
             this.logListBox = new System.Windows.Forms.ListBox();
             this.lblTreeDirectoriesBinding = new System.Windows.Forms.Label();
             this.lblLogging = new System.Windows.Forms.Label();
-            this.filteredResultsListBox = new System.Windows.Forms.ListBox();
-            this.lblFilteredResults = new System.Windows.Forms.Label();
             this.filterButton = new System.Windows.Forms.Button();
             this.filterTextBox = new System.Windows.Forms.TextBox();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.pathTextBox = new System.Windows.Forms.TextBox();
             this.pathButton = new System.Windows.Forms.Button();
-            this.btnStart = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // treeListBox
@@ -48,23 +45,23 @@
             this.treeListBox.HorizontalScrollbar = true;
             this.treeListBox.Location = new System.Drawing.Point(12, 84);
             this.treeListBox.Name = "treeListBox";
-            this.treeListBox.Size = new System.Drawing.Size(374, 485);
+            this.treeListBox.Size = new System.Drawing.Size(580, 485);
             this.treeListBox.TabIndex = 0;
             // 
             // logListBox
             // 
             this.logListBox.FormattingEnabled = true;
             this.logListBox.HorizontalScrollbar = true;
-            this.logListBox.Location = new System.Drawing.Point(879, 84);
+            this.logListBox.Location = new System.Drawing.Point(630, 84);
             this.logListBox.Name = "logListBox";
-            this.logListBox.Size = new System.Drawing.Size(553, 485);
+            this.logListBox.Size = new System.Drawing.Size(662, 485);
             this.logListBox.TabIndex = 1;
             // 
             // lblTreeDirectoriesBinding
             // 
             this.lblTreeDirectoriesBinding.AutoSize = true;
             this.lblTreeDirectoriesBinding.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblTreeDirectoriesBinding.Location = new System.Drawing.Point(95, 49);
+            this.lblTreeDirectoriesBinding.Location = new System.Drawing.Point(204, 49);
             this.lblTreeDirectoriesBinding.Name = "lblTreeDirectoriesBinding";
             this.lblTreeDirectoriesBinding.Size = new System.Drawing.Size(164, 17);
             this.lblTreeDirectoriesBinding.TabIndex = 2;
@@ -74,30 +71,11 @@
             // 
             this.lblLogging.AutoSize = true;
             this.lblLogging.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblLogging.Location = new System.Drawing.Point(1108, 49);
+            this.lblLogging.Location = new System.Drawing.Point(892, 49);
             this.lblLogging.Name = "lblLogging";
             this.lblLogging.Size = new System.Drawing.Size(59, 17);
             this.lblLogging.TabIndex = 3;
             this.lblLogging.Text = "Logging";
-            // 
-            // filteredResultsListBox
-            // 
-            this.filteredResultsListBox.FormattingEnabled = true;
-            this.filteredResultsListBox.HorizontalScrollbar = true;
-            this.filteredResultsListBox.Location = new System.Drawing.Point(416, 84);
-            this.filteredResultsListBox.Name = "filteredResultsListBox";
-            this.filteredResultsListBox.Size = new System.Drawing.Size(436, 485);
-            this.filteredResultsListBox.TabIndex = 4;
-            // 
-            // lblFilteredResults
-            // 
-            this.lblFilteredResults.AutoSize = true;
-            this.lblFilteredResults.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblFilteredResults.Location = new System.Drawing.Point(558, 49);
-            this.lblFilteredResults.Name = "lblFilteredResults";
-            this.lblFilteredResults.Size = new System.Drawing.Size(106, 17);
-            this.lblFilteredResults.TabIndex = 5;
-            this.lblFilteredResults.Text = "Filtered Results";
             // 
             // filterButton
             // 
@@ -131,32 +109,19 @@
             this.pathButton.Name = "pathButton";
             this.pathButton.Size = new System.Drawing.Size(181, 23);
             this.pathButton.TabIndex = 9;
-            this.pathButton.Text = "Choose the Path";
+            this.pathButton.Text = "Choose the Directory";
             this.pathButton.UseVisualStyleBackColor = true;
             this.pathButton.Click += new System.EventHandler(this.PathButton_Click);
-            // 
-            // btnStart
-            // 
-            this.btnStart.Location = new System.Drawing.Point(1094, 9);
-            this.btnStart.Name = "btnStart";
-            this.btnStart.Size = new System.Drawing.Size(121, 23);
-            this.btnStart.TabIndex = 10;
-            this.btnStart.Text = "Start";
-            this.btnStart.UseVisualStyleBackColor = true;
-            this.btnStart.Click += new System.EventHandler(this.btnStart_Click);
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1444, 615);
-            this.Controls.Add(this.btnStart);
+            this.ClientSize = new System.Drawing.Size(1317, 615);
             this.Controls.Add(this.pathButton);
             this.Controls.Add(this.pathTextBox);
             this.Controls.Add(this.filterTextBox);
             this.Controls.Add(this.filterButton);
-            this.Controls.Add(this.lblFilteredResults);
-            this.Controls.Add(this.filteredResultsListBox);
             this.Controls.Add(this.lblLogging);
             this.Controls.Add(this.lblTreeDirectoriesBinding);
             this.Controls.Add(this.logListBox);
@@ -175,14 +140,11 @@
         private System.Windows.Forms.ListBox logListBox;
         private System.Windows.Forms.Label lblTreeDirectoriesBinding;
         private System.Windows.Forms.Label lblLogging;
-        private System.Windows.Forms.ListBox filteredResultsListBox;
-        private System.Windows.Forms.Label lblFilteredResults;
         private System.Windows.Forms.Button filterButton;
         private System.Windows.Forms.TextBox filterTextBox;
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
         private System.Windows.Forms.TextBox pathTextBox;
         private System.Windows.Forms.Button pathButton;
-        private System.Windows.Forms.Button btnStart;
     }
 }
 
