@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Windows.Forms;
-using static WinFormsApp.FileSystemVisitor;
 
 namespace WinFormsApp
 {
@@ -15,6 +13,8 @@ namespace WinFormsApp
         {
             InitializeComponent();
             returnedPathes = new List<string>();
+            groupBoxShowWhat.Controls.Add(radioButtonDirectories);
+            groupBoxShowWhat.Controls.Add(radioButtonFileNames);
         }
         private void MainForm_Load(object sender, System.EventArgs e)
         {
@@ -53,7 +53,24 @@ namespace WinFormsApp
                 returnedPathes.AddRange(visitor.StartSearch(path, MyCondition));
                 foreach (string path in returnedPathes)
                 {
-                    treeListBox.Items.Add(path);
+                    if (radioButtonDirectories.Checked == true)
+                    {
+                        if (Directory.Exists(path))
+                        {
+                            treeListBox.Items.Add(path);
+                        }
+                    }
+                    else if (radioButtonFileNames.Checked == true)
+                    {
+                        if (File.Exists(path))
+                        {
+                            treeListBox.Items.Add(path);
+                        }
+                    }
+                    else
+                    {
+                        treeListBox.Items.Add(path);
+                    }
                 }
             }
             else
@@ -70,6 +87,13 @@ namespace WinFormsApp
         public void ShowLogMessageWithInfo(object sender, EventArgs e)
         {
             logListBox.Items.Add($"{e.Message} {e.ItemInfo}");
+            if (checkBoxStopSearching.Checked == true)
+            {
+                if (e.ItemInfo.Contains(".txt"))
+                {
+                    visitor.ShouldStop = true;
+                }
+            }
         }
         private void PathButton_Click(object sender, System.EventArgs e)
         {
@@ -78,6 +102,12 @@ namespace WinFormsApp
         private void pathTextBox_TextChanged(object sender, System.EventArgs e)
         {
             path = pathTextBox.Text;
+        }
+
+        private void buttonClearBoth_Click(object sender, System.EventArgs e)
+        {
+            radioButtonDirectories.Checked = false;
+            radioButtonFileNames.Checked = false;
         }
     }
 }

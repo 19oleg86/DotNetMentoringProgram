@@ -1,10 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace WinFormsApp
 {
@@ -13,6 +9,8 @@ namespace WinFormsApp
         List<string> allPathes;
         List<string> allDeepPathes;
         List<string> allFilteredPathes;
+
+        public bool ShouldStop { get; set; }
 
         public delegate void TreeStateHandler(string message);
 
@@ -37,6 +35,7 @@ namespace WinFormsApp
 
         public List<string> StartSearch(string wayToDirOrFile, Func<string, bool> predicate)
         {
+            ShouldStop = false;
             allPathes.Clear();
             allDeepPathes.Clear();
             allFilteredPathes.Clear();
@@ -57,6 +56,10 @@ namespace WinFormsApp
                 }
                 allDeepPathes.Add(dirOrFile);
                 LogFoundItem?.Invoke(this, new EventArgs("New directory or file founded: ", dirOrFile));
+                if (ShouldStop == true)
+                {
+                    return allDeepPathes;
+                }
                 if (Directory.Exists(dirOrFile))
                 {
                     ScanDirectoies(dirOrFile, predicate);

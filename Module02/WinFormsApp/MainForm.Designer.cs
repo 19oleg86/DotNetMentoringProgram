@@ -37,6 +37,12 @@
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.pathTextBox = new System.Windows.Forms.TextBox();
             this.pathButton = new System.Windows.Forms.Button();
+            this.groupBoxShowWhat = new System.Windows.Forms.GroupBox();
+            this.radioButtonDirectories = new System.Windows.Forms.RadioButton();
+            this.radioButtonFileNames = new System.Windows.Forms.RadioButton();
+            this.buttonClearBoth = new System.Windows.Forms.Button();
+            this.checkBoxStopSearching = new System.Windows.Forms.CheckBox();
+            this.groupBoxShowWhat.SuspendLayout();
             this.SuspendLayout();
             // 
             // treeListBox
@@ -45,7 +51,7 @@
             this.treeListBox.HorizontalScrollbar = true;
             this.treeListBox.Location = new System.Drawing.Point(12, 84);
             this.treeListBox.Name = "treeListBox";
-            this.treeListBox.Size = new System.Drawing.Size(580, 485);
+            this.treeListBox.Size = new System.Drawing.Size(580, 446);
             this.treeListBox.TabIndex = 0;
             // 
             // logListBox
@@ -54,7 +60,7 @@
             this.logListBox.HorizontalScrollbar = true;
             this.logListBox.Location = new System.Drawing.Point(630, 84);
             this.logListBox.Name = "logListBox";
-            this.logListBox.Size = new System.Drawing.Size(662, 485);
+            this.logListBox.Size = new System.Drawing.Size(662, 446);
             this.logListBox.TabIndex = 1;
             // 
             // lblTreeDirectoriesBinding
@@ -113,11 +119,67 @@
             this.pathButton.UseVisualStyleBackColor = true;
             this.pathButton.Click += new System.EventHandler(this.PathButton_Click);
             // 
+            // groupBoxShowWhat
+            // 
+            this.groupBoxShowWhat.Controls.Add(this.buttonClearBoth);
+            this.groupBoxShowWhat.Controls.Add(this.radioButtonFileNames);
+            this.groupBoxShowWhat.Controls.Add(this.radioButtonDirectories);
+            this.groupBoxShowWhat.Location = new System.Drawing.Point(377, 551);
+            this.groupBoxShowWhat.Name = "groupBoxShowWhat";
+            this.groupBoxShowWhat.Size = new System.Drawing.Size(300, 52);
+            this.groupBoxShowWhat.TabIndex = 10;
+            this.groupBoxShowWhat.TabStop = false;
+            this.groupBoxShowWhat.Text = "Show only";
+            // 
+            // radioButtonDirectories
+            // 
+            this.radioButtonDirectories.AutoSize = true;
+            this.radioButtonDirectories.Location = new System.Drawing.Point(6, 19);
+            this.radioButtonDirectories.Name = "radioButtonDirectories";
+            this.radioButtonDirectories.Size = new System.Drawing.Size(75, 17);
+            this.radioButtonDirectories.TabIndex = 11;
+            this.radioButtonDirectories.TabStop = true;
+            this.radioButtonDirectories.Text = "Directories";
+            this.radioButtonDirectories.UseVisualStyleBackColor = true;
+            // 
+            // radioButtonFileNames
+            // 
+            this.radioButtonFileNames.AutoSize = true;
+            this.radioButtonFileNames.Location = new System.Drawing.Point(99, 19);
+            this.radioButtonFileNames.Name = "radioButtonFileNames";
+            this.radioButtonFileNames.Size = new System.Drawing.Size(46, 17);
+            this.radioButtonFileNames.TabIndex = 12;
+            this.radioButtonFileNames.TabStop = true;
+            this.radioButtonFileNames.Text = "Files";
+            this.radioButtonFileNames.UseVisualStyleBackColor = true;
+            // 
+            // buttonClearBoth
+            // 
+            this.buttonClearBoth.Location = new System.Drawing.Point(164, 12);
+            this.buttonClearBoth.Name = "buttonClearBoth";
+            this.buttonClearBoth.Size = new System.Drawing.Size(99, 30);
+            this.buttonClearBoth.TabIndex = 13;
+            this.buttonClearBoth.Text = "Clear Both";
+            this.buttonClearBoth.UseVisualStyleBackColor = true;
+            this.buttonClearBoth.Click += new System.EventHandler(this.buttonClearBoth_Click);
+            // 
+            // checkBoxStopSearching
+            // 
+            this.checkBoxStopSearching.AutoSize = true;
+            this.checkBoxStopSearching.Location = new System.Drawing.Point(12, 551);
+            this.checkBoxStopSearching.Name = "checkBoxStopSearching";
+            this.checkBoxStopSearching.Size = new System.Drawing.Size(203, 17);
+            this.checkBoxStopSearching.TabIndex = 11;
+            this.checkBoxStopSearching.Text = "Stop Searching with first found .txt file";
+            this.checkBoxStopSearching.UseVisualStyleBackColor = true;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1317, 615);
+            this.Controls.Add(this.checkBoxStopSearching);
+            this.Controls.Add(this.groupBoxShowWhat);
             this.Controls.Add(this.pathButton);
             this.Controls.Add(this.pathTextBox);
             this.Controls.Add(this.filterTextBox);
@@ -129,6 +191,8 @@
             this.Name = "MainForm";
             this.Text = "FileSystemVisitor";
             this.Load += new System.EventHandler(this.MainForm_Load);
+            this.groupBoxShowWhat.ResumeLayout(false);
+            this.groupBoxShowWhat.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -145,6 +209,11 @@
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
         private System.Windows.Forms.TextBox pathTextBox;
         private System.Windows.Forms.Button pathButton;
+        private System.Windows.Forms.GroupBox groupBoxShowWhat;
+        private System.Windows.Forms.RadioButton radioButtonDirectories;
+        private System.Windows.Forms.RadioButton radioButtonFileNames;
+        private System.Windows.Forms.Button buttonClearBoth;
+        private System.Windows.Forms.CheckBox checkBoxStopSearching;
     }
 }
 
