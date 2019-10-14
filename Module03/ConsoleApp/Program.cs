@@ -13,9 +13,8 @@ namespace ConsoleApp
                 {
                     Console.Write("Please enter a string of text: ");
                     baseString = Console.ReadLine();
-                    CheckString cs = new CheckString();
-                    cs.CheckUserString(baseString);
-                    Console.WriteLine(baseString[0]);
+                    StringChecker cs = new StringChecker();
+                    Console.WriteLine(cs.CheckUserString(baseString));
                 }
                 catch (CheckStringException ex)
                 {
@@ -25,14 +24,15 @@ namespace ConsoleApp
         }
     }
 
-    public class CheckString
+    public class StringChecker
     {
-        public void CheckUserString(string checkThis)
+        public char CheckUserString(string checkThis)
         {
             if (checkThis.Length == 0)
             {
                 throw new CheckStringException("The string shouldn't be empty");
             }
+            return checkThis[0];
         }
     }
 
