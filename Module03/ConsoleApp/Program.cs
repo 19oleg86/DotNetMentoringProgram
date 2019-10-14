@@ -16,7 +16,7 @@ namespace ConsoleApp
                     StringChecker cs = new StringChecker();
                     Console.WriteLine(cs.CheckUserString(baseString));
                 }
-                catch (CheckStringException ex)
+                catch (StringCheckerException ex)
                 {
                     Console.WriteLine($"Error: {ex.Message}");
                 }
@@ -30,15 +30,15 @@ namespace ConsoleApp
         {
             if (checkThis.Length == 0)
             {
-                throw new CheckStringException("The string shouldn't be empty");
+                throw new StringCheckerException("The string shouldn't be empty");
             }
             return checkThis[0];
         }
     }
 
-    public class CheckStringException : Exception
+    public class StringCheckerException : Exception
     {
-        public CheckStringException(string message) : base(message)
+        public StringCheckerException(string message) : base(message)
         { }
     }
 
