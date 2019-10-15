@@ -20,5 +20,35 @@ namespace StringTransformer.Tests
             //Assert
             Assert.AreEqual(expected, actual);
         }
+
+        [TestMethod]
+        public void ConvertToInt_ZeroIn_ZeroOut()
+        {
+            //Arrange
+            string sample = "0";
+            long expected = 0;
+
+            //Act
+            IntMaker intMaker = new IntMaker();
+            long actual = intMaker.ConvertToInt(sample);
+
+            //Assert
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod]
+        public void ConvertToInt_NegativeIn_ZeroOut()
+        {
+            //Arrange
+            string sample = "0";
+            long expected = 0;
+
+            //Act
+            IntMaker intMaker = new IntMaker();
+            long actual = intMaker.ConvertToInt(sample);
+
+            //Assert
+            Assert.AreEqual(expected, actual);
+        }
     }
 }
