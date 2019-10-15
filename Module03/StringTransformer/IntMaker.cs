@@ -4,7 +4,7 @@ namespace StringTransformer
 {
     public class IntMaker
     {
-        public long CovertToInt(string sourceString)
+        public long ConvertToInt(string sourceString)
         {
             if (sourceString.Length == 0)
             {

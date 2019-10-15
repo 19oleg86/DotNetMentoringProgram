@@ -17,7 +17,7 @@ namespace ConsoleAppTaskTwo
                     break;
                     try
                     {
-                        Console.WriteLine($"Your number is: {intMaker.CovertToInt(baseString)}");
+                        Console.WriteLine($"Your number is: {intMaker.ConvertToInt(baseString)}");
                     }
                     catch (EmptyStringException ex)
                     {
