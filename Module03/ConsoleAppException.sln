@@ -5,6 +5,10 @@ VisualStudioVersion = 16.0.29306.81
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApp", "ConsoleApp\ConsoleApp.csproj", "{952EEE33-C1A8-4EDF-954E-66D98ABFFC3A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StringTransformer", "StringTransformer\StringTransformer.csproj", "{BE98851D-9D66-4156-860A-7943AC9550FA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleAppTaskTwo", "ConsoleAppTaskTwo\ConsoleAppTaskTwo.csproj", "{826022F3-3F51-4D91-9717-7A62BCFFEFBA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{952EEE33-C1A8-4EDF-954E-66D98ABFFC3A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{952EEE33-C1A8-4EDF-954E-66D98ABFFC3A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{952EEE33-C1A8-4EDF-954E-66D98ABFFC3A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BE98851D-9D66-4156-860A-7943AC9550FA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BE98851D-9D66-4156-860A-7943AC9550FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BE98851D-9D66-4156-860A-7943AC9550FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BE98851D-9D66-4156-860A-7943AC9550FA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{826022F3-3F51-4D91-9717-7A62BCFFEFBA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{826022F3-3F51-4D91-9717-7A62BCFFEFBA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{826022F3-3F51-4D91-9717-7A62BCFFEFBA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{826022F3-3F51-4D91-9717-7A62BCFFEFBA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
