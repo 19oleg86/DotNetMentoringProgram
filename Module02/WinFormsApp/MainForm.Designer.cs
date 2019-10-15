@@ -168,9 +168,9 @@
             this.checkBoxStopSearching.AutoSize = true;
             this.checkBoxStopSearching.Location = new System.Drawing.Point(12, 551);
             this.checkBoxStopSearching.Name = "checkBoxStopSearching";
-            this.checkBoxStopSearching.Size = new System.Drawing.Size(203, 17);
+            this.checkBoxStopSearching.Size = new System.Drawing.Size(205, 17);
             this.checkBoxStopSearching.TabIndex = 11;
-            this.checkBoxStopSearching.Text = "Stop Searching with first found .txt file";
+            this.checkBoxStopSearching.Text = "Stop Searching after first found .txt file";
             this.checkBoxStopSearching.UseVisualStyleBackColor = true;
             // 
             // MainForm

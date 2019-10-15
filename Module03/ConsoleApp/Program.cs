@@ -35,7 +35,6 @@ namespace ConsoleApp
             return checkThis[0];
         }
     }
-
     public class StringCheckerException : Exception
     {
         public StringCheckerException(string message) : base(message)

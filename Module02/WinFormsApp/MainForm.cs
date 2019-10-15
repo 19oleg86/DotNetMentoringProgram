@@ -60,7 +60,7 @@ namespace WinFormsApp
                             treeListBox.Items.Add(path);
                         }
                     }
-                    else if (radioButtonFileNames.Checked == true)
+                    else if(radioButtonFileNames.Checked == true)
                     {
                         if (File.Exists(path))
                         {
@@ -68,7 +68,7 @@ namespace WinFormsApp
                         }
                     }
                     else
-                    {
+                    { 
                         treeListBox.Items.Add(path);
                     }
                 }
@@ -103,7 +103,6 @@ namespace WinFormsApp
         {
             path = pathTextBox.Text;
         }
-
         private void buttonClearBoth_Click(object sender, System.EventArgs e)
         {
             radioButtonDirectories.Checked = false;

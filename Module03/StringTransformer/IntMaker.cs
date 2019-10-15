@@ -12,7 +12,7 @@ namespace StringTransformer
             }
             for (int i = 0; i < sourceString.Length; i++)
             {
-                if (sourceString[i] >= '0' && sourceString[i] <= '9')
+                if (sourceString[i] >= '0' && sourceString[i] <= '9' || sourceString[i] == '-')
                     continue;
                 else
                 {

@@ -9,7 +9,7 @@ namespace WinFormsApp
         List<string> allPathes;
         List<string> allDeepPathes;
         List<string> allFilteredPathes;
-
+        
         public bool ShouldStop { get; set; }
 
         public delegate void TreeStateHandler(string message);
