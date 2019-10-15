@@ -8,7 +8,7 @@ namespace StringTransformer
         {
             if (sourceString.Length == 0)
             {
-                throw new EmptyStringExc("The Input mustn't be empty");
+                throw new EmptyStringException("The Input mustn't be empty");
             }
             for (int i = 0; i < sourceString.Length; i++)
             {
@@ -16,31 +16,31 @@ namespace StringTransformer
                     continue;
                 else
                 {
-                    throw new IncorrectFormatExc("The Input must contain only digits from 0 to 9");
+                    throw new IncorrectFormatException("The Input must contain only digits from 0 to 9");
                 }
             }
             long interimNumber = Convert.ToInt64(sourceString);
-            if (interimNumber > 2147483647 || interimNumber < -2147483648)
+            if (interimNumber > int.MaxValue || interimNumber < int.MinValue)
             {
-                throw new TypeOverFlowExc("Your number too big, it must be between -2 147 483 648 and  2 147 483 647");
+                throw new TypeOverFlowException("Your number is too big, it must be between -2 147 483 648 and  2 147 483 647");
             }
             return interimNumber;
         }
     }
 
-    public class EmptyStringExc : Exception
+    public class EmptyStringException : Exception
     {
-        public EmptyStringExc(string message) : base(message)
+        public EmptyStringException(string message) : base(message)
         {}
     }
-    public class IncorrectFormatExc : Exception
+    public class IncorrectFormatException : Exception
     {
-        public IncorrectFormatExc(string message) : base(message)
+        public IncorrectFormatException(string message) : base(message)
         {}
     }
-    public class TypeOverFlowExc : Exception
+    public class TypeOverFlowException : Exception
     {
-        public TypeOverFlowExc(string message) : base(message) 
+        public TypeOverFlowException(string message) : base(message) 
         {}
     }
 }

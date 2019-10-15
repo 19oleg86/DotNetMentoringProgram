@@ -19,15 +19,15 @@ namespace ConsoleAppTaskTwo
                     {
                         Console.WriteLine($"Your number is: {intMaker.CovertToInt(baseString)}");
                     }
-                    catch (EmptyStringExc ex)
+                    catch (EmptyStringException ex)
                     {
                         Console.WriteLine($"Error: {ex.Message}");
                     }
-                    catch (IncorrectFormatExc ex)
+                    catch (IncorrectFormatException ex)
                     {
                         Console.WriteLine($"Error: {ex.Message}");
                     }
-                    catch (TypeOverFlowExc ex)
+                    catch (TypeOverFlowException ex)
                     {
                         Console.WriteLine($"Error: {ex.Message}");
                     }
@@ -35,7 +35,7 @@ namespace ConsoleAppTaskTwo
                     {
                         Console.WriteLine($"Error: Extremely large number, enter a lower number (between -2 147 483 648 and  2 147 483 647)");
                     }
-            } while (1 == 1);
+            } while (true);
         }
     }
 }
