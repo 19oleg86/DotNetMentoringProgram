@@ -10,11 +10,11 @@ namespace StringTransformer.Tests
         {
             //Arrange
             string sample = "12345";
-            long expected = 12345;
+            int expected = 12345;
 
             //Act
             IntMaker intMaker = new IntMaker();
-            long actual = intMaker.ConvertToInt(sample);
+            int actual = intMaker.ConvertToInt(sample);
 
             //Assert
             Assert.AreEqual(expected, actual);
@@ -25,11 +25,11 @@ namespace StringTransformer.Tests
         {
             //Arrange
             string sample = "0";
-            long expected = 0;
+            int expected = 0;
 
             //Act
             IntMaker intMaker = new IntMaker();
-            long actual = intMaker.ConvertToInt(sample);
+            int actual = intMaker.ConvertToInt(sample);
 
             //Assert
             Assert.AreEqual(expected, actual);
@@ -40,11 +40,11 @@ namespace StringTransformer.Tests
         {
             //Arrange
             string sample = "-15";
-            long expected = -15;
+            int expected = -15;
 
             //Act
             IntMaker intMaker = new IntMaker();
-            long actual = intMaker.ConvertToInt(sample);
+            int actual = intMaker.ConvertToInt(sample);
 
             //Assert
             Assert.AreEqual(expected, actual);
@@ -54,12 +54,12 @@ namespace StringTransformer.Tests
         public void ConvertToInt_MinimumIn_MinimumOut()
         {
             //Arrange
-            string sample = "-2147483648";
-            long expected = -2147483648;
+            string sample = "--2147483648";
+            int expected = -2147483648;
 
             //Act
             IntMaker intMaker = new IntMaker();
-            long actual = intMaker.ConvertToInt(sample);
+            int actual = intMaker.ConvertToInt(sample);
 
             //Assert
             Assert.AreEqual(expected, actual);
@@ -70,18 +70,18 @@ namespace StringTransformer.Tests
         {
             //Arrange
             string sample = "2147483647";
-            long expected = 2147483647;
+            int expected = 2147483647;
 
             //Act
             IntMaker intMaker = new IntMaker();
-            long actual = intMaker.ConvertToInt(sample);
+            int actual = intMaker.ConvertToInt(sample);
 
             //Assert
             Assert.AreEqual(expected, actual);
         }
 
         [TestMethod]
-        public void ConvertToInt_MoreThanMaximumIn_TypeOverFlowExceptionOut()
+        public void ConvertToInt_MoreThanMaximumIn_OverflowExceptionOut()
         {
             //Arrange
             string sample = "2147483649";
@@ -90,11 +90,11 @@ namespace StringTransformer.Tests
             IntMaker intMaker = new IntMaker();
 
             //Assert
-            Assert.ThrowsException<TypeOverFlowException>(() => intMaker.ConvertToInt(sample));
+            Assert.ThrowsException<System.OverflowException>(() => intMaker.ConvertToInt(sample));
         }
 
         [TestMethod]
-        public void ConvertToInt_LessThanMinimumIn_TypeOverFlowExceptionOut()
+        public void ConvertToInt_LessThanMinimumIn_OverflowExceptionOut()
         {
             //Arrange
             string sample = "-2147483650";
@@ -103,7 +103,7 @@ namespace StringTransformer.Tests
             IntMaker intMaker = new IntMaker();
 
             //Assert
-            Assert.ThrowsException<TypeOverFlowException>(() => intMaker.ConvertToInt(sample));
+            Assert.ThrowsException<System.OverflowException>(() => intMaker.ConvertToInt(sample));
         }
 
         [TestMethod]

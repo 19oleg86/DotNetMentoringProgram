@@ -17,17 +17,13 @@ namespace ConsoleAppTaskTwo
                     break;
                     try
                     {
-                        Console.WriteLine($"Your number is: {intMaker.ConvertToInt(baseString)}");
+                        Console.WriteLine($"Your number is: {checked(intMaker.ConvertToInt(baseString))}");
                     }
                     catch (EmptyStringException ex)
                     {
                         Console.WriteLine($"Error: {ex.Message}");
                     }
                     catch (IncorrectFormatException ex)
-                    {
-                        Console.WriteLine($"Error: {ex.Message}");
-                    }
-                    catch (TypeOverFlowException ex)
                     {
                         Console.WriteLine($"Error: {ex.Message}");
                     }
