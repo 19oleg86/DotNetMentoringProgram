@@ -23,22 +23,19 @@ namespace StringTransformer
             char[] array = sourceString.ToCharArray();
 
             for (int i = 0; i < array.Length; i++)
-                checked
-                {
+                
                     if (array[array.Length - i - 1] == '-')
                     {
                         interimNumber *= -1;
                     }
                     else
                     {
-                        if (array[array.Length - i - 1] == '2' && interimNumber == 147483648)
-                        {
-                            unchecked { interimNumber += (int)((array[array.Length - i - 1] - '0') * Math.Pow(10, i)); }
-                            break;
-                        }
+                    checked
+                    {
                         interimNumber += ((int)((array[array.Length - i - 1] - '0') * Math.Pow(10, i)));
                     }
                 }
+                
 
             if (interimNumber > int.MaxValue || interimNumber < int.MinValue)
             {
