@@ -21,15 +21,28 @@ namespace StringTransformer
             }
             int interimNumber = 0;
             char[] array = sourceString.ToCharArray();
-            
-                for (int i = 0; i < array.Length; i++)
+
+            for (int i = 0; i < array.Length; i++)
+                checked
                 {
-                    interimNumber += ((int)((array[array.Length - i - 1] - '0') * Math.Pow(10, i)));
+                    if (array[array.Length - i - 1] == '-')
+                    {
+                        interimNumber *= -1;
+                    }
+                    else
+                    {
+                        if (array[array.Length - i - 1] == '2' && interimNumber == 147483648)
+                        {
+                            unchecked { interimNumber += (int)((array[array.Length - i - 1] - '0') * Math.Pow(10, i)); }
+                            break;
+                        }
+                        interimNumber += ((int)((array[array.Length - i - 1] - '0') * Math.Pow(10, i)));
+                    }
                 }
-            
+
             if (interimNumber > int.MaxValue || interimNumber < int.MinValue)
             {
-                throw new OverflowException("Your number is too big, it must be between -2 147 483 648 and  2 147 483 647");
+                throw new OverflowException();
             }
             return interimNumber;
         }

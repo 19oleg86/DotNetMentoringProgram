@@ -54,7 +54,7 @@ namespace StringTransformer.Tests
         public void ConvertToInt_MinimumIn_MinimumOut()
         {
             //Arrange
-            string sample = "--2147483648";
+            string sample = "-2147483648";
             int expected = -2147483648;
 
             //Act

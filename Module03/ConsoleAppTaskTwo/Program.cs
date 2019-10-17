@@ -17,7 +17,7 @@ namespace ConsoleAppTaskTwo
                     break;
                     try
                     {
-                        Console.WriteLine($"Your number is: {checked(intMaker.ConvertToInt(baseString))}");
+                        Console.WriteLine($"Your number is: {intMaker.ConvertToInt(baseString)}");
                     }
                     catch (EmptyStringException ex)
                     {
@@ -29,7 +29,7 @@ namespace ConsoleAppTaskTwo
                     }
                     catch (OverflowException)
                     {
-                        Console.WriteLine($"Error: Extremely large number, enter a lower number (between -2 147 483 648 and  2 147 483 647)");
+                        Console.WriteLine($"Error: Your number is too big, it must be between -2 147 483 648 and  2 147 483 647");
                     }
             } while (true);
         }
