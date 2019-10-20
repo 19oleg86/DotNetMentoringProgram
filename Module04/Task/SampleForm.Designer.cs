@@ -49,12 +49,15 @@ namespace SampleSupport
             this.runButton = new System.Windows.Forms.Button();
             this.outputTextBox = new System.Windows.Forms.TextBox();
             this.outputLabel = new System.Windows.Forms.Label();
+            ((System.ComponentModel.ISupportInitialize)(this.outerSplitContainer)).BeginInit();
             this.outerSplitContainer.Panel1.SuspendLayout();
             this.outerSplitContainer.Panel2.SuspendLayout();
             this.outerSplitContainer.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.rightContainer)).BeginInit();
             this.rightContainer.Panel1.SuspendLayout();
             this.rightContainer.Panel2.SuspendLayout();
             this.rightContainer.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.rightUpperSplitContainer)).BeginInit();
             this.rightUpperSplitContainer.Panel1.SuspendLayout();
             this.rightUpperSplitContainer.Panel2.SuspendLayout();
             this.rightUpperSplitContainer.SuspendLayout();
@@ -81,9 +84,9 @@ namespace SampleSupport
             // 
             // samplesTreeView
             // 
-            this.samplesTreeView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.samplesTreeView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.samplesTreeView.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.samplesTreeView.HideSelection = false;
             this.samplesTreeView.ImageKey = "Item";
@@ -95,15 +98,16 @@ namespace SampleSupport
             this.samplesTreeView.ShowRootLines = false;
             this.samplesTreeView.Size = new System.Drawing.Size(266, 654);
             this.samplesTreeView.TabIndex = 1;
-            this.samplesTreeView.AfterExpand += new System.Windows.Forms.TreeViewEventHandler(this.samplesTreeView_AfterExpand);
             this.samplesTreeView.BeforeCollapse += new System.Windows.Forms.TreeViewCancelEventHandler(this.samplesTreeView_BeforeCollapse);
-            this.samplesTreeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.samplesTreeView_AfterSelect);
             this.samplesTreeView.AfterCollapse += new System.Windows.Forms.TreeViewEventHandler(this.samplesTreeView_AfterCollapse);
+            this.samplesTreeView.AfterExpand += new System.Windows.Forms.TreeViewEventHandler(this.samplesTreeView_AfterExpand);
+            this.samplesTreeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.samplesTreeView_AfterSelect);
             this.samplesTreeView.DoubleClick += new System.EventHandler(this.samplesTreeView_DoubleClick);
             // 
             // imageList
             // 
             this.imageList.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList.ImageStream")));
+            this.imageList.TransparentColor = System.Drawing.Color.Transparent;
             this.imageList.Images.SetKeyName(0, "Help");
             this.imageList.Images.SetKeyName(1, "BookStack");
             this.imageList.Images.SetKeyName(2, "BookClosed");
@@ -117,7 +121,7 @@ namespace SampleSupport
             this.samplesLabel.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.samplesLabel.Location = new System.Drawing.Point(3, 9);
             this.samplesLabel.Name = "samplesLabel";
-            this.samplesLabel.Size = new System.Drawing.Size(58, 16);
+            this.samplesLabel.Size = new System.Drawing.Size(62, 16);
             this.samplesLabel.TabIndex = 0;
             this.samplesLabel.Text = "Samples:";
             // 
@@ -164,9 +168,9 @@ namespace SampleSupport
             // 
             // descriptionTextBox
             // 
-            this.descriptionTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.descriptionTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.descriptionTextBox.BackColor = System.Drawing.SystemColors.ControlLight;
             this.descriptionTextBox.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.descriptionTextBox.Location = new System.Drawing.Point(0, 28);
@@ -183,15 +187,15 @@ namespace SampleSupport
             this.descriptionLabel.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.descriptionLabel.Location = new System.Drawing.Point(3, 9);
             this.descriptionLabel.Name = "descriptionLabel";
-            this.descriptionLabel.Size = new System.Drawing.Size(72, 16);
+            this.descriptionLabel.Size = new System.Drawing.Size(76, 16);
             this.descriptionLabel.TabIndex = 0;
             this.descriptionLabel.Text = "Description:";
             // 
             // codeRichTextBox
             // 
-            this.codeRichTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.codeRichTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.codeRichTextBox.BackColor = System.Drawing.SystemColors.ControlLight;
             this.codeRichTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.codeRichTextBox.Font = new System.Drawing.Font("Lucida Console", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -209,7 +213,7 @@ namespace SampleSupport
             this.codeLabel.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.codeLabel.Location = new System.Drawing.Point(3, -1);
             this.codeLabel.Name = "codeLabel";
-            this.codeLabel.Size = new System.Drawing.Size(38, 16);
+            this.codeLabel.Size = new System.Drawing.Size(42, 16);
             this.codeLabel.TabIndex = 0;
             this.codeLabel.Text = "Code:";
             // 
@@ -230,9 +234,9 @@ namespace SampleSupport
             // 
             // outputTextBox
             // 
-            this.outputTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.outputTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.outputTextBox.BackColor = System.Drawing.SystemColors.ControlLight;
             this.outputTextBox.Font = new System.Drawing.Font("Lucida Console", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.outputTextBox.Location = new System.Drawing.Point(0, 48);
@@ -250,7 +254,7 @@ namespace SampleSupport
             this.outputLabel.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.outputLabel.Location = new System.Drawing.Point(3, 29);
             this.outputLabel.Name = "outputLabel";
-            this.outputLabel.Size = new System.Drawing.Size(47, 16);
+            this.outputLabel.Size = new System.Drawing.Size(51, 16);
             this.outputLabel.TabIndex = 1;
             this.outputLabel.Text = "Output:";
             // 
@@ -268,15 +272,18 @@ namespace SampleSupport
             this.outerSplitContainer.Panel1.ResumeLayout(false);
             this.outerSplitContainer.Panel1.PerformLayout();
             this.outerSplitContainer.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.outerSplitContainer)).EndInit();
             this.outerSplitContainer.ResumeLayout(false);
             this.rightContainer.Panel1.ResumeLayout(false);
             this.rightContainer.Panel2.ResumeLayout(false);
             this.rightContainer.Panel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.rightContainer)).EndInit();
             this.rightContainer.ResumeLayout(false);
             this.rightUpperSplitContainer.Panel1.ResumeLayout(false);
             this.rightUpperSplitContainer.Panel1.PerformLayout();
             this.rightUpperSplitContainer.Panel2.ResumeLayout(false);
             this.rightUpperSplitContainer.Panel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.rightUpperSplitContainer)).EndInit();
             this.rightUpperSplitContainer.ResumeLayout(false);
             this.ResumeLayout(false);
 

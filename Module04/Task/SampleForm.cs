@@ -65,7 +65,6 @@ namespace SampleSupport
             }
         }
 
-
         private void samplesTreeView_AfterSelect(object sender, TreeViewEventArgs e)
         {
             TreeNode currentNode = samplesTreeView.SelectedNode;

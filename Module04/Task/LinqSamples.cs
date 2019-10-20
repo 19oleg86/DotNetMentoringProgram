@@ -46,7 +46,7 @@ namespace SampleQueries
 
 		[Category("Restriction Operators")]
 		[Title("Where - Task 2")]
-		[Description("This sample return return all presented in market products")]
+		[Description("This sample returns all presented in market products")]
 
 		public void Linq2()
 		{
@@ -61,5 +61,23 @@ namespace SampleQueries
 			}
 		}
 
-	}
+        [Category("Restriction Operators")]
+        [Title("Where - Task 3")]
+        [Description("This sample returns all customers whose sum of all orders is bigger than exact value")]
+
+        public void Linq3()
+        {
+            var allCustomersWithSells =
+                from customer in dataSource.Customers
+                from order in customer.Orders
+                where order.Total > 10000
+                select new { Name = customer.CompanyName, Sum = order.Total };
+                
+            foreach (var p in allCustomersWithSells)
+            {
+                Console.WriteLine($"Customer \"{p.Name}\" has sum of all orders is equal to: {p.Sum}");
+            }
+        }
+
+    }
 }
