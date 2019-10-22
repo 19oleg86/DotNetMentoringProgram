@@ -90,5 +90,51 @@ namespace SampleQueries
             }
         }
 
+        [Category("Restriction Operators")]
+        [Title("Where - Task 4")]
+        [Description("This sample returns list of suppliers for all customers from the same country and city")]
+        public void Linq4()
+        {
+            var allSuppliers = from supplier in dataSource.Suppliers
+                               from customer in dataSource.Customers
+                               where supplier.Country == customer.Country
+                               where supplier.City == customer.City
+                               select new { Supplier = supplier.SupplierName, Customer = customer.CompanyName };
+            foreach (var supplier in allSuppliers)
+            {
+                Console.WriteLine($"Customer \"{supplier.Customer}\" and Supplier \"{supplier.Supplier}\" are located in the same Country and City");
+            }
+        }
+
+        [Category("Restriction Operators")]
+        [Title("Where - Task 4 (grouped)")]
+        [Description("This sample returns list of suppliers for all customers from the same country and city grouped by suppliers")]
+        public void Linq4Grouped()
+        {
+            var allGroupedSuppliers = from supplier in dataSource.Suppliers
+                                      from customer in dataSource.Customers
+                                      where supplier.Country == customer.Country
+                                      where supplier.City == customer.City
+                                      group supplier by supplier.SupplierName into g
+                                      select new
+                                      {
+                                          SupplierName = g.Key,
+                                          Customers = from cust in dataSource.Customers
+                                                      from supl in dataSource.Suppliers
+                                                      where cust.Country == supl.Country
+                                                      where cust.City == supl.City
+                                                      select cust.CompanyName
+                                      };
+
+            foreach (var output in allGroupedSuppliers)
+            {
+                Console.WriteLine($"Supplier {output.SupplierName} has the next Customers in its Country and City: ");
+                foreach (var c in output.Customers)
+                {
+                    Console.WriteLine($"Customer: {c.ToString()}");
+                }
+            }
+        }
+
     }
 }
