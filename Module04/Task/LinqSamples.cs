@@ -18,64 +18,75 @@ using Task.Data;
 
 namespace SampleQueries
 {
-	[Title("LINQ Module")]
-	[Prefix("Linq")]
-	public class LinqSamples : SampleHarness
-	{
+    [Title("LINQ Module")]
+    [Prefix("Linq")]
+    public class LinqSamples : SampleHarness
+    {
 
-		private DataSource dataSource = new DataSource();
+        private DataSource dataSource = new DataSource();
 
-		[Category("Restriction Operators")]
-		[Title("Where - Task 1")]
-		[Description("This sample uses the where clause to find all elements of an array with a value less than 5.")]
-		public void Linq1()
-		{
-			int[] numbers = { 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 };
+        [Category("Restriction Operators")]
+        [Title("Where - Task 1")]
+        [Description("This sample uses the where clause to find all elements of an array with a value less than 5.")]
+        public void Linq1()
+        {
+            int[] numbers = { 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 };
 
-			var lowNums =
-				from num in numbers
-				where num < 5
-				select num;
+            var lowNums =
+                from num in numbers
+                where num < 5
+                select num;
 
-			Console.WriteLine("Numbers < 5:");
-			foreach (var x in lowNums)
-			{
-				Console.WriteLine(x);
-			}
-		}
+            Console.WriteLine("Numbers < 5:");
+            foreach (var x in lowNums)
+            {
+                Console.WriteLine(x);
+            }
+        }
 
-		[Category("Restriction Operators")]
-		[Title("Where - Task 2")]
-		[Description("This sample returns all presented in market products")]
+        [Category("Restriction Operators")]
+        [Title("Where - Task 2")]
+        [Description("This sample returns all presented in market products")]
 
-		public void Linq2()
-		{
-			var products =
-				from p in dataSource.Products
-				where p.UnitsInStock > 0
-				select p;
+        public void Linq2()
+        {
+            var products =
+                from p in dataSource.Products
+                where p.UnitsInStock > 0
+                select p;
 
-			foreach (var p in products)
-			{
-				ObjectDumper.Write(p);
-			}
-		}
+            foreach (var p in products)
+            {
+                ObjectDumper.Write(p);
+            }
+        }
 
         [Category("Restriction Operators")]
         [Title("Where - Task 3")]
-        [Description("This sample returns all customers whose sum of all orders is bigger than exact value")]
+        [Description("This sample returns all customers whose sum of all orders is bigger than exact value (fir exampe bigger than 10 000)")]
 
         public void Linq3()
         {
-            var allCustomersWithSells =
-                from customer in dataSource.Customers
-                from order in customer.Orders
-                where order.Total > 10000
-                select new { Name = customer.CompanyName, Sum = order.Total };
-                
-            foreach (var p in allCustomersWithSells)
+            var allCustomersWithSells = from customer in dataSource.Customers
+                                        group customer by customer.CompanyName into g
+                                        select new { Name = g.Key, sumOrders = g.Select(x => x.Orders) };
+
+            foreach (var customer in allCustomersWithSells)
             {
-                Console.WriteLine($"Customer \"{p.Name}\" has sum of all orders is equal to: {p.Sum}");
+                foreach (Order[] order in customer.sumOrders)
+                {
+                    IEnumerable<decimal> totals = order.Select(x => x.Total);
+                    decimal allTotals = 0;
+                    foreach (var total in totals)
+                    {
+                        allTotals += total;
+                    }
+                    if (allTotals > 10000)
+                    {
+                        Console.Write($"{customer.Name}: ");
+                        Console.WriteLine(allTotals);
+                    }
+                }
             }
         }
 

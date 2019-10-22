@@ -21,7 +21,7 @@ namespace StringTransformer
             }
             int interimNumber = 0;
             char[] array = sourceString.ToCharArray();
-            var negative = sourceString.Contains("-");
+            bool negative = sourceString.Contains("-");
             for (int i = 0; i < array.Length; i++)
                 checked
                 {
