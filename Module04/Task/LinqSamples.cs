@@ -194,5 +194,25 @@ namespace SampleQueries
             }
         }
 
+        [Category("Restriction Operators")]
+        [Title("Where - Task 8")]
+        [Description("Show all the clients that have no numeric postal code, or with not filled region, or without operator code in their phone (without parenthesis in the beginning)")]
+        public void Linq8()
+        {
+            var selectedCustomers = from customer in dataSource.Customers
+                                    from order in customer.Orders
+                                    where !customer.PostalCode.Any(char.IsDigit) || customer.Region == string.Empty || !customer.Phone.StartsWith("(")
+                                    select new
+                                    {
+                                        CustomerName = customer.CompanyName,
+                                        CustomerPostalCode = customer.PostalCode,
+                                        CustomerRegion = customer.Region,
+                                        CustomerPhone = customer.Phone
+                                    };
+            foreach (var customer in selectedCustomers.Distinct())
+            {
+                Console.WriteLine($"Customer: {customer.CustomerName} - Postal Code: {customer.CustomerPostalCode} - Region: {customer.CustomerRegion} - Phone: {customer.CustomerPhone}");
+            }
+        }
     }
 }
