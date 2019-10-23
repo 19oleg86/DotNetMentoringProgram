@@ -173,5 +173,26 @@ namespace SampleQueries
             }
         }
 
+        [Category("Restriction Operators")]
+        [Title("Where - Task 7")]
+        [Description("This sample returns list of customers and from what month and year they became customers sorted by year, month, clients profit from Max to Min and clients name")]
+        public void Linq7()
+        {
+            var selectedCustomers = from customer in dataSource.Customers
+                                    from order in customer.Orders
+                                    orderby order.OrderDate.Year, order.OrderDate.Month, customer.Orders.Sum(x => x.Total) descending, customer.CompanyName
+                                    select new
+                                    {
+                                        CustomerName = customer.CompanyName,
+                                        FirstOrderDate = customer.Orders.Min(y => y.OrderDate),
+                                        ClientProfit = customer.Orders.Sum(x => x.Total)
+                                    };
+
+            foreach (var cust in selectedCustomers.Distinct())
+            {
+                Console.WriteLine($"Customer {cust.CustomerName} bacame customer in {cust.FirstOrderDate}, client's profit: {cust.ClientProfit}");
+            }
+        }
+
     }
 }
