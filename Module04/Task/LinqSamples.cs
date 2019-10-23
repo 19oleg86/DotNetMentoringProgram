@@ -26,7 +26,7 @@ namespace SampleQueries
         private DataSource dataSource = new DataSource();
 
         [Category("Restriction Operators")]
-        [Title("Where - Task 1")]
+        [Title("Where - Task 1 (Example)")]
         [Description("This sample uses the where clause to find all elements of an array with a value less than 5.")]
         public void Linq1()
         {
@@ -45,7 +45,7 @@ namespace SampleQueries
         }
 
         [Category("Restriction Operators")]
-        [Title("Where - Task 2")]
+        [Title("Where - Task 2 (Example)")]
         [Description("This sample returns all presented in market products")]
 
         public void Linq2()
@@ -121,7 +121,7 @@ namespace SampleQueries
                                        GroupedSupplier = g.Key,
                                        WholeSupplier = g,
                                        Customer = from c in dataSource.Customers
-                                                  where c.Country == "Germany"
+                                                  where c.Country == dataSource.Suppliers.ToString()
                                                   select c
                                    };
 
@@ -130,10 +130,36 @@ namespace SampleQueries
                 Console.WriteLine(sup.GroupedSupplier);
                 foreach (var customer in sup.Customer)
                 {
-                    Console.WriteLine("   " + customer.CompanyName);
+                    Console.WriteLine(customer.CompanyName);
                 }
             }
 
+        }
+
+        [Category("Restriction Operators")]
+        [Title("Where - Task 5")]
+        [Description("This sample returns list of customers who had orders bigger than exact sum")]
+        public void Linq5()
+        {
+            var allCustomers = from customer in dataSource.Customers
+                               from allOrders in customer.Orders
+                               where allOrders.Total > 10000
+                               group customer by customer.CompanyName into g
+                               select new { Name = g.Key, Customer = g };
+            Console.WriteLine($"Customers who had orders where cost is more than 10 000:");
+            foreach (var cust in allCustomers)
+            {
+                Console.WriteLine($"Customer {cust.Name} ");
+                
+            }
+        }
+
+        [Category("Restriction Operators")]
+        [Title("Where - Task 6")]
+        [Description("This sample returns list of customers who had orders bigger than exact sum")]
+        public void Linq6()
+        {
+            
         }
 
     }
