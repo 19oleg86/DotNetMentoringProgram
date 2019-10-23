@@ -150,16 +150,28 @@ namespace SampleQueries
             foreach (var cust in allCustomers)
             {
                 Console.WriteLine($"Customer {cust.Name} ");
-                
+
             }
         }
 
         [Category("Restriction Operators")]
         [Title("Where - Task 6")]
-        [Description("This sample returns list of customers who had orders bigger than exact sum")]
+        [Description("This sample returns list of customers and from what month and year they became customers")]
         public void Linq6()
         {
-            
+            var selectedCustomers = from customer in dataSource.Customers
+                                    from order in customer.Orders
+                                    group customer by customer.CompanyName into g
+                                    select new {
+                                        CustomerName = g.Key,
+                                        MinYear = g.Select(x => x.Orders.Min(y => y.OrderDate.Year.ToString())),
+                                        MinMonth = g.Select(x => x.Orders.Min(y => y.OrderDate.Month.ToString()))
+                                    };
+
+            foreach (var cust in selectedCustomers)
+            {
+                Console.WriteLine($"Customer {cust.CustomerName} bacame customer in {cust.MinMonth} of {cust.MinYear}");
+            }
         }
 
     }
