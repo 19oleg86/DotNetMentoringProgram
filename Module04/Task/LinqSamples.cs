@@ -161,16 +161,15 @@ namespace SampleQueries
         {
             var selectedCustomers = from customer in dataSource.Customers
                                     from order in customer.Orders
-                                    group customer by customer.CompanyName into g
-                                    select new {
-                                        CustomerName = g.Key,
-                                        MinYear = g.Select(x => x.Orders.Min(y => y.OrderDate.Year.ToString())),
-                                        MinMonth = g.Select(x => x.Orders.Min(y => y.OrderDate.Month.ToString()))
+                                    select new
+                                    {
+                                        CustomerName = customer.CompanyName,
+                                        FirstOrderDate = customer.Orders.Min(y => y.OrderDate)
                                     };
 
-            foreach (var cust in selectedCustomers)
+            foreach (var cust in selectedCustomers.Distinct())
             {
-                Console.WriteLine($"Customer {cust.CustomerName} bacame customer in {cust.MinMonth} of {cust.MinYear}");
+                Console.WriteLine($"Customer {cust.CustomerName} bacame customer in {cust.FirstOrderDate}");
             }
         }
 
