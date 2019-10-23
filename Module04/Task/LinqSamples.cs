@@ -111,29 +111,29 @@ namespace SampleQueries
         [Description("This sample returns list of suppliers for all customers from the same country and city grouped by suppliers")]
         public void Linq4Grouped()
         {
-            var allGroupedSuppliers = from supplier in dataSource.Suppliers
-                                      from customer in dataSource.Customers
-                                      where supplier.Country == customer.Country
-                                      where supplier.City == customer.City
-                                      group supplier by supplier.SupplierName into g
-                                      select new
-                                      {
-                                          SupplierName = g.Key,
-                                          Customers = from cust in dataSource.Customers
-                                                      from supl in dataSource.Suppliers
-                                                      where cust.Country == supl.Country
-                                                      where cust.City == supl.City
-                                                      select cust.CompanyName
-                                      };
+            var allGroupedPeople = from supplier in dataSource.Suppliers
+                                   from customer in dataSource.Customers
+                                   where supplier.Country == customer.Country
+                                   where supplier.City == customer.City
+                                   group supplier by supplier.SupplierName into g
+                                   select new
+                                   {
+                                       GroupedSupplier = g.Key,
+                                       WholeSupplier = g,
+                                       Customer = from c in dataSource.Customers
+                                                  where c.Country == "Germany"
+                                                  select c
+                                   };
 
-            foreach (var output in allGroupedSuppliers)
+            foreach (var sup in allGroupedPeople)
             {
-                Console.WriteLine($"Supplier {output.SupplierName} has the next Customers in its Country and City: ");
-                foreach (var c in output.Customers)
+                Console.WriteLine(sup.GroupedSupplier);
+                foreach (var customer in sup.Customer)
                 {
-                    Console.WriteLine($"Customer: {c.ToString()}");
+                    Console.WriteLine("   " + customer.CompanyName);
                 }
             }
+
         }
 
     }
