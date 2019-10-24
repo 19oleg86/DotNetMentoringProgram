@@ -286,5 +286,64 @@ namespace SampleQueries
                 Console.WriteLine($"In {v.Key} an average quantity of orders for one client is equal to: {v.AverageOrders}");
             }
         }
+
+        [Category("Restriction Operators")]
+        [Title("Where - Task 12")]
+        [Description("Average statistics of clients activity grouped by Month, grouped by Year, grouped by Year and Month")]
+        public void Linq12()
+        {
+            var monthClientActivity = from customer in dataSource.Customers
+                                      from order in customer.Orders
+                                      group customer by order.OrderDate.Month into g
+                                      select new
+                                      {
+                                          g.Key,
+                                          ordersNumber = g.Select(x => x.Orders.Count()).Sum()
+                                      };
+            foreach (var order in monthClientActivity)
+            {
+                Console.WriteLine($"In month {order.Key} clients activity was equal to {order.ordersNumber}");
+
+            }
+
+            Console.WriteLine();
+
+            var yearClientActivity = from customer in dataSource.Customers
+                                     from order in customer.Orders
+                                     group customer by order.OrderDate.Year into g
+                                     select new
+                                     {
+                                         YearKey = g.Key,
+                                         ordersNumber = g.Select(x => x.Orders.Count()).Sum()
+                                     };
+            foreach (var order in yearClientActivity)
+            {
+                Console.WriteLine($"In {order.YearKey} year clients activity was equal to {order.ordersNumber}");
+
+            }
+
+            Console.WriteLine();
+
+            var yearMonthClientActivity = dataSource.Customers.GroupBy(x => x.Orders.Select(y => y.OrderDate.Year)).Select(g => new
+            {
+                Key1 = g.Key,
+                Group = g.
+                GroupBy(x => x.Orders.Select(y => y.OrderDate.Month)).Select(m => new
+                {
+                    Key2 = m.Key,
+                    Group2 = m
+                })
+            });
+                                          
+            //foreach (var order in yearMonthClientActivity)
+            //{
+            //    Console.WriteLine($"In {order.Key1} year clients activity was equal to {order.Group}");
+            //    foreach (var or in order.Group.Select(x => x.Key2))
+            //    {
+            //        Console.WriteLine($"In {or}");
+            //    }
+
+            //}
+        }
     }
 }
