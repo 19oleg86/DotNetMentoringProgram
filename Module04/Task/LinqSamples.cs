@@ -201,23 +201,22 @@ namespace SampleQueries
             {
                 Key1 = g.Key,
                 Other = g
-                .GroupBy(y => y.UnitsInStock).Select(m => new { Key2 = m.Key, Other = m.OrderBy(z => z.UnitPrice)})
+                .GroupBy(y => y.UnitsInStock).Select(m => new { Key2 = m.Key, Other2 = m.OrderBy(z => z.UnitPrice)})
             });
+            
+            foreach (var gp in groupedCategoryProducts)
+            { 
+                Console.WriteLine($"Category: {gp.Key1}");
+                foreach (var uis in gp.Other)
+                {
+                    Console.WriteLine($" Units In Stock: {uis.Key2}");
+                    foreach (var up in uis.Other2)
+                    {
+                        Console.WriteLine($"  Product: {up.ProductName} - Price: {up.UnitPrice}");
+                    }
+                }
 
-
-            //foreach (var gp in groupedProducts)
-            //{
-            //    Console.WriteLine($"{gp.Key1}");
-            //    foreach (var cats in gp.Other)
-            //    {
-            //        Console.WriteLine($"{gp.Key2}");
-            //        foreach (var units in gp.Other)
-            //        {
-            //            Console.WriteLine($"{units.ProductName} - {units.UnitPrice}");
-            //        }
-            //    }
-
-            //}
+            }
         }
     }
 }
