@@ -1199,7 +1199,8 @@
     <country>Spain</country>
     <phone>(91) 555 94 44</phone>
     <fax>(91) 555 55 93</fax>
-    <orders />
+    <orders>
+    </orders>
   </customer>
   <customer>
     <id>FOLIG</id>

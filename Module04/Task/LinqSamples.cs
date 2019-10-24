@@ -63,30 +63,17 @@ namespace SampleQueries
 
         [Category("Restriction Operators")]
         [Title("Where - Task 3")]
-        [Description("This sample returns all customers whose sum of all orders is bigger than exact value (fir exampe bigger than 10 000)")]
+        [Description("This sample returns all customers whose sum of all orders is bigger than exact value (for example bigger than 10 000)")]
 
         public void Linq3()
         {
             var allCustomersWithSells = from customer in dataSource.Customers
-                                        group customer by customer.CompanyName into g
-                                        select new { Name = g.Key, sumOrders = g.Select(x => x.Orders) };
-
+                                        where customer.Orders.Sum(x => x.Total) > 10000
+                                        select new { Name = customer.CompanyName, sumOrders = customer.Orders.Sum(x => x.Total) };
+            Console.WriteLine("Customers with sum of all orders more than 10000: ");
             foreach (var customer in allCustomersWithSells)
             {
-                foreach (Order[] order in customer.sumOrders)
-                {
-                    IEnumerable<decimal> totals = order.Select(x => x.Total);
-                    decimal allTotals = 0;
-                    foreach (var total in totals)
-                    {
-                        allTotals += total;
-                    }
-                    if (allTotals > 10000)
-                    {
-                        Console.Write($"{customer.Name}: ");
-                        Console.WriteLine(allTotals);
-                    }
-                }
+                Console.WriteLine($"Customer {customer.Name} has sum of all orders: {customer.sumOrders}");
             }
         }
 
@@ -97,8 +84,7 @@ namespace SampleQueries
         {
             var allSuppliers = from supplier in dataSource.Suppliers
                                from customer in dataSource.Customers
-                               where supplier.Country == customer.Country
-                               where supplier.City == customer.City
+                               where supplier.Country == customer.Country && supplier.City == customer.City
                                select new { Supplier = supplier.SupplierName, Customer = customer.CompanyName };
             foreach (var supplier in allSuppliers)
             {
@@ -109,29 +95,23 @@ namespace SampleQueries
         [Category("Restriction Operators")]
         [Title("Where - Task 4 (grouped)")]
         [Description("This sample returns list of suppliers for all customers from the same country and city grouped by suppliers")]
-        public void Linq4Grouped()
+        public void Linq4Grouped() // не работает - доделать
         {
             var allGroupedPeople = from supplier in dataSource.Suppliers
                                    from customer in dataSource.Customers
-                                   where supplier.Country == customer.Country
-                                   where supplier.City == customer.City
-                                   group supplier by supplier.SupplierName into g
+                                   where supplier.Country == customer.Country && supplier.City == customer.City
+                                   group supplier by new { supplier.City, supplier.Country } into g
                                    select new
                                    {
-                                       GroupedSupplier = g.Key,
-                                       WholeSupplier = g,
-                                       Customer = from c in dataSource.Customers
-                                                  where c.Country == dataSource.Suppliers.ToString()
-                                                  select c
+                                       SupplierSimilarity = g.Key,
+                                       WholeSupplier = g
                                    };
 
             foreach (var sup in allGroupedPeople)
             {
-                Console.WriteLine(sup.GroupedSupplier);
-                foreach (var customer in sup.Customer)
-                {
-                    Console.WriteLine(customer.CompanyName);
-                }
+
+                Console.WriteLine($" Supplier {sup.WholeSupplier.Select(x => x.SupplierName.ToString())}");
+                Console.WriteLine($"{sup.SupplierSimilarity}");
             }
 
         }
@@ -142,15 +122,12 @@ namespace SampleQueries
         public void Linq5()
         {
             var allCustomers = from customer in dataSource.Customers
-                               from allOrders in customer.Orders
-                               where allOrders.Total > 10000
-                               group customer by customer.CompanyName into g
-                               select new { Name = g.Key, Customer = g };
+                               where customer.Orders.Any(x => x.Total > 10000)
+                               select customer;
             Console.WriteLine($"Customers who had orders where cost is more than 10 000:");
             foreach (var cust in allCustomers)
             {
-                Console.WriteLine($"Customer {cust.Name} ");
-
+                Console.WriteLine($"Customer {cust.CompanyName} ");
             }
         }
 
@@ -160,7 +137,7 @@ namespace SampleQueries
         public void Linq6()
         {
             var selectedCustomers = from customer in dataSource.Customers
-                                    from order in customer.Orders
+                                    where customer.Orders.Any(x => x.OrderDate != null)
                                     select new
                                     {
                                         CustomerName = customer.CompanyName,
@@ -201,7 +178,7 @@ namespace SampleQueries
         {
             var selectedCustomers = from customer in dataSource.Customers
                                     from order in customer.Orders
-                                    where !customer.PostalCode.Any(char.IsDigit) || customer.Region == string.Empty || !customer.Phone.StartsWith("(")
+                                    where (!string.IsNullOrEmpty(customer.PostalCode) && !customer.PostalCode.Any(char.IsDigit)) || string.IsNullOrEmpty(customer.Region) || !customer.Phone.StartsWith("(")
                                     select new
                                     {
                                         CustomerName = customer.CompanyName,
@@ -212,6 +189,28 @@ namespace SampleQueries
             foreach (var customer in selectedCustomers.Distinct())
             {
                 Console.WriteLine($"Customer: {customer.CustomerName} - Postal Code: {customer.CustomerPostalCode} - Region: {customer.CustomerRegion} - Phone: {customer.CustomerPhone}");
+            }
+        }
+
+        [Category("Restriction Operators")]
+        [Title("Where - Task 9")]
+        [Description("All products grouped by category, inside grouped by UnitInStock and sorted by UnitPrice inside the last gropu")]
+        public void Linq9()
+        {
+            var groupedProducts = dataSource.Products.GroupBy(x => new { x.Category, x.UnitsInStock }, (key, group) => new { Key1 = key.Category, Key2 = key.UnitsInStock, Other = group }).OrderBy(x => x.Other.Select(y => y.UnitPrice));
+
+            foreach (var gp in groupedProducts)
+            {
+                Console.WriteLine($"{gp.Key1}");
+                foreach (var cats in gp.Other)
+                {
+                    Console.WriteLine($"{gp.Key2}");
+                    foreach (var units in gp.Other)
+                    {
+                        Console.WriteLine($"{units.ProductName} - {units.UnitPrice}");
+                    }
+                }
+
             }
         }
     }
