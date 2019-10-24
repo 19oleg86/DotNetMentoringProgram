@@ -251,5 +251,40 @@ namespace SampleQueries
 
             }
         }
+
+        [Category("Restriction Operators")]
+        [Title("Where - Task 11")]
+        [Description("Average profit of every city (average order sum of all clients from this city), Average intensity (Average quantity of orders for a client from each city)")]
+        public void Linq11()
+        {
+            var averageCityProfit = from customer in dataSource.Customers
+                                    from order in customer.Orders
+                                    group customer by customer.City into g
+                                    select new
+                                    {
+                                        g.Key,
+                                        AverageSum = g.Select(x => x.Orders).Select(y => y.Average(z => z.Total)).Sum() / g.Select(x => x.Orders).Count()
+                                    };
+            foreach (var v in averageCityProfit)
+            {
+                Console.WriteLine("{0} has average profit: ${1:#.##}", v.Key, v.AverageSum);
+            }
+
+            Console.WriteLine();
+
+            var averageIntensity = from customer in dataSource.Customers
+                                   from order in customer.Orders
+                                   group customer by customer.City into k
+                                   select new
+                                   {
+                                       k.Key,
+                                       AverageOrders = k.Select(x => x.Orders.Count()).Sum() / k.Count()
+                                   };
+
+            foreach (var v in averageIntensity)
+            {
+                Console.WriteLine($"In {v.Key} an average quantity of orders for one client is equal to: {v.AverageOrders}");
+            }
+        }
     }
 }
