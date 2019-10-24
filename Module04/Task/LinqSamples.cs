@@ -194,24 +194,30 @@ namespace SampleQueries
 
         [Category("Restriction Operators")]
         [Title("Where - Task 9")]
-        [Description("All products grouped by category, inside grouped by UnitInStock and sorted by UnitPrice inside the last gropu")]
+        [Description("All products grouped by category, inside grouped by UnitInStock and sorted by UnitPrice inside the last group")]
         public void Linq9()
         {
-            var groupedProducts = dataSource.Products.GroupBy(x => new { x.Category, x.UnitsInStock }, (key, group) => new { Key1 = key.Category, Key2 = key.UnitsInStock, Other = group }).OrderBy(x => x.Other.Select(y => y.UnitPrice));
-
-            foreach (var gp in groupedProducts)
+            var groupedCategoryProducts = dataSource.Products.GroupBy(x => x.Category).Select(g => new
             {
-                Console.WriteLine($"{gp.Key1}");
-                foreach (var cats in gp.Other)
-                {
-                    Console.WriteLine($"{gp.Key2}");
-                    foreach (var units in gp.Other)
-                    {
-                        Console.WriteLine($"{units.ProductName} - {units.UnitPrice}");
-                    }
-                }
+                Key1 = g.Key,
+                Other = g
+                .GroupBy(y => y.UnitsInStock).Select(m => new { Key2 = m.Key, Other = m.OrderBy(z => z.UnitPrice)})
+            });
 
-            }
+
+            //foreach (var gp in groupedProducts)
+            //{
+            //    Console.WriteLine($"{gp.Key1}");
+            //    foreach (var cats in gp.Other)
+            //    {
+            //        Console.WriteLine($"{gp.Key2}");
+            //        foreach (var units in gp.Other)
+            //        {
+            //            Console.WriteLine($"{units.ProductName} - {units.UnitPrice}");
+            //        }
+            //    }
+
+            //}
         }
     }
 }
