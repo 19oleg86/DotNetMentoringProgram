@@ -201,11 +201,11 @@ namespace SampleQueries
             {
                 Key1 = g.Key,
                 Other = g
-                .GroupBy(y => y.UnitsInStock).Select(m => new { Key2 = m.Key, Other2 = m.OrderBy(z => z.UnitPrice)})
+                .GroupBy(y => y.UnitsInStock).Select(m => new { Key2 = m.Key, Other2 = m.OrderBy(z => z.UnitPrice) })
             });
-            
+
             foreach (var gp in groupedCategoryProducts)
-            { 
+            {
                 Console.WriteLine($"Category: {gp.Key1}");
                 foreach (var uis in gp.Other)
                 {
@@ -214,6 +214,39 @@ namespace SampleQueries
                     {
                         Console.WriteLine($"  Product: {up.ProductName} - Price: {up.UnitPrice}");
                     }
+                }
+
+            }
+        }
+
+        [Category("Restriction Operators")]
+        [Title("Where - Task 10")]
+        [Description("All products grouped by groups - \"Low Price\", \"Average Price\" and \"High Price\"")]
+        public void Linq10()
+        {
+            string FindOutCost(decimal cost)
+            {
+                if (cost < 20)
+                {
+                    return "Low Price (lower than 20)";
+                }
+                else if (cost >= 20 && cost < 40)
+                {
+                    return "Average Price (from 20 to 40)";
+                }
+                else return "High Price (Higher than 40)";
+            }
+
+            var groupedProducts = from product in dataSource.Products
+                                  group product by FindOutCost(product.UnitPrice) into g
+                                  select new { Key = g.Key, Group = g };
+            foreach (var gp in groupedProducts)
+            {
+                Console.WriteLine($"{gp.Key}:");
+                foreach (var other in gp.Group)
+                {
+                    Console.Write($"  {other.ProductName} - ");
+                    Console.WriteLine($"{other.UnitPrice}");
                 }
 
             }
