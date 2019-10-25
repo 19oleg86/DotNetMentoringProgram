@@ -319,40 +319,28 @@ namespace SampleQueries
             foreach (var order in yearClientActivity)
             {
                 Console.WriteLine($"In {order.YearKey} year clients activity was equal to {order.ordersNumber}");
-
             }
 
             Console.WriteLine();
 
-            var yearMonthClientActivity = from customer in dataSource.Customers
-                                          from order in customer.Orders
-                                          group order by new { Key1 = order.OrderDate.Year, Key2 = order.OrderDate.Month } into g
+            var yearMonthClientActivity = from cust in dataSource.Customers
                                           select new
                                           {
-                                              groupYear = g.Key.Key1,
-                                              groupMonth = g.Key.Key2,
-                                              Months = g.Select(x => x.OrderDate.Month),
-                                              Group = g
+                                              cust.CompanyName,
+                                              YearGroups =
+                                              from order in cust.Orders
+                                              group order by order.OrderDate.Year into yearGroup
+                                              select
+                                                  new
+                                                  {
+                                                      Year = yearGroup.Key,
+                                                      MonthGroups =
+                                                            from ord in yearGroup
+                                                            group ord by ord.OrderDate.Month into monthGroup
+                                                            select new { Month = monthGroup.Key, Orders = monthGroup }
+                                                  }
                                           };
-
-            foreach (var output in yearMonthClientActivity.Select(x => x.groupYear).Distinct())
-            {
-                Console.WriteLine($"Yearly client activity: {output.groupYear}");
-                foreach (var ou in output.Months)
-                {
-                    Console.WriteLine($"  Monthly client activity: {output.groupMonth} {output.Group.Select(x => x.OrderDate.Month).ToString()}");
-                }
-            }
-
-            //foreach (var order in yearMonthClientActivity)
-            //{
-            //    Console.WriteLine($"In {order.Key1} year clients activity was equal to {order.Group}");
-            //    foreach (var or in order.Group.Select(x => x.Key2))
-            //    {
-            //        Console.WriteLine($"In {or}");
-            //    }
-
-            //}
+            ObjectDumper.Write(yearMonthClientActivity, 3);
         }
     }
 }
