@@ -137,7 +137,7 @@ namespace SampleQueries
         public void Linq6()
         {
             var selectedCustomers = from customer in dataSource.Customers
-                                    where customer.Orders.Any(x => x.OrderDate != null)
+                                    where customer.Orders.Any(x => x.OrderDate > DateTime.MinValue)
                                     select new
                                     {
                                         CustomerName = customer.CompanyName,
@@ -324,16 +324,7 @@ namespace SampleQueries
 
             Console.WriteLine();
 
-            var yearMonthClientActivity = dataSource.Customers.GroupBy(x => x.Orders.Select(y => y.OrderDate.Year)).Select(g => new
-            {
-                Key1 = g.Key,
-                Group = g.
-                GroupBy(x => x.Orders.Select(y => y.OrderDate.Month)).Select(m => new
-                {
-                    Key2 = m.Key,
-                    Group2 = m
-                })
-            });
+            //var yearMonthClientActivity = dataSource.Customers.GroupBy(x => new{ x.Orders.Select(x => x.OrderDate.Year) }
                                           
             //foreach (var order in yearMonthClientActivity)
             //{
