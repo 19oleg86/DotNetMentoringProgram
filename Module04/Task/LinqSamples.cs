@@ -100,18 +100,26 @@ namespace SampleQueries
             var allGroupedPeople = from supplier in dataSource.Suppliers
                                    from customer in dataSource.Customers
                                    where supplier.Country == customer.Country && supplier.City == customer.City
-                                   group supplier by new { supplier.City, supplier.Country } into g
+                                   group (supplier, customer) by new { supplier.Country, supplier.City } into g
                                    select new
                                    {
-                                       SupplierSimilarity = g.Key,
-                                       WholeSupplier = g
+                                       SupplierKey = g.Key,
+                                       SupplierGroup = g.Distinct(),
+                                       //Suppliers = g.Select(x => x.supplier.SupplierName),
+                                       //Customers = g.Select(x => x.customer.CompanyName)
                                    };
 
-            foreach (var sup in allGroupedPeople)
+            foreach (var sup in allGroupedPeople.Distinct())
             {
+                foreach (var innerSup in sup.SupplierGroup.Distinct())
+                {
+                    Console.WriteLine($" Supplier {innerSup.supplier.SupplierName} shares {sup.SupplierKey.Country} and {sup.SupplierKey.City} with next customers: ");
+                    foreach (var ins in sup.SupplierGroup.Distinct())
+                    {
+                        Console.WriteLine($"{ins.customer.CompanyName}");
+                    }
+                }
 
-                Console.WriteLine($" Supplier {sup.WholeSupplier.Select(x => x.SupplierName.ToString())}");
-                Console.WriteLine($"{sup.SupplierSimilarity}");
             }
 
         }
