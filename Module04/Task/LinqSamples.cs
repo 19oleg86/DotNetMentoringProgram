@@ -100,22 +100,19 @@ namespace SampleQueries
             var allGroupedPeople = from supplier in dataSource.Suppliers
                                    from customer in dataSource.Customers
                                    where supplier.Country == customer.Country && supplier.City == customer.City
-                                   group (supplier, customer) by new { supplier.Country, supplier.City } into g
+                                   group (supplier, customer) by new { supplier.Country, supplier.City, supplier.SupplierName } into g
                                    select new
                                    {
                                        SupplierKey = g.Key,
-                                       SupplierGroup = g,
+                                       Customers = g.Select(x => x.customer).ToList(),
                                    };
 
             foreach (var sup in allGroupedPeople)
             {
-                foreach (var innerSup in sup.SupplierGroup)
+                Console.WriteLine($" Supplier {sup.SupplierKey.SupplierName} shares {sup.SupplierKey.Country} and {sup.SupplierKey.City} with next customers: ");
+                foreach (var cust in sup.Customers)
                 {
-                    Console.WriteLine($" Supplier {innerSup.supplier.SupplierName} shares {sup.SupplierKey.Country} and {sup.SupplierKey.City} with next customers: ");
-                    foreach (var ins in sup.SupplierGroup)
-                    {
-                        Console.WriteLine($"{ins.customer.CompanyName}");
-                    }
+                    Console.WriteLine($"{cust.CompanyName}");
                 }
 
             }
@@ -329,24 +326,20 @@ namespace SampleQueries
 
             Console.WriteLine();
 
-            var yearMonthClientActivity = from cust in dataSource.Customers
+            var yearMonthClientActivity = from customer in dataSource.Customers
+                                          from order in customer.Orders
+                                          orderby order.OrderDate.Year
+                                          group customer by new { order.OrderDate.Year, order.OrderDate.Month } into g
                                           select new
                                           {
-                                              cust.CompanyName,
-                                              YearGroups =
-                                              from order in cust.Orders
-                                              group order by order.OrderDate.Year into yearGroup
-                                              select
-                                                  new
-                                                  {
-                                                      Year = yearGroup.Key,
-                                                      MonthGroups =
-                                                            from ord in yearGroup
-                                                            group ord by ord.OrderDate.Month into monthGroup
-                                                            select new { Month = monthGroup.Key, Orders = monthGroup }
-                                                  }
+                                              Key = g.Key,
+                                              ordersNumber = g.Select(x => x.Orders.Count()).Sum()
                                           };
-            ObjectDumper.Write(yearMonthClientActivity, 3);
+            foreach (var cust in yearMonthClientActivity)
+            {
+                Console.WriteLine($"In year {cust.Key.Year}");
+                Console.WriteLine($"Monthly activity in {cust.Key.Month}-th month was equal to: {cust.ordersNumber}");
+            }
         }
     }
 }
