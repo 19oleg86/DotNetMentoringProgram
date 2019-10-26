@@ -95,7 +95,7 @@ namespace SampleQueries
         [Category("Restriction Operators")]
         [Title("Where - Task 4 (grouped)")]
         [Description("This sample returns list of suppliers for all customers from the same country and city grouped by suppliers")]
-        public void Linq4Grouped() // не работает - доделать
+        public void Linq4Grouped()
         {
             var allGroupedPeople = from supplier in dataSource.Suppliers
                                    from customer in dataSource.Customers
@@ -104,17 +104,15 @@ namespace SampleQueries
                                    select new
                                    {
                                        SupplierKey = g.Key,
-                                       SupplierGroup = g.Distinct(),
-                                       //Suppliers = g.Select(x => x.supplier.SupplierName),
-                                       //Customers = g.Select(x => x.customer.CompanyName)
+                                       SupplierGroup = g,
                                    };
 
-            foreach (var sup in allGroupedPeople.Distinct())
+            foreach (var sup in allGroupedPeople)
             {
-                foreach (var innerSup in sup.SupplierGroup.Distinct())
+                foreach (var innerSup in sup.SupplierGroup)
                 {
                     Console.WriteLine($" Supplier {innerSup.supplier.SupplierName} shares {sup.SupplierKey.Country} and {sup.SupplierKey.City} with next customers: ");
-                    foreach (var ins in sup.SupplierGroup.Distinct())
+                    foreach (var ins in sup.SupplierGroup)
                     {
                         Console.WriteLine($"{ins.customer.CompanyName}");
                     }
