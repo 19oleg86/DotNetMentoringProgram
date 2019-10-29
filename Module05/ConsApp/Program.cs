@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -12,25 +13,41 @@ namespace ConsApp
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Press Ctrl + C for exit");
-            while (true)
+            string path = ConfigurationManager.AppSettings["WatcherPath"];
+            using (FileSystemWatcher watcher = new FileSystemWatcher())
             {
-                var k = Console.ReadKey(true);
-                if ((k.Modifiers & ConsoleModifiers.Control) != 0)
-                {
-                    if ((k.Key & ConsoleKey.C) != 0)
-                    {
-                        break;
-                    }
-                }
+                watcher.Path = path;
+                watcher.NotifyFilter = NotifyFilters.Attributes
+                    | NotifyFilters.CreationTime
+                    | NotifyFilters.DirectoryName
+                    | NotifyFilters.FileName
+                    | NotifyFilters.LastAccess
+                    | NotifyFilters.LastWrite
+                    | NotifyFilters.Size;
 
-                string[] pathesToWatch = Environment.GetCommandLineArgs();
-                
-                using (FileSystemWatcher watcher = new FileSystemWatcher())
-                {
+                watcher.Filter = "*.txt";
 
-                }
-            } 
+                watcher.Created += OnChanged;
+                watcher.Changed += OnChanged;
+                watcher.Deleted += OnChanged;
+                watcher.Renamed += OnRenamed;
+
+                watcher.EnableRaisingEvents = true;
+
+                Console.WriteLine("Press q to quit the Program");
+                while (Console.Read() != 'q');
+            }
+            
+        }
+
+        private static void OnChanged(object source, FileSystemEventArgs e)
+        {
+            Console.WriteLine($"File {e.FullPath} is {e.ChangeType}");
+        }
+
+        private static void OnRenamed(object source, RenamedEventArgs e)
+        {
+            Console.WriteLine($"File {e.OldFullPath} renamed to {e.FullPath}");
         }
     }
 }
