@@ -13,10 +13,11 @@ namespace ConsApp
     {
         static void Main(string[] args)
         {
-            string path = ConfigurationManager.AppSettings["WatcherPath"];
+            var con = (CustomConfigurationSection)ConfigurationManager.GetSection("customSection");
+            //string s = con.WatcherFolder.FolderToWatch;
             using (FileSystemWatcher watcher = new FileSystemWatcher())
             {
-                watcher.Path = path;
+                watcher.Path = con.WatcherFolder.FolderToWatch;
                 watcher.NotifyFilter = NotifyFilters.Attributes
                     | NotifyFilters.CreationTime
                     | NotifyFilters.DirectoryName
@@ -26,6 +27,7 @@ namespace ConsApp
                     | NotifyFilters.Size;
 
                 watcher.Filter = "*.txt";
+               
 
                 watcher.Created += OnChanged;
                 watcher.Changed += OnChanged;
