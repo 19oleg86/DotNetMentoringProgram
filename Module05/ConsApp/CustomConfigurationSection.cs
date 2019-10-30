@@ -21,6 +21,18 @@ namespace ConsApp
             get { return (WatcherFolderElement)this["watcherFolder"]; }
         }
 
+        [ConfigurationProperty("targetFolder")]
+        public TargetFolderElement TargetFolder
+        {
+            get { return (TargetFolderElement)this["targetFolder"]; }
+        }
+
+        [ConfigurationProperty("defaultFolder")]
+        public DefaultFolderElement DefaultFolder
+        {
+            get { return (DefaultFolderElement)this["defaultFolder"]; }
+        }
+
         [ConfigurationProperty("files")]
         public FileElementCollection Files
         {
