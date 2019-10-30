@@ -4,6 +4,7 @@ using System.Configuration;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Resources;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
@@ -13,12 +14,15 @@ namespace ConsApp
 {
     class Program
     {
-        
+
         static void Main(string[] args)
         {
-            var cultures = CultureInfo.GetCultures(CultureTypes.AllCultures);
-            var rusCul = CultureInfo.GetCultureInfo("ru-Ru");
-            var engCul = CultureInfo.GetCultureInfo("en-Us");
+            //var cultures = CultureInfo.GetCultures(CultureTypes.AllCultures);
+            //var rusCul = CultureInfo.GetCultureInfo("ru-Ru");
+            //var engCul = CultureInfo.GetCultureInfo("en-Us");
+
+            //var rm = new ResourceManager("ConsApp.Resources.Resources.en-US", typeof(Program).Assembly);
+            //Console.WriteLine(rm.GetString("Hello")); 
 
             var con = (CustomConfigurationSection)ConfigurationManager.GetSection("customSection");
 
@@ -34,10 +38,9 @@ namespace ConsApp
                     | NotifyFilters.Size;
 
                 watcher.Filter = "*";
-                
-                watcher.Created += OnChanged;
-                watcher.Changed += OnChanged;
-                watcher.Deleted += OnChanged;
+
+                watcher.Created += OnCreated;
+                watcher.Deleted += OnDeleted;
                 watcher.Renamed += OnRenamed;
 
                 watcher.EnableRaisingEvents = true;
@@ -46,37 +49,63 @@ namespace ConsApp
                     "any other files will be removed to \"DefaultFolder\" directory");
                 Console.WriteLine();
                 Console.WriteLine("Press q to quit the Program");
-                while (Console.Read() != 'q');
+                Console.WriteLine();
+                while (Console.Read() != 'q') ;
             }
         }
 
-        private static void OnChanged(object source, FileSystemEventArgs e)
+        private static string GetFilterString(CustomConfigurationSection section)
         {
-            var con = (CustomConfigurationSection)ConfigurationManager.GetSection("customSection");
+            var expressions = new List<string>();
+            foreach (FileElement file in section.Files)
+            {
+                expressions.Add(file.FileType);
+            }
+            string result = string.Join("|", expressions);
+            return result;
+        }
+
+        private static void LogAndMoveFile(string message, string finalDestination, string movingFile)
+        {
+            Console.WriteLine(message);
+            File.Move(movingFile, finalDestination);
+            File.Delete(movingFile);
+        }
+
+        private static void OnCreated(object source, FileSystemEventArgs e)
+        {
+
+            var configuration = (CustomConfigurationSection)ConfigurationManager.GetSection("customSection");
+            string fileToCheck = e.FullPath;
+            if (!File.Exists(configuration.TargetFolder.FolderToMove + fileToCheck.Substring(fileToCheck.LastIndexOf('\\') + 1)) &&
+                !File.Exists(configuration.DefaultFolder.FolderToMove + fileToCheck.Substring(fileToCheck.LastIndexOf('\\') + 1)))
+            {
+                Console.WriteLine($"File {e.FullPath} is {e.ChangeType}");
+
+                string setOfRegExpressions = GetFilterString(configuration);
+
+                if (Regex.IsMatch(fileToCheck, setOfRegExpressions, RegexOptions.IgnoreCase))
+                {
+                    LogAndMoveFile("The rule is found and this file is moved to \"TargetFolder\" directory",
+                                    configuration.TargetFolder.FolderToMove + fileToCheck.Substring(fileToCheck.LastIndexOf('\\') + 1),
+                                    fileToCheck);
+                }
+                else
+                {
+                    LogAndMoveFile("The rule isn't found and this file is moved to \"DefaultFolder\" directory",
+                                    configuration.DefaultFolder.FolderToMove + fileToCheck.Substring(fileToCheck.LastIndexOf('\\') + 1),
+                                    fileToCheck);
+                }
+            }
+            else
+            {
+                Console.WriteLine("File with this name already exists - create another file");
+                File.Delete(fileToCheck);
+            }
+        }
+        private static void OnDeleted(object source, FileSystemEventArgs e)
+        {
             Console.WriteLine($"File {e.FullPath} is {e.ChangeType}");
-            string strFileExt = e.FullPath;
-            StringBuilder sb = new StringBuilder();
-            foreach (FileElement file in con.Files)
-            {
-                sb.Append(file.FileType + "|");
-            }
-            string reStr = sb.ToString();
-            string changedStr = reStr.Remove(reStr.LastIndexOf('|'));
-            if (Regex.IsMatch(strFileExt, changedStr, RegexOptions.IgnoreCase) && e.ChangeType == WatcherChangeTypes.Created)
-            {
-                Console.WriteLine("The rule is found and this file will be moved to \"TargetFolder\" directory");
-                string moveTo = con.TargetFolder.FolderToMove + strFileExt.Substring(strFileExt.LastIndexOf('\\') + 1);
-                File.Move(strFileExt, moveTo);
-                File.Delete(strFileExt);
-            }
-            else if (e.ChangeType == WatcherChangeTypes.Created)
-            {
-                Console.WriteLine("The rule isn't found and this file will be moved to \"DefaultFolder\" directory");
-                string moveTo = con.DefaultFolder.FolderToMove + strFileExt.Substring(strFileExt.LastIndexOf('\\') + 1);
-                File.Move(strFileExt, moveTo);
-                File.Delete(strFileExt);
-            }
-            else { };
             Console.WriteLine();
         }
 
