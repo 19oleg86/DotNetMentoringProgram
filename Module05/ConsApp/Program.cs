@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -15,6 +16,10 @@ namespace ConsApp
         
         static void Main(string[] args)
         {
+            var cultures = CultureInfo.GetCultures(CultureTypes.AllCultures);
+            var rusCul = CultureInfo.GetCultureInfo("ru-Ru");
+            var engCul = CultureInfo.GetCultureInfo("en-Us");
+
             var con = (CustomConfigurationSection)ConfigurationManager.GetSection("customSection");
 
             using (FileSystemWatcher watcher = new FileSystemWatcher())
