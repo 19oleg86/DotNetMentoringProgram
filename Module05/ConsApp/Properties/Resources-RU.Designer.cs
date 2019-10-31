@@ -61,6 +61,24 @@ namespace ConsApp.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Правило для данного файла было найдено и он перенесен в папку &quot;TargetFolder&quot;.
+        /// </summary>
+        internal static string foundRule {
+            get {
+                return ResourceManager.GetString("foundRule", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Правило для данного файла не было найдено и он перенесен в папку &quot;DefaultFolder&quot;.
+        /// </summary>
+        internal static string notFoundRule {
+            get {
+                return ResourceManager.GetString("notFoundRule", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Эта программа прослушивает папку WatcherFolder на предмет следующих файлов: .txt, .docx или .rar и если они найдены то они будут перемещены в папку TargetFolder, любые другие файлы будут перемещены в папку DefaultFolder.
         /// </summary>
         internal static string programGoal {

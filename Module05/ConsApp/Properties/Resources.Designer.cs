@@ -61,6 +61,24 @@ namespace ConsApp.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The rule is found and this file is moved to &quot;TargetFolder&quot; directory.
+        /// </summary>
+        internal static string foundRule {
+            get {
+                return ResourceManager.GetString("foundRule", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The rule isn&apos;t found and this file is moved to &quot;DefaultFolder&quot; directory.
+        /// </summary>
+        internal static string notFoundRule {
+            get {
+                return ResourceManager.GetString("notFoundRule", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to This program is watching a &quot;WatcherFolder&quot; directory for files: .txt, .docx, .rar and if they are found they will be removed to &quot;TargetFolder&quot; directory, any other files will be removed to &quot;DefaultFolder&quot; directory..
         /// </summary>
         internal static string programGoal {

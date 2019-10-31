@@ -83,7 +83,7 @@ namespace ConsApp
 
         private static void OnCreated(object source, FileSystemEventArgs e)
         {
-
+            //var abc = resourceManager;
             var configuration = (CustomConfigurationSection)ConfigurationManager.GetSection("customSection");
             string fileToCheck = e.FullPath;
             if (!File.Exists(configuration.TargetFolder.FolderToMove + fileToCheck.Substring(fileToCheck.LastIndexOf('\\') + 1)) &&
@@ -95,7 +95,7 @@ namespace ConsApp
 
                 if (Regex.IsMatch(fileToCheck, setOfRegExpressions, RegexOptions.IgnoreCase))
                 {
-                    LogAndMoveFile("The rule is found and this file is moved to \"TargetFolder\" directory",
+                    LogAndMoveFile(resourceManager.GetString("foundRule"),
                                     configuration.TargetFolder.FolderToMove + fileToCheck.Substring(fileToCheck.LastIndexOf('\\') + 1),
                                     fileToCheck);
                 }
