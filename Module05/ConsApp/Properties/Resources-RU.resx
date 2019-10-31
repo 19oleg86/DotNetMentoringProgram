@@ -117,7 +117,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Hello" xml:space="preserve">
-    <value>It's Hello string</value>
+  <data name="programGoal" xml:space="preserve">
+    <value>Эта программа прослушивает папку WatcherFolder на предмет следующих файлов: .txt, .docx или .rar и если они найдены то они будут перемещены в папку TargetFolder, любые другие файлы будут перемещены в папку DefaultFolder</value>
+  </data>
+  <data name="toExit" xml:space="preserve">
+    <value>Нажмите q чтобы выйти из программы</value>
   </data>
 </root>

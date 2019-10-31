@@ -14,16 +14,31 @@ namespace ConsApp
 {
     class Program
     {
-
         static void Main(string[] args)
         {
-            //var cultures = CultureInfo.GetCultures(CultureTypes.AllCultures);
-            //var rusCul = CultureInfo.GetCultureInfo("ru-Ru");
-            //var engCul = CultureInfo.GetCultureInfo("en-Us");
-
-            //var rm = new ResourceManager("ConsApp.Resources.Resources.en-US", typeof(Program).Assembly);
-            //Console.WriteLine(rm.GetString("Hello")); 
-
+            Console.OutputEncoding = Encoding.UTF8;
+            ResourceManager resourceManager;
+            string userChoice = string.Empty;
+            do
+            {
+                Console.WriteLine("Please choose interface language: E - for English, R - for Russian");
+                userChoice = Console.ReadLine().ToUpper();
+                if (userChoice == "E")
+                {
+                    resourceManager = new ResourceManager("ConsApp.Properties.Resources", typeof(Program).Assembly);
+                }
+                else if (userChoice == "R")
+                {
+                    resourceManager = new ResourceManager("ConsApp.Properties.Resources-RU", typeof(Program).Assembly);
+                }
+                else
+                {
+                    resourceManager = null;
+                    Console.WriteLine("You can choose only E - for English language interface or R - for Russian language interface");
+                    Console.WriteLine();
+                }
+            } while (resourceManager == null);
+            
             var con = (CustomConfigurationSection)ConfigurationManager.GetSection("customSection");
 
             using (FileSystemWatcher watcher = new FileSystemWatcher())
@@ -45,10 +60,10 @@ namespace ConsApp
 
                 watcher.EnableRaisingEvents = true;
 
-                Console.WriteLine("This program is watching a \"WatcherFolder\" directory for files: .txt, .docx, .rar and if they are found they will be removed to \"TargetFolder\" directory, " +
-                    "any other files will be removed to \"DefaultFolder\" directory");
+                Console.Clear();
+                Console.WriteLine(resourceManager.GetString("programGoal"));
                 Console.WriteLine();
-                Console.WriteLine("Press q to quit the Program");
+                Console.WriteLine(resourceManager.GetString("toExit"));
                 Console.WriteLine();
                 while (Console.Read() != 'q') ;
             }
