@@ -56,13 +56,7 @@ namespace ConsApp
 
         private static string GetFilterString(CustomConfigurationSection section)
         {
-            var expressions = new List<string>();
-            foreach (FileElement file in section.Files)
-            {
-                expressions.Add(file.FileType);
-            }
-            string result = string.Join("|", expressions);
-            return result;
+            return string.Join("|", section.Files.OfType<FileElement>().Select(i => i.FileType));
         }
 
         private static void LogAndMoveFile(string message, string finalDestination, string movingFile)
