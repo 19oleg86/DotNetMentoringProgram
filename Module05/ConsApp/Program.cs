@@ -1,27 +1,24 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Configuration;
-using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Resources;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace ConsApp
 {
     class Program
     {
+        private static ResourceManager resourceManager;
         static void Main(string[] args)
         {
             Console.OutputEncoding = Encoding.UTF8;
-            ResourceManager resourceManager;
+            
             string userChoice = string.Empty;
             do
             {
-                Console.WriteLine("Please choose interface language: E - for English, R - for Russian");
+                Console.WriteLine("Please choose interface language: E - for English, R - for Russian and press Enter");
                 userChoice = Console.ReadLine().ToUpper();
                 if (userChoice == "E")
                 {
@@ -83,13 +80,12 @@ namespace ConsApp
 
         private static void OnCreated(object source, FileSystemEventArgs e)
         {
-            //var abc = resourceManager;
             var configuration = (CustomConfigurationSection)ConfigurationManager.GetSection("customSection");
             string fileToCheck = e.FullPath;
             if (!File.Exists(configuration.TargetFolder.FolderToMove + fileToCheck.Substring(fileToCheck.LastIndexOf('\\') + 1)) &&
                 !File.Exists(configuration.DefaultFolder.FolderToMove + fileToCheck.Substring(fileToCheck.LastIndexOf('\\') + 1)))
             {
-                Console.WriteLine($"File {e.FullPath} is {e.ChangeType}");
+                Console.WriteLine($"{resourceManager.GetString("File")} {e.FullPath} {resourceManager.GetString("Created")}");
 
                 string setOfRegExpressions = GetFilterString(configuration);
 
@@ -101,26 +97,26 @@ namespace ConsApp
                 }
                 else
                 {
-                    LogAndMoveFile("The rule isn't found and this file is moved to \"DefaultFolder\" directory",
+                    LogAndMoveFile(resourceManager.GetString("notFoundRule"),
                                     configuration.DefaultFolder.FolderToMove + fileToCheck.Substring(fileToCheck.LastIndexOf('\\') + 1),
                                     fileToCheck);
                 }
             }
             else
             {
-                Console.WriteLine("File with this name already exists - create another file");
+                Console.WriteLine(resourceManager.GetString("existingFile"));
                 File.Delete(fileToCheck);
             }
         }
         private static void OnDeleted(object source, FileSystemEventArgs e)
         {
-            Console.WriteLine($"File {e.FullPath} is {e.ChangeType}");
+            Console.WriteLine($"{resourceManager.GetString("File")} {e.FullPath} {resourceManager.GetString("Deleted")}");
             Console.WriteLine();
         }
 
         private static void OnRenamed(object source, RenamedEventArgs e)
         {
-            Console.WriteLine($"File {e.OldFullPath} renamed to {e.FullPath}");
+            Console.WriteLine($"{resourceManager.GetString("File")} {e.OldFullPath} renamed to {e.FullPath}");
         }
     }
 }

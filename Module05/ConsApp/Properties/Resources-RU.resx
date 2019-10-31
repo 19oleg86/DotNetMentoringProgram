@@ -117,8 +117,26 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Created" xml:space="preserve">
+    <value>создан</value>
+  </data>
+  <data name="Deleted" xml:space="preserve">
+    <value>удален</value>
+  </data>
+  <data name="existingFile" xml:space="preserve">
+    <value>Файл с таким именем уже существует, создайте другой файл</value>
+  </data>
+  <data name="File" xml:space="preserve">
+    <value>Файл</value>
+  </data>
+  <data name="foundRule" xml:space="preserve">
+    <value>Правило для данного файла было найдено и он перенесен в папку "TargetFolder"</value>
+  </data>
+  <data name="notFoundRule" xml:space="preserve">
+    <value>Правило для данного файла не было найдено и он перенесен в папку "DefaultFolder"</value>
+  </data>
   <data name="programGoal" xml:space="preserve">
-    <value>Эта программа прослушивает папку WatcherFolder на предмет следующих файлов: .txt, .docx или .rar и если они найдены то они будут перемещены в папку TargetFolder, любые другие файлы будут перемещены в папку DefaultFolder</value>
+    <value>Эта программа прослушивает папку WatcherFolder на наличие следующих файлов: .txt, .docx или .rar и если они найдены то они будут перемещены в папку TargetFolder, любые другие файлы будут перемещены в папку DefaultFolder</value>
   </data>
   <data name="toExit" xml:space="preserve">
     <value>Нажмите q чтобы выйти из программы</value>

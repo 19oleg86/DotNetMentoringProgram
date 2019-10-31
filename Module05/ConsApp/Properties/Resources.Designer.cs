@@ -61,6 +61,42 @@ namespace ConsApp.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to is created.
+        /// </summary>
+        internal static string Created {
+            get {
+                return ResourceManager.GetString("Created", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to is deleted.
+        /// </summary>
+        internal static string Deleted {
+            get {
+                return ResourceManager.GetString("Deleted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to File with this name already exists - create another file.
+        /// </summary>
+        internal static string existingFile {
+            get {
+                return ResourceManager.GetString("existingFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to File.
+        /// </summary>
+        internal static string File {
+            get {
+                return ResourceManager.GetString("File", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The rule is found and this file is moved to &quot;TargetFolder&quot; directory.
         /// </summary>
         internal static string foundRule {

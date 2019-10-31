@@ -61,6 +61,42 @@ namespace ConsApp.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to создан.
+        /// </summary>
+        internal static string Created {
+            get {
+                return ResourceManager.GetString("Created", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to удален.
+        /// </summary>
+        internal static string Deleted {
+            get {
+                return ResourceManager.GetString("Deleted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Файл с таким именем уже существует, создайте другой файл.
+        /// </summary>
+        internal static string existingFile {
+            get {
+                return ResourceManager.GetString("existingFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Файл.
+        /// </summary>
+        internal static string File {
+            get {
+                return ResourceManager.GetString("File", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Правило для данного файла было найдено и он перенесен в папку &quot;TargetFolder&quot;.
         /// </summary>
         internal static string foundRule {
@@ -79,7 +115,7 @@ namespace ConsApp.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Эта программа прослушивает папку WatcherFolder на предмет следующих файлов: .txt, .docx или .rar и если они найдены то они будут перемещены в папку TargetFolder, любые другие файлы будут перемещены в папку DefaultFolder.
+        ///   Looks up a localized string similar to Эта программа прослушивает папку WatcherFolder на наличие следующих файлов: .txt, .docx или .rar и если они найдены то они будут перемещены в папку TargetFolder, любые другие файлы будут перемещены в папку DefaultFolder.
         /// </summary>
         internal static string programGoal {
             get {
