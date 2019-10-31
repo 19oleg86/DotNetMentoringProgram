@@ -62,6 +62,8 @@
     </Compile>
     <Compile Include="TargetFolderElement.cs" />
     <Compile Include="WatcherFolderElement.cs" />
+    <Compile Include="WatcherFolderElementThree.cs" />
+    <Compile Include="WatcherFolderElementTwo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">
@@ -71,6 +73,8 @@
   <ItemGroup>
     <Folder Include="DefaultFolder\" />
     <Folder Include="TargetFolder\" />
+    <Folder Include="WatcherFolderThree\" />
+    <Folder Include="WatcherFolderTwo\" />
     <Folder Include="WatcherFolder\" />
   </ItemGroup>
   <ItemGroup>

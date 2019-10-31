@@ -16,6 +16,18 @@ namespace ConsApp
             get { return (WatcherFolderElement)this["watcherFolder"]; }
         }
 
+        [ConfigurationProperty("watcherFolderTwo")]
+        public WatcherFolderElementTwo WatcherFolderTwo
+        {
+            get { return (WatcherFolderElementTwo)this["watcherFolderTwo"]; }
+        }
+
+        [ConfigurationProperty("watcherFolderThree")]
+        public WatcherFolderElementThree WatcherFolderThree
+        {
+            get { return (WatcherFolderElementThree)this["watcherFolderThree"]; }
+        }
+
         [ConfigurationProperty("targetFolder")]
         public TargetFolderElement TargetFolder
         {

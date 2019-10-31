@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
 using System.Linq;
@@ -14,7 +15,7 @@ namespace ConsApp
         static void Main(string[] args)
         {
             Console.OutputEncoding = Encoding.UTF8;
-            
+
             string userChoice = string.Empty;
             do
             {
@@ -35,35 +36,42 @@ namespace ConsApp
                     Console.WriteLine();
                 }
             } while (resourceManager == null);
-            
+
             var con = (CustomConfigurationSection)ConfigurationManager.GetSection("customSection");
 
-            using (FileSystemWatcher watcher = new FileSystemWatcher())
+            List<FileSystemWatcher> listWatchers = new List<FileSystemWatcher>()
             {
-                watcher.Path = con.WatcherFolder.FolderToWatch;
-                watcher.NotifyFilter = NotifyFilters.Attributes
-                    | NotifyFilters.CreationTime
-                    | NotifyFilters.DirectoryName
-                    | NotifyFilters.FileName
-                    | NotifyFilters.LastAccess
-                    | NotifyFilters.LastWrite
-                    | NotifyFilters.Size;
+            new FileSystemWatcher(con.WatcherFolder.FolderToWatch),
+            new FileSystemWatcher(con.WatcherFolderTwo.FolderToWatchTwo),
+            new FileSystemWatcher(con.WatcherFolderThree.FolderToWatchThree),
+            };
+            do
+            {
+                foreach (var watcher in listWatchers)
+                {
+                    watcher.NotifyFilter = NotifyFilters.Attributes
+                        | NotifyFilters.CreationTime
+                        | NotifyFilters.DirectoryName
+                        | NotifyFilters.FileName
+                        | NotifyFilters.LastAccess
+                        | NotifyFilters.LastWrite
+                        | NotifyFilters.Size;
 
-                watcher.Filter = "*";
+                    watcher.Filter = "*";
 
-                watcher.Created += OnCreated;
-                watcher.Deleted += OnDeleted;
-                watcher.Renamed += OnRenamed;
+                    watcher.Created += OnCreated;
+                    watcher.Deleted += OnDeleted;
+                    watcher.Renamed += OnRenamed;
 
-                watcher.EnableRaisingEvents = true;
+                    watcher.EnableRaisingEvents = true;
 
-                Console.Clear();
-                Console.WriteLine(resourceManager.GetString("programGoal"));
-                Console.WriteLine();
-                Console.WriteLine(resourceManager.GetString("toExit"));
-                Console.WriteLine();
-                while (Console.Read() != 'q') ;
-            }
+                    Console.Clear();
+                    Console.WriteLine(resourceManager.GetString("programGoal"));
+                    Console.WriteLine();
+                    Console.WriteLine(resourceManager.GetString("toExit"));
+                    Console.WriteLine();
+                }
+            } while (Console.Read() != 'q');
         }
 
         private static string GetFilterString(CustomConfigurationSection section)
