@@ -45,17 +45,18 @@ namespace ConsApp
             new FileSystemWatcher(con.WatcherFolderTwo.FolderToWatchTwo),
             new FileSystemWatcher(con.WatcherFolderThree.FolderToWatchThree),
             };
+
             do
             {
                 foreach (var watcher in listWatchers)
                 {
                     watcher.NotifyFilter = NotifyFilters.Attributes
-                        | NotifyFilters.CreationTime
-                        | NotifyFilters.DirectoryName
-                        | NotifyFilters.FileName
-                        | NotifyFilters.LastAccess
-                        | NotifyFilters.LastWrite
-                        | NotifyFilters.Size;
+                    | NotifyFilters.CreationTime
+                    | NotifyFilters.DirectoryName
+                    | NotifyFilters.FileName
+                    | NotifyFilters.LastAccess
+                    | NotifyFilters.LastWrite
+                    | NotifyFilters.Size;
 
                     watcher.Filter = "*";
 
