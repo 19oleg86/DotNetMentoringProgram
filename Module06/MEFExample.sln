@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29306.81
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MEFConsApp", "MEFConsApp\MEFConsApp.csproj", "{A9933CB0-5C46-48B7-898B-3F497DC23A1A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MainHost", "MainHost\MainHost.csproj", "{F676D09F-0E51-451C-B0CE-075A57C4D0F8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Contracts", "Contracts\Contracts.csproj", "{2CF4F40A-B2A5-4200-9894-BF3E74978C84}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plugins", "Plugins\Plugins.csproj", "{B91ACFD2-488C-4F11-A8CD-DFEC5C46A001}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,10 +15,18 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{A9933CB0-5C46-48B7-898B-3F497DC23A1A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A9933CB0-5C46-48B7-898B-3F497DC23A1A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A9933CB0-5C46-48B7-898B-3F497DC23A1A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A9933CB0-5C46-48B7-898B-3F497DC23A1A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F676D09F-0E51-451C-B0CE-075A57C4D0F8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F676D09F-0E51-451C-B0CE-075A57C4D0F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F676D09F-0E51-451C-B0CE-075A57C4D0F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F676D09F-0E51-451C-B0CE-075A57C4D0F8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2CF4F40A-B2A5-4200-9894-BF3E74978C84}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2CF4F40A-B2A5-4200-9894-BF3E74978C84}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2CF4F40A-B2A5-4200-9894-BF3E74978C84}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2CF4F40A-B2A5-4200-9894-BF3E74978C84}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B91ACFD2-488C-4F11-A8CD-DFEC5C46A001}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B91ACFD2-488C-4F11-A8CD-DFEC5C46A001}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B91ACFD2-488C-4F11-A8CD-DFEC5C46A001}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B91ACFD2-488C-4F11-A8CD-DFEC5C46A001}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
