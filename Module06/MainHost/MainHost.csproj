@@ -44,6 +44,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Container.cs" />
+    <Compile Include="ImportConstructor.cs" />
     <Compile Include="ImporterConstructor.cs" />
     <Compile Include="ImporterCustomerBLL.cs" />
     <Compile Include="Program.cs" />

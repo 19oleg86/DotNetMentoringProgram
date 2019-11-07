@@ -8,6 +8,5 @@ namespace Contracts
 {
     public interface ICustomerDAL
     {
-        void ContractMethod();
     }
 }

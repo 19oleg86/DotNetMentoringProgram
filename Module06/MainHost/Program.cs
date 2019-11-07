@@ -15,23 +15,17 @@ namespace MainHost
     {
         static void Main(string[] args)
         {
-            ApplicationCatalog catalog = new ApplicationCatalog();
-            CompositionContainer container = new CompositionContainer(catalog);
+            //ApplicationCatalog catalog = new ApplicationCatalog();
+            //CompositionContainer container = new CompositionContainer(catalog);
 
-            ImporterCustomerBLL importer = new ImporterCustomerBLL();
+            //ImporterCustomerBLL importer = new ImporterCustomerBLL();
 
-            container.ComposeParts(importer);
+            //container.ComposeParts(importer);
 
-            importer.ImporterOfCustomerDAL.ContractMethod();
-            importer.Logger.LoggerMethod();
-            Console.WriteLine();
+            //importer.ImporterOfCustomerDAL.ContractMethod();
+            //importer.Logger.LoggerMethod();
 
-            ICustomerDAL customerDAL = new CustomerDAL();
-
-            Logger logger = new Logger();
-            ImporterConstructor importerConstructor = new ImporterConstructor(customerDAL, logger);
-
-            container.ComposeParts(importerConstructor);
+            var container = new Container();
 
         }
     }

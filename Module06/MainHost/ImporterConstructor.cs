@@ -9,19 +9,11 @@ using System.Threading.Tasks;
 
 namespace MainHost
 {
+    [ImportConstructor]
     public class ImporterConstructor
     {
-        ICustomerDAL dal;
-        Logger logger;
-        public ImporterConstructor()
+        public ImporterConstructor(ICustomerDAL dal, Logger log)
         {
-        }
-        [ImportingConstructor]
-        public ImporterConstructor(ICustomerDAL dal, Logger logger)
-        {
-            this.dal = dal;
-            this.logger = logger;
-            Console.WriteLine("Message from Importing Constructor");
         }
     }
 }

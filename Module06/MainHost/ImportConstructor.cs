@@ -4,13 +4,12 @@ using System.ComponentModel.Composition;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Contracts;
 
-namespace Plugins
+namespace MainHost
 {
-    [Export(typeof(ICustomerDAL))]
-    public class CustomerDAL : ICustomerDAL
+    [AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
+    public class ImportConstructor : ImportAttribute
     {
-        
+
     }
 }
