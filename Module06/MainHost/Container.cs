@@ -1,32 +1,47 @@
-﻿using Contracts;
-using Plugins;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Reflection;
 
 namespace MainHost
 {
     public class Container
     {
-        //List<T> allTypes = new List<T>();
+        List<Assembly> allAssemblies = new List<Assembly>();
+        List<object> allTypes = new List<object>();
 
-        public void AddType<T>(T instance) where T : class, ICustomerDAL
+        public void ProcessType(Type incomingType)
         {
-            var ins = CreateInstance(instance);
+            allTypes.Add(AddType(incomingType));
         }
 
-        public T CreateInstance<T>(T arg)
+        public object AddType(Type instance)
         {
-            return new Instance();
+            Type implementation = instance;
+            ConstructorInfo constructor = implementation.GetConstructors()[0];
+            ParameterInfo[] constructorParameters = constructor.GetParameters();
+            if (constructorParameters.Length == 0)
+            {
+                return Activator.CreateInstance(implementation);
+            }
+            return Activator.CreateInstance(implementation, constructorParameters);
+        }
+
+        public void AddAssembly(Assembly assembly)
+        {
+            allAssemblies.Add(assembly);
+        }
+
+        public object CreateInstance(Type instanceType)
+        {
+            foreach (var type in allTypes)
+            {
+                if (type.ToString() == instanceType.FullName)
+                {
+                    return Activator.CreateInstance(instanceType);
+                }
+            }
+            return null;
         }
     }
-
-    public class Instance
-    {
-        public Instance()
-        {
-        }
-    }
+    
 }

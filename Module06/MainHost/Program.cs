@@ -1,13 +1,6 @@
-﻿using Contracts;
-using Plugins;
+﻿using Plugins;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel.Composition;
-using System.ComponentModel.Composition.Hosting;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MainHost
 {
@@ -15,18 +8,19 @@ namespace MainHost
     {
         static void Main(string[] args)
         {
-            //ApplicationCatalog catalog = new ApplicationCatalog();
-            //CompositionContainer container = new CompositionContainer(catalog);
-
-            //ImporterCustomerBLL importer = new ImporterCustomerBLL();
-
-            //container.ComposeParts(importer);
-
-            //importer.ImporterOfCustomerDAL.ContractMethod();
-            //importer.Logger.LoggerMethod();
-
             var container = new Container();
+            container.ProcessType(typeof(ImporterCustomerBLL));
+            container.ProcessType(typeof(Logger));
+            container.ProcessType(typeof(CustomerDAL));
 
+            container.AddAssembly(Assembly.GetExecutingAssembly());
+
+            var customerBLL = container.CreateInstance(typeof(ImporterCustomerBLL));
+            if (customerBLL != null)
+            {
+                Console.WriteLine("Instance of ImporterCustomerBLL type is created");
+                Console.WriteLine();
+            }
         }
     }
 }
