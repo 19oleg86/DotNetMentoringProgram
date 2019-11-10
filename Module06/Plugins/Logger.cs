@@ -1,5 +1,4 @@
-﻿using System;
-using System.ComponentModel.Composition;
+﻿using System.ComponentModel.Composition;
 
 namespace Plugins
 {
@@ -8,7 +7,6 @@ namespace Plugins
     {
         public void LoggerMethod()
         {
-            Console.WriteLine("Message from Logger");
         }
     }
 }

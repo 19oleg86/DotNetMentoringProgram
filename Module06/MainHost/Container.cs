@@ -1,47 +1,51 @@
-﻿using System;
+﻿using Contracts;
+using Plugins;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 
 namespace MainHost
 {
     public class Container
     {
-        List<Assembly> allAssemblies = new List<Assembly>();
-        List<object> allTypes = new List<object>();
-
-        public void ProcessType(Type incomingType)
+        Dictionary<Type, Type> registeredDependencies = new Dictionary<Type, Type>();
+        public void AddType(Type contract, Type implementation)
         {
-            allTypes.Add(AddType(incomingType));
+            registeredDependencies.Add(contract, implementation);
         }
-
-        public object AddType(Type instance)
-        {
-            Type implementation = instance;
-            ConstructorInfo constructor = implementation.GetConstructors()[0];
-            ParameterInfo[] constructorParameters = constructor.GetParameters();
-            if (constructorParameters.Length == 0)
-            {
-                return Activator.CreateInstance(implementation);
-            }
-            return Activator.CreateInstance(implementation, constructorParameters);
-        }
-
-        public void AddAssembly(Assembly assembly)
-        {
-            allAssemblies.Add(assembly);
-        }
-
+        object[] dependencies;
         public object CreateInstance(Type instanceType)
         {
-            foreach (var type in allTypes)
+            Type implementation = instanceType;
+            if (registeredDependencies.ContainsKey(instanceType))
             {
-                if (type.ToString() == instanceType.FullName)
+                implementation = registeredDependencies[instanceType];
+            }
+
+            ConstructorInfo constructor = implementation.GetConstructors()[0];
+            ParameterInfo[] constructorParameters = constructor.GetParameters();
+            
+            if (constructorParameters.Length == 0)
+            {
+                var properties = implementation.GetProperties().Where(x => x.CustomAttributes == typeof(ICustomerDAL) || x.CustomAttributes == typeof(Logger));
+                dependencies = properties.Select(x => CreateInstance(x.PropertyType)).ToArray();
+                var instance = Activator.CreateInstance(implementation);
+                foreach (var property in properties)
                 {
-                    return Activator.CreateInstance(instanceType);
+                    property.SetValue(dependencies.FirstOrDefault(x => x.GetType() == property.PropertyType), instance);
                 }
             }
-            return null;
+            dependencies = constructorParameters.Select(x => CreateInstance(x.ParameterType)).ToArray();
+            return Activator.CreateInstance(implementation, dependencies);
         }
-    }
-    
+        public void AddAssembly(Assembly assembly)
+        {
+            var types = assembly.GetTypes().Where(x => x.Attributes.GetType().Name == "ICustomerDAL");
+            foreach (var type in types)
+            {
+                CreateInstance(type);
+            }
+        }
+    } 
 }

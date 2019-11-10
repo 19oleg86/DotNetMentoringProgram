@@ -1,4 +1,5 @@
-﻿using Plugins;
+﻿using Contracts;
+using Plugins;
 using System;
 using System.Reflection;
 
@@ -9,18 +10,16 @@ namespace MainHost
         static void Main(string[] args)
         {
             var container = new Container();
-            container.ProcessType(typeof(ImporterCustomerBLL));
-            container.ProcessType(typeof(Logger));
-            container.ProcessType(typeof(CustomerDAL));
 
-            container.AddAssembly(Assembly.GetExecutingAssembly());
+            container.AddType(typeof(ICustomerDAL), typeof(CustomerDAL));
 
-            var customerBLL = container.CreateInstance(typeof(ImporterCustomerBLL));
-            if (customerBLL != null)
-            {
-                Console.WriteLine("Instance of ImporterCustomerBLL type is created");
-                Console.WriteLine();
-            }
+            var importProperty = container.CreateInstance(typeof(ImporterCustomerBLL));
+
+            var importConstructor = container.CreateInstance(typeof(ImporterConstructor));
+
+            container.AddAssembly(Assembly.GetAssembly(typeof(CustomerDAL)));
+
+            Console.ReadKey();
         }
     }
 }

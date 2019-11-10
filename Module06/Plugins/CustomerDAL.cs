@@ -5,7 +5,6 @@ namespace Plugins
 {
     [Export(typeof(ICustomerDAL))]
     public class CustomerDAL : ICustomerDAL
-    {
-        
+    { 
     }
 }
