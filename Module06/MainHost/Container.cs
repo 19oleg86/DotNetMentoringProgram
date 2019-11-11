@@ -2,6 +2,7 @@
 using Plugins;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.Composition;
 using System.Linq;
 using System.Reflection;
 
@@ -14,7 +15,6 @@ namespace MainHost
         {
             registeredDependencies.Add(contract, implementation);
         }
-        object[] dependencies;
         public object CreateInstance(Type instanceType)
         {
             Type implementation = instanceType;
@@ -28,16 +28,16 @@ namespace MainHost
             
             if (constructorParameters.Length == 0)
             {
-                var properties = implementation.GetProperties().Where(x => x.CustomAttributes == typeof(ICustomerDAL) || x.CustomAttributes == typeof(Logger));
-                dependencies = properties.Select(x => CreateInstance(x.PropertyType)).ToArray();
+                var properties = implementation.GetProperties().Where(x => x.CustomAttributes.Any(y => y.AttributeType == typeof(ImportAttribute)));
+                var dependencies = properties.Select(x => new KeyValuePair<string, object>(x.Name, CreateInstance(x.PropertyType))).ToArray();
                 var instance = Activator.CreateInstance(implementation);
                 foreach (var property in properties)
                 {
-                    property.SetValue(dependencies.FirstOrDefault(x => x.GetType() == property.PropertyType), instance);
+                    property.SetValue(instance, dependencies.FirstOrDefault(x => x.Key == property.Name).Value);
                 }
+                return instance;
             }
-            dependencies = constructorParameters.Select(x => CreateInstance(x.ParameterType)).ToArray();
-            return Activator.CreateInstance(implementation, dependencies);
+            return Activator.CreateInstance(implementation, constructorParameters.Select(x => CreateInstance(x.ParameterType)).ToArray());
         }
         public void AddAssembly(Assembly assembly)
         {
