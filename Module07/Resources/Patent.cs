@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
 
 namespace Resources
 {
-    class Patent
+    public class Patent
     {
         public string Name { get; set; }
         public string Inventer { get; set; }

@@ -1,11 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.29306.81
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.852
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MainHost", "MainHost\MainHost.csproj", "{15F1B9B4-E30D-480A-B5CD-5E7655423391}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Resources", "Resources\Resources.csproj", "{9F24E5A6-254D-4B07-A3EF-96187B81B41A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XmlReaderWriter", "XmlReaderWriter\XmlReaderWriter.csproj", "{EDD5286D-8B3A-486E-A2AA-22FDFFFC0BE3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{9F24E5A6-254D-4B07-A3EF-96187B81B41A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9F24E5A6-254D-4B07-A3EF-96187B81B41A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9F24E5A6-254D-4B07-A3EF-96187B81B41A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EDD5286D-8B3A-486E-A2AA-22FDFFFC0BE3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EDD5286D-8B3A-486E-A2AA-22FDFFFC0BE3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EDD5286D-8B3A-486E-A2AA-22FDFFFC0BE3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EDD5286D-8B3A-486E-A2AA-22FDFFFC0BE3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Resources
 {
-    class Newspaper
+    public class Newspaper
     {
         public string Name { get; set; }
         public string PublishCity { get; set; }

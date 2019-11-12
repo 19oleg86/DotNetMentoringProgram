@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<catalog>
+  <books>
+    <book name="War and Peace">
+      <author>Leo Tolstoy</author>
+      <publishCity>Moscow</publishCity>
+      <publisherName>MosIzdat</publisherName>
+      <yearOfPublish>1873</yearOfPublish>
+      <numberOfPages>6854</numberOfPages>
+      <remark>History of Russian Empire during the war with France</remark>
+      <ISBN>1324-765</ISBN>
+    </book>
+  </books>
+  <newspapers>
+    <newspaper name="New York Times">
+      <publishCity>New York</publishCity>
+      <publisherName>Arthur Ochs Sulzberger, Jr.</publisherName>
+      <yearOfPublish>2011</yearOfPublish>
+      <numberOfPages>44</numberOfPages>
+      <remark>Weekly News</remark>
+      <number>14375</number>
+      <date>10/16/2011</date>
+      <ISSN>4321-666</ISSN>
+    </newspaper>
+  </newspapers>
+  <patents>
+    <patent name="Radio">
+      <inventer>William Crookes</inventer>
+      <country>United Kingdom</country>
+      <registerNumber>186-174</registerNumber>
+      <applyDate>07/13/1873</applyDate>
+      <publishDate>11/22/1873</publishDate>
+      <numberOfPages>1713</numberOfPages>
+      <remark>Technical documentation</remark>
+    </patent>
+  </patents>
+</catalog> 
