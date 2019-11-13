@@ -7,6 +7,8 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
+using XmlReaderWriter;
 
 namespace MainHost
 {
@@ -17,9 +19,15 @@ namespace MainHost
             Book book = new Book();
             Newspaper newspaper = new Newspaper();
             Patent patent = new Patent();
+
             ArrayList catalogObjects = new ArrayList() { book, newspaper, patent };
+
             DirectoryInfo projectDirectory = new DirectoryInfo(@"..\..");
             var pathToResource = projectDirectory.FullName + @"\Resources\XMLSource.xml";
+
+            ReaderFromXml xmlReader = new ReaderFromXml();
+
+            ArrayList finalResult = xmlReader.ReadFromXml(pathToResource, catalogObjects);
             
             Console.ReadKey();
         }
