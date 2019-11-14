@@ -23,7 +23,7 @@ namespace XmlReaderWriter
                         {
                             if (xml.Name == "books")
                             {
-                                do
+                                do 
                                 {
                                     xml.Read();
                                 } while (xml.Name != "book");
