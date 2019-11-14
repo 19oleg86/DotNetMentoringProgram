@@ -16,18 +16,12 @@ namespace MainHost
     {
         static void Main(string[] args)
         {
-            Book book = new Book();
-            Newspaper newspaper = new Newspaper();
-            Patent patent = new Patent();
-
-            ArrayList catalogObjects = new ArrayList() { book, newspaper, patent };
-
             DirectoryInfo projectDirectory = new DirectoryInfo(@"..\..");
             var pathToResource = projectDirectory.FullName + @"\Resources\XMLSource.xml";
 
             ReaderFromXml xmlReader = new ReaderFromXml();
 
-            ArrayList finalResult = xmlReader.ReadFromXml(pathToResource, catalogObjects);
+            ArrayList finalResult = xmlReader.ReadFromXml(pathToResource);
             
             Console.ReadKey();
         }
