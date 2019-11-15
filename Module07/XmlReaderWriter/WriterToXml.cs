@@ -5,7 +5,7 @@ namespace XmlReaderWriter
 {
     public class WriterToXml
     {
-        public void WriteToXml(string path, Book book, Newspaper newspaper, Patent patent)
+        public static void WriteToXml(string path, Book book, Newspaper newspaper, Patent patent)
         {
             XmlWriterSettings xmlWriterSettings = new XmlWriterSettings()
             {
