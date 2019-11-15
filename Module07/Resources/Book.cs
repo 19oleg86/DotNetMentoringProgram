@@ -28,7 +28,7 @@ namespace Resources
             if (string.IsNullOrEmpty(PublishCity))
             {
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("Warning: The element publishCity doesn't contain any Value");
+                Console.WriteLine("Warning: The element publishCity is required but it doesn't contain any Value, please check source Xml File");
                 Console.ResetColor();
                 PublishCity = "This is default value instead of empty value";
             }
