@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Xml;
 using System.Xml.Linq;
 
@@ -24,6 +25,13 @@ namespace Resources
             Name = child.FirstAttribute.Value;
             Author = properties.FirstOrDefault(x => x.Name == "author")?.Value;
             PublishCity = properties.FirstOrDefault(x => x.Name == "publishCity")?.Value;
+            if (string.IsNullOrEmpty(PublishCity))
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Warning: The element publishCity doesn't contain any Value");
+                Console.ResetColor();
+                PublishCity = "This is default value instead of empty value";
+            }
             PublisherName = properties.FirstOrDefault(x => x.Name == "publisherName")?.Value;
             YearOfPublish = int.Parse(properties.FirstOrDefault(x => x.Name == "yearOfPublish")?.Value);
             NumberOfPages = int.Parse(properties.FirstOrDefault(x => x.Name == "numberOfPages")?.Value);

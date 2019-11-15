@@ -1,4 +1,5 @@
 ﻿using Resources;
+using System;
 using System.Collections;
 using System.Linq;
 using System.Xml;
@@ -18,27 +19,35 @@ namespace XmlReaderWriter
                 {
                     if (reader.NodeType == XmlNodeType.Element)
                     {
-                        XElement group = XNode.ReadFrom(reader) as XElement;
+                        try
                         {
-                            var children = group.Elements().Where(x => x.NodeType == XmlNodeType.Element).ToList();
-                            foreach (var child in children)
+                            XElement group = XNode.ReadFrom(reader) as XElement;
                             {
-                                if (child.Name == "book")
+                                var children = group.Elements().Where(x => x.NodeType == XmlNodeType.Element).ToList();
+                                foreach (var child in children)
                                 {
-                                    Book book = new Book(child);
-                                    finalList.Add(book);
-                                }
-                                else if (child.Name == "newspaper")
-                                {
-                                    Newspaper newspaper = new Newspaper(child);
-                                    finalList.Add(newspaper);
-                                }
-                                else
-                                {
-                                    Patent patent = new Patent(child);
-                                    finalList.Add(patent);
+                                    if (child.Name == "book")
+                                    {
+                                        Book book = new Book(child);
+                                        finalList.Add(book);
+                                    }
+                                    else if (child.Name == "newspaper")
+                                    {
+                                        Newspaper newspaper = new Newspaper(child);
+                                        finalList.Add(newspaper);
+                                    }
+                                    else
+                                    {
+                                        Patent patent = new Patent(child);
+                                        finalList.Add(patent);
+                                    }
                                 }
                             }
+                        }
+                        catch (XmlException exception)
+                        {
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.WriteLine($"Warning: current XML file has incorrect format: {exception.Message}");
                         }
                     }
                 }
