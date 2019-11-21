@@ -1,0 +1,3 @@
+﻿instnwnd_v1.0 - Base option.
+instnwnd_v1.1 - Added "EmployeesCreditCardData" table with columns: CardNumber, ExpirationDate, CardHolderName, LinkToEmployee. 
+instnwnd_v1.3 - "Region" table renamed to "Regions". New column "FoundationDate" is added to "Customers" table.
