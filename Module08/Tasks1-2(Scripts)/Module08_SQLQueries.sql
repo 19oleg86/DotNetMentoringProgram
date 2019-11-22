@@ -19,7 +19,7 @@ case
 	when ShippedDate IS NULL then 'Not Shipped'  
 end
 from Orders
-where ShippedDate > '1998-05-07 00:00:00.000' OR ShippedDate IS NULL
+where ShippedDate >= '1998-05-07 00:00:00.000' OR ShippedDate IS NULL
 
 -- Task 1.2
 
