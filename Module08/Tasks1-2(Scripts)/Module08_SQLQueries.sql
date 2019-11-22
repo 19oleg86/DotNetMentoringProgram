@@ -19,7 +19,7 @@ case
 	when ShippedDate IS NULL then 'Not Shipped'  
 end
 from Orders
-where ShippedDate > '1998-05-06' OR ShippedDate IS NULL
+where ShippedDate > '1998-05-06 00:00:00.000' OR ShippedDate IS NULL
 
 -- Task 1.2
 
@@ -63,7 +63,7 @@ where Country LIKE '[b-g]%'
 --1
 select ProductName
 from Products
-where ProductName like '%chocolate%' and '%chocolate%' like '%c%'
+where ProductName like '%chocolate%' and 'chocolate' like '%_c_%'
 
 -- Task 2.1
 
@@ -139,12 +139,10 @@ order by [Number of Orders]
 
 -- Task 2.4
 
---1 
-select distinct sup.CompanyName, prod.UnitsInStock
+--1
+select CompanyName
 from Suppliers as sup
-left join Products as prod
-on sup.SupplierID = prod.SupplierID
-where prod.UnitsInStock in (Select UnitsInStock from Products where UnitsInStock = 0);
+where sup.SupplierID in (Select SupplierID from Products where UnitsInStock = 0);
 
 --2
 select emp.FirstName, count(ord.OrderID) as [Number of Orders]
@@ -155,9 +153,10 @@ group by emp.FirstName
 having count(ord.OrderID) in (select count(ord.OrderID) from Orders where count(ord.OrderID) > 150)
 
 --3
-select  *
+select cust.CompanyName
 from Customers as cust
-where exists (select OrderID from Orders, Customers where Orders.CustomerID not in (Customers.CustomerID));
+where not exists (select OrderID from Orders, Customers where Orders.CustomerID in (Customers.CustomerID));
+
 
 
 
