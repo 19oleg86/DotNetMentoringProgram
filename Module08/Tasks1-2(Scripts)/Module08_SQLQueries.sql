@@ -19,7 +19,7 @@ case
 	when ShippedDate IS NULL then 'Not Shipped'  
 end
 from Orders
-where ShippedDate > '1998-05-06 00:00:00.000' OR ShippedDate IS NULL
+where ShippedDate > '1998-05-07 00:00:00.000' OR ShippedDate IS NULL
 
 -- Task 1.2
 
@@ -63,7 +63,7 @@ where Country LIKE '[b-g]%'
 --1
 select ProductName
 from Products
-where ProductName like '%chocolate%' and 'chocolate' like '%_c_%'
+where ProductName like '%cho_olate%'
 
 -- Task 2.1
 
