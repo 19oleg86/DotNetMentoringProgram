@@ -8,6 +8,7 @@ using System.Configuration;
 using System.Data.SqlClient;
 using System.Data;
 using NorthwindDAL;
+using System.Collections.Specialized;
 
 namespace MainWebHost
 {
@@ -18,14 +19,25 @@ namespace MainWebHost
 
         }
 
+        string connectionString = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+        NameValueCollection section = (NameValueCollection)ConfigurationManager.GetSection("MyDictionary");
+
         protected void btnGetOrders_Click(object sender, EventArgs e)
-        {
-            string connectionString = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
-            SqlConnection sqlConnection = new SqlConnection(connectionString);
+        { 
+            string sqlConnection = section["SqlProvider"];
             IOrderRepository repository = new OrderRepository(connectionString, sqlConnection);
             IEnumerable<Order> listOfOrders = repository.GetOrders();
             grvAllOrders.DataSource = listOfOrders;
             grvAllOrders.DataBind();
+        }
+
+        protected void btnShowOrderDetails_Click(object sender, EventArgs e)
+        {
+            string sqlConnection = section["SqlProvider"];
+            IOrderRepository repository = new OrderRepository(connectionString, sqlConnection);
+            int orderId = int.Parse(txtOrderId.Text);
+            grvAllOrders.DataSource = repository.GetOrderDetails(orderId);
+            //grvAllOrders.DataBind();
         }
     }
 }

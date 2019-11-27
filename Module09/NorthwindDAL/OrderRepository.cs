@@ -5,28 +5,66 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data;
 using System.Data.Common;
+using System.Data.SqlClient;
 
 namespace NorthwindDAL
 {
     public class OrderRepository : IOrderRepository
     {
-        private readonly DbProviderFactory providerFactory;
-        private readonly string connectionString;
-        DbConnection sqlConnection;
+        DbConnection connectionToDB;
 
-        public OrderRepository(string connectionString, DbConnection sqlConnection)
+        public OrderRepository(string connectionString, string providerName)
         {
-            this.connectionString = connectionString;
-            this.sqlConnection = sqlConnection;
+            connectionToDB = CreateDbConnection(providerName, connectionString);
         }
+
+        static DbConnection CreateDbConnection(string providerName, string connectionString)
+        {
+            DbConnection connection = null;
+            if (connectionString != null)
+            {
+                try
+                {
+                    DbProviderFactory factory = DbProviderFactories.GetFactory(providerName);
+                    connection = factory.CreateConnection();
+                    connection.ConnectionString = connectionString;
+                }
+                catch (Exception ex)
+                {
+                    if (connection != null)
+                    {
+                        connection = null;
+                    }
+                    Console.WriteLine(ex.Message);
+                }
+            }
+            return connection;
+        }
+
+        public DbDataReader GetOrderDetails(int orderID)
+        {
+            DbDataReader dbDataReader = null;
+            using (var connection = connectionToDB)
+            {
+                connection.Open();
+                using (var command = connection.CreateCommand())
+                {
+                    command.CommandText = string.Format( "SELECT ords.OrderID, ordt.ProductID, prds.ProductName " +
+                                          "FROM dbo.Orders as ords, dbo.[Order Details] ordt, dbo.Products as prds " +
+                                          "where ords.OrderID = ordt.OrderID and ordt.ProductID = prds.ProductID and ords.OrderID = {0}", orderID);
+                    command.CommandType = CommandType.Text;
+                    dbDataReader = command.ExecuteReader();
+                    return dbDataReader;
+                } 
+            }
+        }
+
         public IEnumerable<Order> GetOrders()
         {
             var resultOrders = new List<Order>();
-            using (var connection = sqlConnection/*providerFactory.CreateConnection()*/)
+            using (var connection = connectionToDB)
             {
-                connection.ConnectionString = connectionString;
                 connection.Open();
-
                 using (var command = connection.CreateCommand())
                 {
                     command.CommandText = "SELECT * FROM dbo.Orders";
@@ -43,16 +81,16 @@ namespace NorthwindDAL
                             order.EmployeeID = (int)reader["EmployeeID"];
                             order.OrderDate = (DateTime)reader["OrderDate"];
                             order.RequiredDate = (DateTime)reader["RequiredDate"];
-                            order.ShippedDate = (reader["ShippedDate"] as DateTime?) ?? new DateTime(9999,12,12,23,59,59,999);
+                            order.ShippedDate = (reader["ShippedDate"] as DateTime?) ?? null;
                             order.ShipVia = (int)reader["ShipVia"];
                             order.Freight = (decimal)reader["Freight"];
                             order.ShipName = (string)reader["ShipName"];
                             order.ShipAddress = (string)reader["ShipAddress"];
                             order.ShipCity = (string)reader["ShipCity"];
-                            order.ShipRegion = (reader["ShipRegion"] as string) ?? "empty";
-                            order.ShipPostalCode = (reader["ShipPostalCode"] as string) ?? "empty";
+                            order.ShipRegion = (reader["ShipRegion"] as string) ?? null;
+                            order.ShipPostalCode = (reader["ShipPostalCode"] as string) ?? null;
                             order.ShipCountry = (string)reader["ShipCountry"];
-                            order.OrderStatus = order.ShippedDate == new DateTime(9999, 12, 12, 23, 59, 59, 999) ? OrderStatus.NotInProgress : OrderStatus.InProgress;
+                            order.OrderStatus = order.ShippedDate == null ? OrderStatus.NotInProgress : OrderStatus.InProgress;
 
                             resultOrders.Add(order);
                         }
