@@ -36,8 +36,7 @@ namespace MainWebHost
             string sqlConnection = section["SqlProvider"];
             IOrderRepository repository = new OrderRepository(connectionString, sqlConnection);
             int orderId = int.Parse(txtOrderId.Text);
-            grvAllOrders.DataSource = repository.GetOrderDetails(orderId);
-            //grvAllOrders.DataBind();
+            Order orderResult = repository.GetOrderDetails(orderId);
         }
     }
 }

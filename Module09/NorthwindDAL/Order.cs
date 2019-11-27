@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace NorthwindDAL
 {
@@ -19,5 +20,6 @@ namespace NorthwindDAL
         public string ShipPostalCode { get; set; }
         public string ShipCountry { get; set; }
         public OrderStatus OrderStatus { get; set; }
+        public List<OrderDetails> Details { get; set; }
     }
 }

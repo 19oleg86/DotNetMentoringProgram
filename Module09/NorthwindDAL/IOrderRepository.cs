@@ -12,6 +12,6 @@ namespace NorthwindDAL
     {
         IEnumerable<Order> GetOrders();
 
-        DbDataReader GetOrderDetails(int orderID);
+        Order GetOrderDetails(int orderID);
     }
 }

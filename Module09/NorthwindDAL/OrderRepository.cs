@@ -41,21 +41,54 @@ namespace NorthwindDAL
             return connection;
         }
 
-        public DbDataReader GetOrderDetails(int orderID)
+        public Order GetOrderDetails(int orderID)
         {
-            DbDataReader dbDataReader = null;
             using (var connection = connectionToDB)
             {
                 connection.Open();
                 using (var command = connection.CreateCommand())
                 {
-                    command.CommandText = string.Format( "SELECT ords.OrderID, ordt.ProductID, prds.ProductName " +
-                                          "FROM dbo.Orders as ords, dbo.[Order Details] ordt, dbo.Products as prds " +
-                                          "where ords.OrderID = ordt.OrderID and ordt.ProductID = prds.ProductID and ords.OrderID = {0}", orderID);
+                    command.CommandText = "SELECT ords.OrderID FROM dbo.Orders AS ords WHERE ords.OrderID = @id; " +
+                                          "SELECT ordt.ProductID FROM  dbo.[Order Details] AS ordt WHERE ordt.OrderID = @id; " +
+                                          "SELECT prds.ProductName FROM Products as prds, [Order Details] WHERE prds.ProductID = dbo.[Order Details].ProductID AND dbo.[Order Details].OrderID = @id";
                     command.CommandType = CommandType.Text;
-                    dbDataReader = command.ExecuteReader();
-                    return dbDataReader;
-                } 
+                    var paramID = command.CreateParameter();
+                    paramID.ParameterName = "@id";
+                    paramID.Value = orderID;
+                    command.Parameters.Add(paramID);
+
+                    using (var reader = command.ExecuteReader())
+                    {
+                        if (!reader.HasRows) return null;
+                        reader.Read();
+
+                        Order order = new Order();
+
+                        order.OrderID = (int)reader["OrderID"];
+
+                        reader.NextResult();
+                        order.Details = new List<OrderDetails>();
+
+                        var detail = new OrderDetails();
+                        while (reader.Read())
+                        {
+                            detail = new OrderDetails();
+                            detail.ProductID = (int)reader["ProductID"];
+                            order.Details.Add(detail);
+                        }
+                        reader.NextResult();
+                     
+                        order.Details.FirstOrDefault().Products = new List<Product>();
+                        var product = new Product();
+                        while (reader.Read())
+                        {
+                            product = new Product();
+                            product.ProductName = (string)reader["ProductName"];
+                            order.Details.FirstOrDefault().Products.Add(product);
+                        }
+                        return order;
+                    }
+                }
             }
         }
 
