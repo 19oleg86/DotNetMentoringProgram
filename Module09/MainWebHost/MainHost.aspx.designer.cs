@@ -49,6 +49,33 @@ namespace MainWebHost {
         protected global::System.Web.UI.WebControls.TextBox txtOrderId;
         
         /// <summary>
+        /// btnAddNewOrder control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnAddNewOrder;
+        
+        /// <summary>
+        /// btnUpdateOrder control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnUpdateOrder;
+        
+        /// <summary>
+        /// btnDeleteOrder control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnDeleteOrder;
+        
+        /// <summary>
         /// grvAllOrders control.
         /// </summary>
         /// <remarks>

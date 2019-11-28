@@ -41,6 +41,79 @@ namespace NorthwindDAL
             return connection;
         }
 
+        public int DeleteOrder(int orderID)
+        {
+            using (var connection = connectionToDB)
+            {
+                connection.Open();
+                using (var command = connection.CreateCommand())
+                {
+                    command.CommandText = "DELETE FROM Orders WHERE OrderID = @OrderID";
+                    command.CommandType = CommandType.Text;
+                    var paramOrderID = command.CreateParameter();
+                    paramOrderID.ParameterName = "@OrderID";
+                    paramOrderID.Value = orderID;
+                    command.Parameters.Add(paramOrderID);
+                    
+                    int affectedRows = command.ExecuteNonQuery();
+                    return affectedRows;
+                }
+            }
+        }
+
+        public int UpdateOrder(int orderID, string newCustomerId)
+        {
+            using (var connection = connectionToDB)
+            {
+                connection.Open();
+                using (var command = connection.CreateCommand())
+                {
+                    command.CommandText = "UPDATE Orders SET CustomerID = @CustomerId WHERE OrderID = @OrderID";
+                    command.CommandType = CommandType.Text;
+                    var paramOrderID = command.CreateParameter();
+                    paramOrderID.ParameterName = "@OrderID";
+                    paramOrderID.Value = orderID;
+                    command.Parameters.Add(paramOrderID);
+                    var paramNewCustomerId = command.CreateParameter();
+                    paramNewCustomerId.ParameterName = "@CustomerId";
+                    paramNewCustomerId.Value = newCustomerId;
+                    command.Parameters.Add(paramNewCustomerId);
+
+                    int affectedRows = command.ExecuteNonQuery();
+                    return affectedRows;
+                }
+            }
+        }
+
+        public int AddNewOrder(string customerId, DateTime orderDate, DateTime shippedDate)
+        {
+            using (var connection = connectionToDB)
+            {
+                connection.Open();
+                using (var command = connection.CreateCommand())
+                {
+                    command.CommandText = "INSERT INTO Orders (CustomerID, OrderDate, ShippedDate) VALUES (@CustomerID, @OrderDate, @ShippedDate)";
+                    command.CommandType = CommandType.Text;
+                    var paramCustomerID = command.CreateParameter();
+                    paramCustomerID.ParameterName = "@CustomerID";
+                    paramCustomerID.Value = customerId;
+                    command.Parameters.Add(paramCustomerID);
+                    var paramOrderDate = command.CreateParameter();
+                    paramOrderDate.ParameterName = "@OrderDate";
+                    paramOrderDate.Value = orderDate;
+                    command.Parameters.Add(paramOrderDate);
+                    var paramShippedDate = command.CreateParameter();
+                    paramShippedDate.ParameterName = "@ShippedDate";
+                    paramShippedDate.Value = shippedDate;
+                    command.Parameters.Add(paramShippedDate);
+
+                    int affectedRows = command.ExecuteNonQuery();
+                    return affectedRows;
+                }
+            }
+            
+        }
+
         public Order GetOrderDetails(int orderID)
         {
             using (var connection = connectionToDB)
@@ -49,8 +122,8 @@ namespace NorthwindDAL
                 using (var command = connection.CreateCommand())
                 {
                     command.CommandText = "SELECT ords.OrderID FROM dbo.Orders AS ords WHERE ords.OrderID = @id; " +
-                                          "SELECT ordt.ProductID FROM  dbo.[Order Details] AS ordt WHERE ordt.OrderID = @id; " +
-                                          "SELECT prds.ProductName FROM Products as prds, [Order Details] WHERE prds.ProductID = dbo.[Order Details].ProductID AND dbo.[Order Details].OrderID = @id";
+                                            "SELECT ordt.ProductID FROM  dbo.[Order Details] AS ordt WHERE ordt.OrderID = @id; " +
+                                            "SELECT prds.ProductName FROM Products as prds, [Order Details] WHERE prds.ProductID = dbo.[Order Details].ProductID AND dbo.[Order Details].OrderID = @id";
                     command.CommandType = CommandType.Text;
                     var paramID = command.CreateParameter();
                     paramID.ParameterName = "@id";
@@ -77,7 +150,7 @@ namespace NorthwindDAL
                             order.Details.Add(detail);
                         }
                         reader.NextResult();
-                     
+
                         order.Details.FirstOrDefault().Products = new List<Product>();
                         var product = new Product();
                         while (reader.Read())
@@ -139,4 +212,4 @@ namespace NorthwindDAL
         NotInProgress = 0,
         InProgress = 1
     }
-}
+    }

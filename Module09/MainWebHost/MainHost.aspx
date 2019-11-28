@@ -14,6 +14,12 @@
             &nbsp;
             <asp:Button ID="btnShowOrderDetails" runat="server" OnClick="btnShowOrderDetails_Click" Text="Task 2 - Show Order Details" />
             <asp:TextBox ID="txtOrderId" runat="server" Width="82px"></asp:TextBox>
+            &nbsp;
+            <asp:Button ID="btnAddNewOrder" runat="server" OnClick="btnAddNewOrder_Click" Text="Task 3 - Add New Order" />
+&nbsp;
+            <asp:Button ID="btnUpdateOrder" runat="server" OnClick="btnUpdateOrder_Click" Text="Task 4 - Update Order" />
+&nbsp;
+            <asp:Button ID="btnDeleteOrder" runat="server" OnClick="btnDeleteOrder_Click" Text="Task 5 - Delete Order" />
             <br />
             <br />
             <asp:GridView ID="grvAllOrders" runat="server">
