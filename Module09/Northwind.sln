@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NorthwindDAL", "NorthwindDA
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MainWebHost", "MainWebHost\MainWebHost.csproj", "{02FA6756-423A-47D2-BE88-8FADC952CE11}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NorthwindDALTests", "NorthwindDALTests\NorthwindDALTests.csproj", "{9C2AC277-E26D-4DD4-858D-3889EDCDF21A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{02FA6756-423A-47D2-BE88-8FADC952CE11}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{02FA6756-423A-47D2-BE88-8FADC952CE11}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{02FA6756-423A-47D2-BE88-8FADC952CE11}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9C2AC277-E26D-4DD4-858D-3889EDCDF21A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9C2AC277-E26D-4DD4-858D-3889EDCDF21A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9C2AC277-E26D-4DD4-858D-3889EDCDF21A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9C2AC277-E26D-4DD4-858D-3889EDCDF21A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

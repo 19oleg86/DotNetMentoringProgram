@@ -207,9 +207,9 @@ namespace NorthwindDAL
         }
     }
 
-    public enum OrderStatus
-    {
-        NotInProgress = 0,
-        InProgress = 1
-    }
-    }
+        public enum OrderStatus
+        {
+            NotInProgress = 0,
+            InProgress = 1
+        }
+}
