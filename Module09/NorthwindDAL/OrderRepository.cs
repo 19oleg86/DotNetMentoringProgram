@@ -1,17 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Data;
 using System.Data.Common;
-using System.Data.SqlClient;
 
 namespace NorthwindDAL
 {
     public class OrderRepository : IOrderRepository
     {
-        DbConnection connectionToDB;
+        public static DbConnection connectionToDB;
 
         public OrderRepository(string connectionString, string providerName)
         {
@@ -96,7 +93,7 @@ namespace NorthwindDAL
                     command.CommandType = CommandType.Text;
                     var paramCustomerID = command.CreateParameter();
                     paramCustomerID.ParameterName = "@CustomerID";
-                    paramCustomerID.Value = customerId;
+                    paramCustomerID.Value = customerId ?? "DefId";
                     command.Parameters.Add(paramCustomerID);
                     var paramOrderDate = command.CreateParameter();
                     paramOrderDate.ParameterName = "@OrderDate";
@@ -122,8 +119,8 @@ namespace NorthwindDAL
                 using (var command = connection.CreateCommand())
                 {
                     command.CommandText = "SELECT ords.OrderID FROM dbo.Orders AS ords WHERE ords.OrderID = @id; " +
-                                            "SELECT ordt.ProductID FROM  dbo.[Order Details] AS ordt WHERE ordt.OrderID = @id; " +
-                                            "SELECT prds.ProductName FROM Products as prds, [Order Details] WHERE prds.ProductID = dbo.[Order Details].ProductID AND dbo.[Order Details].OrderID = @id";
+                                          "SELECT ordt.ProductID FROM  dbo.[Order Details] AS ordt WHERE ordt.OrderID = @id; " +
+                                          "SELECT prds.ProductName FROM Products as prds, [Order Details] WHERE prds.ProductID = dbo.[Order Details].ProductID AND dbo.[Order Details].OrderID = @id";
                     command.CommandType = CommandType.Text;
                     var paramID = command.CreateParameter();
                     paramID.ParameterName = "@id";
@@ -184,18 +181,18 @@ namespace NorthwindDAL
 
                             order.OrderID = (int)reader["OrderID"];
                             order.CustomerID = (string)reader["CustomerID"];
-                            order.EmployeeID = (int)reader["EmployeeID"];
+                            order.EmployeeID = (reader["EmployeeID"] as int?) ?? null;
                             order.OrderDate = (DateTime)reader["OrderDate"];
-                            order.RequiredDate = (DateTime)reader["RequiredDate"];
+                            order.RequiredDate = (reader["RequiredDate"] as DateTime?) ?? null;
                             order.ShippedDate = (reader["ShippedDate"] as DateTime?) ?? null;
-                            order.ShipVia = (int)reader["ShipVia"];
+                            order.ShipVia = (reader["ShipVia"] as int?) ?? null;
                             order.Freight = (decimal)reader["Freight"];
-                            order.ShipName = (string)reader["ShipName"];
-                            order.ShipAddress = (string)reader["ShipAddress"];
-                            order.ShipCity = (string)reader["ShipCity"];
+                            order.ShipName = (reader["ShipName"] as string) ?? null;
+                            order.ShipAddress = (reader["ShipAddress"] as string) ?? null;
+                            order.ShipCity = (reader["ShipCity"] as string) ?? null;
                             order.ShipRegion = (reader["ShipRegion"] as string) ?? null;
                             order.ShipPostalCode = (reader["ShipPostalCode"] as string) ?? null;
-                            order.ShipCountry = (string)reader["ShipCountry"];
+                            order.ShipCountry = (reader["ShipCountry"] as string) ?? null;
                             order.OrderStatus = order.ShippedDate == null ? OrderStatus.NotInProgress : OrderStatus.InProgress;
 
                             resultOrders.Add(order);
