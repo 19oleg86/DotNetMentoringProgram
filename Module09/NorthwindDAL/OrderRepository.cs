@@ -38,6 +38,45 @@ namespace NorthwindDAL
             return connection;
         }
 
+        public DbDataReader PutOrderToInProgress(int orderId)
+        {
+            DbDataReader dbDataReader = null;
+            using (var connection = connectionToDB)
+            {
+                connection.Open();
+                using (var command = connection.CreateCommand())
+                {
+                    command.CommandText = "UPDATE Orders SET OrderDate = @OrderDate WHERE OrderID = @OrderID";
+                    command.CommandType = CommandType.Text;
+                    var paramOrderDate = command.CreateParameter();
+                    paramOrderDate.ParameterName = "@OrderDate";
+                    paramOrderDate.Value = DateTime.Now;
+                    command.Parameters.Add(paramOrderDate);
+
+                    var paramOrderID = command.CreateParameter();
+                    paramOrderID.ParameterName = "@OrderID";
+                    paramOrderID.Value = orderId;
+                    command.Parameters.Add(paramOrderID);
+
+                    int affectedRows = command.ExecuteNonQuery();
+                }
+
+                using (var command = connection.CreateCommand())
+                {
+                    command.CommandText = "SELECT * FROM  dbo.Orders WHERE OrderID = @OrderID";
+                    command.CommandType = CommandType.Text;
+
+                    var paramOrderID = command.CreateParameter();
+                    paramOrderID.ParameterName = "@OrderID";
+                    paramOrderID.Value = orderId;
+                    command.Parameters.Add(paramOrderID);
+
+                    dbDataReader = command.ExecuteReader();
+                }
+            }
+            return dbDataReader;
+        }
+
         public int DeleteOrder(int orderID)
         {
             using (var connection = connectionToDB)

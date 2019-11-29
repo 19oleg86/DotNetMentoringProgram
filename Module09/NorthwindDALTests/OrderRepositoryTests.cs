@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Data.SqlClient;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NorthwindDAL;
@@ -23,7 +24,6 @@ namespace NorthwindDALTests
 
             //Assert
             NUnit.Framework.Assert.That(actual, Is.TypeOf<List<Order>>());
-            
         }
 
         [TestMethod]
@@ -86,6 +86,21 @@ namespace NorthwindDALTests
 
             //Assert
             NUnit.Framework.Assert.That(actual, Is.TypeOf<SqlConnection>());
+        }
+
+        [TestMethod]
+        public void PutOrderToInProgress_DbDataReaderReturned()
+        {
+            //Arrange
+            string connectionString = "data source=.; database = Northwind; integrated security=SSPI";
+            string sqlConnection = "System.Data.SqlClient";
+            IOrderRepository repository = new OrderRepository(connectionString, sqlConnection);
+
+            //Act
+            var actual = repository.PutOrderToInProgress(10262);
+
+            //Assert
+            NUnit.Framework.Assert.That(actual, Is.TypeOf<SqlDataReader>());
         }
 
         //[TestMethod]

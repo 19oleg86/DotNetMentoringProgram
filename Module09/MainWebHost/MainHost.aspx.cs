@@ -53,5 +53,12 @@ namespace MainWebHost
             IOrderRepository repository = new OrderRepository(connectionString, sqlConnection);
             int result = repository.DeleteOrder(10317);
         }
+
+        protected void btnPutInProgress_Click(object sender, EventArgs e)
+        {
+            string sqlConnection = section["SqlProvider"];
+            IOrderRepository repository = new OrderRepository(connectionString, sqlConnection);
+            var result = repository.PutOrderToInProgress(10258);
+        }
     }
 }

@@ -20,6 +20,8 @@
             <asp:Button ID="btnUpdateOrder" runat="server" OnClick="btnUpdateOrder_Click" Text="Task 4 - Update Order" />
 &nbsp;
             <asp:Button ID="btnDeleteOrder" runat="server" OnClick="btnDeleteOrder_Click" Text="Task 5 - Delete Order" />
+            &nbsp;
+            <asp:Button ID="btnPutInProgress" runat="server" OnClick="btnPutInProgress_Click" Text="Task 6 - Put Order To In Progress" Width="208px" />
             <br />
             <br />
             <asp:GridView ID="grvAllOrders" runat="server">

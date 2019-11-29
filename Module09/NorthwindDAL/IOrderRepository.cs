@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Common;
 
 namespace NorthwindDAL
 {
@@ -14,5 +15,7 @@ namespace NorthwindDAL
         int UpdateOrder(int orderID, string newCustomerId);
 
         int DeleteOrder(int orderID);
+
+        DbDataReader PutOrderToInProgress(int orderId);
     }
 }
