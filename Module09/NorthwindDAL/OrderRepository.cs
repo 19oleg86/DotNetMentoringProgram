@@ -121,7 +121,7 @@ namespace NorthwindDAL
             }
         }
 
-        public int AddNewOrder(string customerId, DateTime orderDate, DateTime shippedDate)
+        public int AddNewOrder(string customerId, DateTime? orderDate, DateTime? shippedDate)
         {
             using (var connection = connectionToDB)
             {
@@ -132,22 +132,66 @@ namespace NorthwindDAL
                     command.CommandType = CommandType.Text;
                     var paramCustomerID = command.CreateParameter();
                     paramCustomerID.ParameterName = "@CustomerID";
-                    paramCustomerID.Value = customerId ?? "DefId";
+                    paramCustomerID.Value = customerId;
                     command.Parameters.Add(paramCustomerID);
                     var paramOrderDate = command.CreateParameter();
                     paramOrderDate.ParameterName = "@OrderDate";
-                    paramOrderDate.Value = orderDate;
+                    paramOrderDate.Value = orderDate ?? null;
                     command.Parameters.Add(paramOrderDate);
                     var paramShippedDate = command.CreateParameter();
                     paramShippedDate.ParameterName = "@ShippedDate";
-                    paramShippedDate.Value = shippedDate;
+                    paramShippedDate.Value = shippedDate ?? null;
                     command.Parameters.Add(paramShippedDate);
 
                     int affectedRows = command.ExecuteNonQuery();
                     return affectedRows;
                 }
             }
-            
+        }
+
+        public int AddNewOrder(string customerId, DateTime? requiredDate)
+        {
+            using (var connection = connectionToDB)
+            {
+                connection.Open();
+                using (var command = connection.CreateCommand())
+                {
+                    command.CommandText = "INSERT INTO Orders (CustomerID, RequiredDate) VALUES (@CustomerID, @RequiredDate)";
+                    command.CommandType = CommandType.Text;
+                    var paramCustomerID = command.CreateParameter();
+                    paramCustomerID.ParameterName = "@CustomerID";
+                    paramCustomerID.Value = customerId;
+                    command.Parameters.Add(paramCustomerID);
+                    var paramRequiredDate = command.CreateParameter();
+                    paramRequiredDate.ParameterName = "@RequiredDate";
+                    paramRequiredDate.Value = requiredDate ?? null;
+                    command.Parameters.Add(paramRequiredDate);
+
+                    int affectedRows = command.ExecuteNonQuery();
+                    return affectedRows;
+                }
+            }
+        }
+
+        public int AddNewOrder(string customerId)
+        {
+            using (var connection = connectionToDB)
+            {
+                connection.Open();
+                using (var command = connection.CreateCommand())
+                {
+                    command.CommandText = "INSERT INTO Orders (CustomerID) VALUES (@CustomerID)";
+                    command.CommandType = CommandType.Text;
+                    var paramCustomerID = command.CreateParameter();
+                    paramCustomerID.ParameterName = "@CustomerID";
+                    paramCustomerID.Value = customerId;
+                    command.Parameters.Add(paramCustomerID);
+                    
+                    int affectedRows = command.ExecuteNonQuery();
+                    return affectedRows;
+                }
+            }
+
         }
 
         public Order GetOrderDetails(int orderID)
@@ -221,7 +265,7 @@ namespace NorthwindDAL
                             order.OrderID = (int)reader["OrderID"];
                             order.CustomerID = (string)reader["CustomerID"];
                             order.EmployeeID = (reader["EmployeeID"] as int?) ?? null;
-                            order.OrderDate = (DateTime)reader["OrderDate"];
+                            order.OrderDate = (reader["OrderDate"] as DateTime?) ?? null;
                             order.RequiredDate = (reader["RequiredDate"] as DateTime?) ?? null;
                             order.ShippedDate = (reader["ShippedDate"] as DateTime?) ?? null;
                             order.ShipVia = (reader["ShipVia"] as int?) ?? null;
@@ -232,7 +276,11 @@ namespace NorthwindDAL
                             order.ShipRegion = (reader["ShipRegion"] as string) ?? null;
                             order.ShipPostalCode = (reader["ShipPostalCode"] as string) ?? null;
                             order.ShipCountry = (reader["ShipCountry"] as string) ?? null;
-                            order.OrderStatus = order.ShippedDate == null ? OrderStatus.NotInProgress : OrderStatus.InProgress;
+                            if (order.OrderDate == null && order.RequiredDate == null && order.ShippedDate == null)
+                            {order.OrderStatus = OrderStatus.New; }
+                            else if (order.OrderDate == null && order.ShippedDate == null)
+                            { order.OrderStatus = OrderStatus.InProgress; }
+                            else { order.OrderStatus = OrderStatus.Done; }
 
                             resultOrders.Add(order);
                         }
@@ -241,11 +289,50 @@ namespace NorthwindDAL
             }
             return resultOrders;
         }
+
+        public DbDataReader GetOrderStatisticFromSP(int orderId)
+        {
+            DbDataReader procResult;
+            using (var connection = connectionToDB)
+            {
+                connection.Open();
+                using (var command = connection.CreateCommand())
+                {
+                    command.CommandText = "dbo.CustOrderHist";
+                    command.CommandType = CommandType.StoredProcedure;
+                    var paramId = command.CreateParameter();
+                    paramId.ParameterName = "@CustomerID";
+                    paramId.Value = orderId;
+                    command.Parameters.Add(paramId);
+
+                    procResult = command.ExecuteReader();
+                    return procResult;
+                }
+            }
+        }
+
+        public int GetLastOrderId()
+        {
+            int lastOrderId;
+            using (var connection = connectionToDB)
+            {
+                connection.Open();
+                using (var command = connection.CreateCommand())
+                {
+                    command.CommandText = "SELECT MAX(OrderID) FROM Orders";
+                    command.CommandType = CommandType.Text;
+
+                    lastOrderId = (int)command.ExecuteScalar();
+                }
+                return lastOrderId;
+            }
+        }
     }
 
         public enum OrderStatus
         {
-            NotInProgress = 0,
-            InProgress = 1
+            New = 0,
+            InProgress = 1,
+            Done = 2
         }
 }

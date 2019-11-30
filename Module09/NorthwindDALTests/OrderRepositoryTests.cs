@@ -11,12 +11,12 @@ namespace NorthwindDALTests
     [TestClass]
     public class OrderRepositoryTests
     {
+        string connectionString = "data source=.; database = Northwind; integrated security=SSPI";
+        string sqlConnection = "System.Data.SqlClient";
         [TestMethod]
         public void GetOrders_IEnumerableOfOrderReturned()
         {
             //Arrange
-            string connectionString = "data source=.; database = Northwind; integrated security=SSPI";
-            string sqlConnection = "System.Data.SqlClient";
             IOrderRepository repository = new OrderRepository(connectionString, sqlConnection);
 
             //Act
@@ -30,8 +30,6 @@ namespace NorthwindDALTests
         public void GetOrderDetails_OrderReturned()
         {
             //Arrange
-            string connectionString = "data source=.; database = Northwind; integrated security=SSPI";
-            string sqlConnection = "System.Data.SqlClient";
             IOrderRepository repository = new OrderRepository(connectionString, sqlConnection);
 
             //Act
@@ -45,8 +43,6 @@ namespace NorthwindDALTests
         public void AddNewOrder_AffectedRowsNumberReturned()
         {
             //Arrange
-            string connectionString = "data source=.; database = Northwind; integrated security=SSPI";
-            string sqlConnection = "System.Data.SqlClient";
             IOrderRepository repository = new OrderRepository(connectionString, sqlConnection);
             int expected = 1;
 
@@ -58,11 +54,37 @@ namespace NorthwindDALTests
         }
 
         [TestMethod]
+        public void AddNewOrderWithCustomerIdAndRequiredDate_AffectedRowsNumberReturned()
+        {
+            //Arrange
+            IOrderRepository repository = new OrderRepository(connectionString, sqlConnection);
+            int expected = 1;
+
+            //Act
+            var actual = repository.AddNewOrder("CHOPS", DateTime.Now);
+
+            //Assert
+            NUnit.Framework.Assert.AreEqual(actual, expected);
+        }
+
+        [TestMethod]
+        public void AddNewOrderWithCustomerId_AffectedRowsNumberReturned()
+        {
+            //Arrange
+            IOrderRepository repository = new OrderRepository(connectionString, sqlConnection);
+            int expected = 1;
+
+            //Act
+            var actual = repository.AddNewOrder("CHOPS");
+
+            //Assert
+            NUnit.Framework.Assert.AreEqual(actual, expected);
+        }
+
+        [TestMethod]
         public void UpdateOrder_AffectedRowsNumberReturned()
         {
             //Arrange
-            string connectionString = "data source=.; database = Northwind; integrated security=SSPI";
-            string sqlConnection = "System.Data.SqlClient";
             IOrderRepository repository = new OrderRepository(connectionString, sqlConnection);
             int expected = 1;
 
@@ -77,8 +99,6 @@ namespace NorthwindDALTests
         public void CreateDbConnection_DbConnectionReturned()
         {
             //Arrange
-            string connectionString = "data source=.; database = Northwind; integrated security=SSPI";
-            string sqlConnection = "System.Data.SqlClient";
             OrderRepository repository = new OrderRepository(connectionString, sqlConnection);
 
             //Act
@@ -92,8 +112,6 @@ namespace NorthwindDALTests
         public void PutOrderToInProgress_DbDataReaderReturned()
         {
             //Arrange
-            string connectionString = "data source=.; database = Northwind; integrated security=SSPI";
-            string sqlConnection = "System.Data.SqlClient";
             IOrderRepository repository = new OrderRepository(connectionString, sqlConnection);
 
             //Act
@@ -103,23 +121,36 @@ namespace NorthwindDALTests
             NUnit.Framework.Assert.That(actual, Is.TypeOf<SqlDataReader>());
         }
 
-        //[TestMethod]
-        //public void DeleteOrder_AffectedRowsNumberReturned()
-        //{
-        //    //Arrange
-        //    string connectionString = "data source=.; database = Northwind; integrated security=SSPI";
-        //    string sqlConnection = "System.Data.SqlClient";
-        //    IOrderRepository repository = new OrderRepository(connectionString, sqlConnection);
-        //    int expected = 1;
+        [TestMethod]
+        public void GetOrderStatisticFromSP_DbDataReaderReturned()
+        {
+            //Arrange
+            IOrderRepository repository = new OrderRepository(connectionString, sqlConnection);
 
-        //    //Act
-        //    var actual = repository.DeleteOrder(11086);
+            //Act
+            var actual = repository.GetOrderStatisticFromSP(10262);
 
-        //    //Assert
-        //    NUnit.Framework.Assert.AreEqual(actual, expected);
-        //    repository = new OrderRepository(connectionString, sqlConnection);
-        //    repository.AddNewOrder("DRACD", DateTime.Now, DateTime.Now);
-        //}
+            //Assert
+            NUnit.Framework.Assert.That(actual, Is.TypeOf<SqlDataReader>());
+        }
+
+        [TestMethod]
+        public void DeleteOrder_AffectedRowsNumberReturned()
+        {
+            //Arrange
+            IOrderRepository repository = new OrderRepository(connectionString, sqlConnection);
+            repository.AddNewOrder("LILAS");
+            repository = new OrderRepository(connectionString, sqlConnection);
+            int lastOrderId = repository.GetLastOrderId();
+            int expected = 1;
+
+            //Act
+            repository = new OrderRepository(connectionString, sqlConnection);
+            var actual = repository.DeleteOrder(lastOrderId);
+
+            //Assert
+            NUnit.Framework.Assert.AreEqual(actual, expected);
+        }
     }
 
 

@@ -10,12 +10,20 @@ namespace NorthwindDAL
 
         Order GetOrderDetails(int orderID);
 
-        int AddNewOrder(string customerId, DateTime orderDate, DateTime shippedDate);
+        DbDataReader GetOrderStatisticFromSP(int orderId);
+
+        int AddNewOrder(string customerId, DateTime? orderDate, DateTime? shippedDate);
+
+        int AddNewOrder(string customerId, DateTime? requiredDate);
+
+        int AddNewOrder(string customerId);
 
         int UpdateOrder(int orderID, string newCustomerId);
 
         int DeleteOrder(int orderID);
 
         DbDataReader PutOrderToInProgress(int orderId);
+
+        int GetLastOrderId();
     }
 }
