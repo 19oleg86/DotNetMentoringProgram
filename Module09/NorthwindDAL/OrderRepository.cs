@@ -90,7 +90,7 @@ namespace NorthwindDAL
                     paramOrderID.ParameterName = "@OrderID";
                     paramOrderID.Value = orderID;
                     command.Parameters.Add(paramOrderID);
-                    
+
                     int affectedRows = command.ExecuteNonQuery();
                     return affectedRows;
                 }
@@ -186,7 +186,7 @@ namespace NorthwindDAL
                     paramCustomerID.ParameterName = "@CustomerID";
                     paramCustomerID.Value = customerId;
                     command.Parameters.Add(paramCustomerID);
-                    
+
                     int affectedRows = command.ExecuteNonQuery();
                     return affectedRows;
                 }
@@ -277,7 +277,7 @@ namespace NorthwindDAL
                             order.ShipPostalCode = (reader["ShipPostalCode"] as string) ?? null;
                             order.ShipCountry = (reader["ShipCountry"] as string) ?? null;
                             if (order.OrderDate == null && order.RequiredDate == null && order.ShippedDate == null)
-                            {order.OrderStatus = OrderStatus.New; }
+                            { order.OrderStatus = OrderStatus.New; }
                             else if (order.OrderDate == null && order.ShippedDate == null)
                             { order.OrderStatus = OrderStatus.InProgress; }
                             else { order.OrderStatus = OrderStatus.Done; }
@@ -329,10 +329,10 @@ namespace NorthwindDAL
         }
     }
 
-        public enum OrderStatus
-        {
-            New = 0,
-            InProgress = 1,
-            Done = 2
-        }
+    public enum OrderStatus
+    {
+        New = 0,
+        InProgress = 1,
+        Done = 2
+    }
 }
