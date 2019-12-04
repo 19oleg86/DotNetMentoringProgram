@@ -14,5 +14,11 @@ namespace Task2EntityFramework_Versions
         public IDbSet<Product> Products { get; set; }
 
         public IDbSet<Category> Categories { get; set; }
+
+        public IDbSet<EmployeeCreditCardData> EmployeeCreditCardInfo { get; set; }
+
+        public IDbSet<Regions> AllRegions { get; set; }
+
+        public IDbSet<Customer> Customers { get; set; }
     }
 }

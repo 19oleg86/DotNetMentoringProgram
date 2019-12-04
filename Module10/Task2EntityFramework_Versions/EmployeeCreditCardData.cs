@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace Task2EntityFramework_Versions
 {
-    class EmployeeCreditCardData
+    public class EmployeeCreditCardData
     {
+        public int Id { get; set; }
         public string CardNumber { get; set; }
 
         public DateTime ExpirationDate { get; set; }

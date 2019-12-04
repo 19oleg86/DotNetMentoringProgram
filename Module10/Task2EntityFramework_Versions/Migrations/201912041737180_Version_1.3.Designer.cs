@@ -7,13 +7,13 @@ namespace Task2EntityFramework_Versions.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class Version_20 : IMigrationMetadata
+    public sealed partial class Version_13 : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(Version_20));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(Version_13));
         
         string IMigrationMetadata.Id
         {
-            get { return "201912041412386_Version_2.0"; }
+            get { return "201912041737180_Version_1.3"; }
         }
         
         string IMigrationMetadata.Source
