@@ -30,5 +30,7 @@ namespace Task1Linq2DB
         public ITable<Supplier> Suppliers => GetTable<Supplier>();
 
         public ITable<Shipper> Shippers => GetTable<Shipper>();
+
+        public ITable<OrderDetails> OrderDetails => GetTable<OrderDetails>();
     }
 }

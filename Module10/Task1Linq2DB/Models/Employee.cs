@@ -23,5 +23,7 @@ namespace Task1Linq2DB.Models
         public string Region { get; set; }
         [Column(Name ="City")]
         public string City { get; set; }
+
+        public List<Region> AllRegions { get; set; }
     }
 }

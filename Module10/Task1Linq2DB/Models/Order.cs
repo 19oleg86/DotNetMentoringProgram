@@ -21,6 +21,9 @@ namespace Task1Linq2DB.Models
         [Column(Name ="EmployeeID")]
         public int EmployeeID { get; set; }
 
+        [Column(Name = "ShippedDate")]
+        public DateTime ShippedDate { get; set; }
+
         [Column(Name ="ShipName")]
         public string ShipName { get; set; }
 
