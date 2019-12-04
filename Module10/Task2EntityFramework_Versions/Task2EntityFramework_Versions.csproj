@@ -5,11 +5,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{9C1C140D-987C-44BA-BD22-A136EE936702}</ProjectGuid>
+    <ProjectGuid>{12A946FF-4D57-4BB9-8476-DE602FC7A7E9}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Task2EntityFramework</RootNamespace>
-    <AssemblyName>Task2EntityFramework</AssemblyName>
+    <RootNamespace>Task2EntityFramework_Versions</RootNamespace>
+    <AssemblyName>Task2EntityFramework_Versions</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -54,31 +54,27 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Runtime.Serialization" />
-    <Reference Include="System.Security" />
-    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="EmployeeCreditCardData.cs" />
     <Compile Include="Category.cs" />
-    <Compile Include="Customer.cs" />
-    <Compile Include="CustomerDemographic.cs" />
-    <Compile Include="Employee.cs" />
+    <Compile Include="Migrations\201912041130396_Version_1.0.cs" />
+    <Compile Include="Migrations\201912041130396_Version_1.0.Designer.cs">
+      <DependentUpon>201912041130396_Version_1.0.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="NorthwindDB.cs" />
-    <Compile Include="Order.cs" />
-    <Compile Include="Order_Detail.cs" />
     <Compile Include="Product.cs" />
-    <Compile Include="Region.cs" />
-    <Compile Include="Shipper.cs" />
-    <Compile Include="Supplier.cs" />
-    <Compile Include="Territory.cs" />
-    <Compile Include="UnitTest1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UnitTest1.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201912041130396_Version_1.0.resx">
+      <DependentUpon>201912041130396_Version_1.0.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

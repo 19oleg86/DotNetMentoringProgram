@@ -8,7 +8,7 @@ namespace Task2EntityFramework
     public partial class NorthwindDB : DbContext
     {
         public NorthwindDB()
-            : base("name=NorthwindDB")
+            : base("name=Northwind")
         {
         }
 
