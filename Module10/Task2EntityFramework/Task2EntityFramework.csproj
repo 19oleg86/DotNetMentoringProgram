@@ -64,6 +64,11 @@
     <Compile Include="Customer.cs" />
     <Compile Include="CustomerDemographic.cs" />
     <Compile Include="Employee.cs" />
+    <Compile Include="Migrations\201912050356493_WithAddedChanges.cs" />
+    <Compile Include="Migrations\201912050356493_WithAddedChanges.Designer.cs">
+      <DependentUpon>201912050356493_WithAddedChanges.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="NorthwindDB.cs" />
     <Compile Include="Order.cs" />
     <Compile Include="Order_Detail.cs" />
@@ -78,6 +83,11 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201912050356493_WithAddedChanges.resx">
+      <DependentUpon>201912050356493_WithAddedChanges.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

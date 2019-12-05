@@ -11,7 +11,7 @@ namespace Task2EntityFramework_Versions
         {
             using (var db = new NorthwindDB())
             {
-                db.Database.Create();
+                db.Database.CreateIfNotExists();
             }
         }
     }

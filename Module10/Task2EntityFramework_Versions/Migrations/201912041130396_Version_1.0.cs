@@ -26,15 +26,8 @@ namespace Task2EntityFramework_Versions.Migrations
                         CategoryID = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.ProductID);
-
-            
-            //DbSetMigrationsExtensions.AddOrUpdate<>()
-            //    { }
-
-
         }
 
-        
         public override void Down()
         {
             DropTable("dbo.Products");

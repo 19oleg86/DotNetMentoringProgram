@@ -28,7 +28,6 @@ namespace Task2EntityFramework_Versions.Migrations
                         FoundationDate = c.DateTime(nullable: false),
                     })
                 .PrimaryKey(t => t.CustomerId);
-            
         }
         
         public override void Down()
