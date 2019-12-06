@@ -127,7 +127,7 @@ namespace Task1Linq2DB
                 {
                     connection.OrderDetails
                         .Where(x => x.OrderID == orders.FirstOrDefault().OrderID)
-                        .Set(p => p.Quantity, 33)
+                        .Set(p => p.ProductID, 10)
                         .Update();
                 }
             };
