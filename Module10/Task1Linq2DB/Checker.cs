@@ -121,15 +121,25 @@ namespace Task1Linq2DB
             using (var connection = new DbNorthwind())
             {
                 var orders = from o in connection.Orders
+                             where o.ShippedDate == null
                              select o;
 
-                if (orders.Any(x => x.ShippedDate == null))
-                {
-                    connection.OrderDetails
-                        .Where(x => x.OrderID == orders.FirstOrDefault().OrderID)
-                        .Set(p => p.ProductID, 10)
-                        .Update();
-                }
+               var order = orders.FirstOrDefault();
+
+                var notShippedOrders = from od in connection.OrderDetails
+                                       where od.OrderID == orders.Select(x => x.OrderID).FirstOrDefault()
+                                       select od;
+
+                notShippedOrders.FirstOrDefault();
+
+                notShippedOrders.Set(p => p.ProductID, 5);
+
+                connection.OrderDetails
+                    .Where(p => p.OrderID == notShippedOrders.Select(x => x.OrderID).FirstOrDefault())
+                    .Delete();
+
+                connection.OrderDetails.BulkCopy(notShippedOrders);
+
             };
         }
 
