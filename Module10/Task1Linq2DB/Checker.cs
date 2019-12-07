@@ -25,7 +25,7 @@ namespace Task1Linq2DB
                             where p.CategoryID == c.CategoryID && p.SupplierID == s.SupplierID
                             select new { Product = p.ProductName, Category = c.CategoryName, Supplier = s.CompanyName };
                 foreach (var product in query)
-                Console.WriteLine($"Product: {product.Product}, Category: {product.Category}, Supplier: {product.Supplier}");
+                    Console.WriteLine($"Product: {product.Product}, Category: {product.Category}, Supplier: {product.Supplier}");
             };
         }
 
@@ -54,7 +54,7 @@ namespace Task1Linq2DB
 
                 foreach (var employee in query)
                     Console.WriteLine($"City: {employee.City}, Number of Employees: {employee.Count}");
-                        
+
             };
         }
 
@@ -67,7 +67,7 @@ namespace Task1Linq2DB
                             from o in connection.Orders
                             from s in connection.Shippers
                             where o.EmployeeID == e.EmployeeID && o.ShipVia == s.ShipperID
-                            select new { Employee = e.FirstName,Order = o.OrderID, Shipper = s.CompanyName };
+                            select new { Employee = e.FirstName, Order = o.OrderID, Shipper = s.CompanyName };
 
                 foreach (var employee in query)
                     Console.WriteLine($"Employee: {employee.Employee} with order No: {employee.Order} worked with Shipper: {employee.Shipper}");
@@ -123,25 +123,33 @@ namespace Task1Linq2DB
                 var orders = from o in connection.Orders
                              where o.ShippedDate == null
                              select o;
-
-               var order = orders.FirstOrDefault();
+                var order = orders.FirstOrDefault();
+                var result = orders.ToList();
 
                 var notShippedOrders = from od in connection.OrderDetails
-                                       where od.OrderID == orders.Select(x => x.OrderID).FirstOrDefault()
+                                       where od.OrderID == result.Select(x => x.OrderID).FirstOrDefault()
                                        select od;
+                var notShippedOrder = notShippedOrders.FirstOrDefault();
+                var resultNotShippedOrders = notShippedOrders.ToList();
+                var forReplacement = notShippedOrders.ToList();
 
-                notShippedOrders.FirstOrDefault();
-
-                notShippedOrders.Set(p => p.ProductID, 5);
+                foreach (var item in forReplacement)
+                {
+                    item.ProductID = 22;
+                }
 
                 connection.OrderDetails
                     .Where(p => p.OrderID == notShippedOrders.Select(x => x.OrderID).FirstOrDefault())
                     .Delete();
 
-                connection.OrderDetails.BulkCopy(notShippedOrders);
+                foreach (var unit in forReplacement)
+                {
+                    connection.OrderDetails.Value(p => p.OrderID, unit.OrderID)
+                                           .Value(p => p.ProductID, unit.ProductID)
+                                           .Value(p => p.Quantity, unit.Quantity).Insert();
+                }
 
             };
         }
-
     }
 }
