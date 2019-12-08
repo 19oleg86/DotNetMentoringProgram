@@ -5,6 +5,7 @@ namespace Task2EntityFramework_Versions.Migrations
     
     public partial class Version_10 : DbMigration
     {
+        //NorthwindDB connection = new NorthwindDB();
         public override void Up()
         {
             CreateTable(
@@ -26,6 +27,8 @@ namespace Task2EntityFramework_Versions.Migrations
                         CategoryID = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.ProductID);
+
+            //Configuration.Seed(connection);
         }
 
         public override void Down()

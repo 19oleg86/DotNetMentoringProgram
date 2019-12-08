@@ -5,6 +5,7 @@ namespace Task2EntityFramework_Versions.Migrations
     
     public partial class Version_13 : DbMigration
     {
+        //NorthwindDB context = new NorthwindDB();
         public override void Up()
         {
             CreateTable(
@@ -28,8 +29,9 @@ namespace Task2EntityFramework_Versions.Migrations
                         FoundationDate = c.DateTime(nullable: false),
                     })
                 .PrimaryKey(t => t.CustomerId);
+            //Configuration.Seed(context);
         }
-        
+
         public override void Down()
         {
             DropTable("dbo.Customers");
