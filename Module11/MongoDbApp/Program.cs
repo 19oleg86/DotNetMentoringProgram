@@ -47,9 +47,27 @@ namespace MongoDbApp
             ChangeEachBookCountOnOne().GetAwaiter().GetResult();
             Console.WriteLine();
 
+            Console.WriteLine("Add additional genre Favority where Fantasy exists");
+            AddAdditionalGenreWhereFantasy().GetAwaiter().GetResult();
+            Console.WriteLine();
+
             Console.WriteLine("Press Enter to clear the database");
             Console.ReadLine();
             DeleteBooks().GetAwaiter().GetResult();
+        }
+
+        private static async Task AddAdditionalGenreWhereFantasy()
+        {
+            string connectionString = ConfigurationManager.ConnectionStrings["MongoDB"].ConnectionString;
+            var client = new MongoClient(connectionString);
+            var database = client.GetDatabase("library");
+            var collection = database.GetCollection<BsonDocument>("books");
+            var filter = Builders<BsonDocument>.Filter.Eq("Genre", "Fantasy");
+            var update = Builders<BsonDocument>.Update.AddToSet("Genre", "Favority");
+            var books = await collection.UpdateManyAsync(filter, update);
+            Console.WriteLine("Display all documents:");
+            DisplayDocs().GetAwaiter().GetResult();
+            Console.WriteLine();
         }
 
         private static async Task ChangeEachBookCountOnOne()
@@ -62,7 +80,6 @@ namespace MongoDbApp
             Console.WriteLine("Display all documents:");
             DisplayDocs().GetAwaiter().GetResult();
             Console.WriteLine();
-
         }
 
         private static async Task FindAllBooksWithoutAuthors()
