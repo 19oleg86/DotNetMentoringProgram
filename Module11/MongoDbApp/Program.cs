@@ -25,13 +25,37 @@ namespace MongoDbApp
 
             Console.WriteLine("Display all documents: ");
             DisplayDocs().GetAwaiter().GetResult();
+            Console.WriteLine();
 
             Console.WriteLine("Books with count more than 1:");
             FindBooksMoreThanOne().GetAwaiter().GetResult();
+            Console.WriteLine();
+
+            Console.WriteLine("Books with Maximum and Minimum Count values:");
+            FindBooksWithMaxAndMinCount().GetAwaiter().GetResult();
 
             Console.WriteLine("Press Enter to clear the database");
             Console.ReadLine();
             DeleteBooks().GetAwaiter().GetResult();
+        }
+
+        private static async Task FindBooksWithMaxAndMinCount()
+        {
+            string connectionString = ConfigurationManager.ConnectionStrings["MongoDB"].ConnectionString;
+            var client = new MongoClient(connectionString);
+            var database = client.GetDatabase("library");
+            var collection = database.GetCollection<BsonDocument>("books");
+            var filter = new BsonDocument();
+            var books = await collection.Find(filter).Sort("{Count:-1}").Limit(1).ToListAsync();
+            foreach (var doc in books)
+            {
+                Console.WriteLine("Book with Maximum of Count: " + doc);
+            }
+            books = await collection.Find(filter).Sort("{Count:1}").Limit(1).ToListAsync();
+            foreach (var doc in books)
+            {
+                Console.WriteLine("Book with Minimum of Count: " + doc);
+            }
         }
 
         private static async Task FindBooksMoreThanOne()
