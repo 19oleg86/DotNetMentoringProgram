@@ -43,9 +43,26 @@ namespace MongoDbApp
             FindAllBooksWithoutAuthors().GetAwaiter().GetResult();
             Console.WriteLine();
 
+            Console.WriteLine("Change each book count on 1:");
+            ChangeEachBookCountOnOne().GetAwaiter().GetResult();
+            Console.WriteLine();
+
             Console.WriteLine("Press Enter to clear the database");
             Console.ReadLine();
             DeleteBooks().GetAwaiter().GetResult();
+        }
+
+        private static async Task ChangeEachBookCountOnOne()
+        {
+            string connectionString = ConfigurationManager.ConnectionStrings["MongoDB"].ConnectionString;
+            var client = new MongoClient(connectionString);
+            var database = client.GetDatabase("library");
+            var collection = database.GetCollection<BsonDocument>("books");
+            var books = await collection.UpdateManyAsync(new BsonDocument(), new BsonDocument("$inc", new BsonDocument("Count", 1)));
+            Console.WriteLine("Display all documents:");
+            DisplayDocs().GetAwaiter().GetResult();
+            Console.WriteLine();
+
         }
 
         private static async Task FindAllBooksWithoutAuthors()
