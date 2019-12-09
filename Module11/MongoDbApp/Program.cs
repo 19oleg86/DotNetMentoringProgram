@@ -33,10 +33,49 @@ namespace MongoDbApp
 
             Console.WriteLine("Books with Maximum and Minimum Count values:");
             FindBooksWithMaxAndMinCount().GetAwaiter().GetResult();
+            Console.WriteLine();
+
+            Console.WriteLine("All authors (without duplicates):");
+            FindAllAuthorsOnce().GetAwaiter().GetResult();
+            Console.WriteLine();
+
+            Console.WriteLine("All books without authors:");
+            FindAllBooksWithoutAuthors().GetAwaiter().GetResult();
+            Console.WriteLine();
 
             Console.WriteLine("Press Enter to clear the database");
             Console.ReadLine();
             DeleteBooks().GetAwaiter().GetResult();
+        }
+
+        private static async Task FindAllBooksWithoutAuthors()
+        {
+            string connectionString = ConfigurationManager.ConnectionStrings["MongoDB"].ConnectionString;
+            var client = new MongoClient(connectionString);
+            var database = client.GetDatabase("library");
+            var collection = database.GetCollection<BsonDocument>("books");
+            var filter = new BsonDocument("Author", "");
+            var books = await collection.Find(filter).Project("{_id:0}").ToListAsync();
+            var fiteredBooks = books.Distinct();
+            foreach (var doc in fiteredBooks)
+            {
+                Console.WriteLine(doc);
+            }
+        }
+
+        private static async Task FindAllAuthorsOnce()
+        {
+            string connectionString = ConfigurationManager.ConnectionStrings["MongoDB"].ConnectionString;
+            var client = new MongoClient(connectionString);
+            var database = client.GetDatabase("library");
+            var collection = database.GetCollection<BsonDocument>("books");
+            var filter = new BsonDocument();
+            var books = await collection.Find(filter).Project("{Author:1, _id:0}").ToListAsync();
+            var fiteredBooks = books.Distinct();
+            foreach (var doc in fiteredBooks)
+            {
+                Console.WriteLine(doc);
+            }
         }
 
         private static async Task FindBooksWithMaxAndMinCount()
@@ -46,12 +85,12 @@ namespace MongoDbApp
             var database = client.GetDatabase("library");
             var collection = database.GetCollection<BsonDocument>("books");
             var filter = new BsonDocument();
-            var books = await collection.Find(filter).Sort("{Count:-1}").Limit(1).ToListAsync();
+            var books = await collection.Find(filter).Sort("{Count:-1}").Limit(1).Project("{_id:0}").ToListAsync();
             foreach (var doc in books)
             {
                 Console.WriteLine("Book with Maximum of Count: " + doc);
             }
-            books = await collection.Find(filter).Sort("{Count:1}").Limit(1).ToListAsync();
+            books = await collection.Find(filter).Sort("{Count:1}").Limit(1).Project("{_id:0}").ToListAsync();
             foreach (var doc in books)
             {
                 Console.WriteLine("Book with Minimum of Count: " + doc);
