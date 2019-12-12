@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<SourceAnalyzer Name="MyCustomRules">
+  <Description>
+    Custom rules enforcing blah blah blah.
+  </Description>
+  <Rules>
+    <RuleGroup Name="Fun Rules You Will Love">
+      <Rule Name="ClassMustHavePrefixController" CheckId="MY1000">
+        <Context>Class mus have a Controller prefix.</Context>
+        <Description>Validates that the code does not contain any empty block statements.</Description>
+      </Rule>
+      <Rule Name="CodeMustNotContainHardcodedStrings" CheckId="MY1001">
+        <Context>The code should not contain any hard-coded strings.</Context>
+        <Description>Validates that the code does not contain any hard-coded strings.</Description>
+      </Rule>
+    </RuleGroup>
+  </Rules>
+</SourceAnalyzer>
