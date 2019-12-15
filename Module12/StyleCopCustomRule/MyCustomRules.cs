@@ -9,43 +9,77 @@ using System.Threading.Tasks;
 
 namespace StyleCopCustomRule
 {
+    class MyClass : Controller
+    {
+
+    }
     [SourceAnalyzer(typeof(CsParser))]
     public class MyCustomRules : SourceAnalyzer
     {
-        public override void AnalyzeDocument(CodeDocument document)
+        public override void AnalyzeDocument(CodeDocument currentCodeDocument)
         {
-            CsDocument csharpDocument = (CsDocument)document;
-            if (csharpDocument.RootElement != null && !csharpDocument.RootElement.Generated)
+            var codeDocument = (CsDocument)currentCodeDocument;
+            if (codeDocument.RootElement != null && !codeDocument.RootElement.Generated)
             {
-                // Run the custom rules against the code.
-                csharpDocument.WalkDocument(
-            new CodeWalkerElementVisitor<object>(this.VisitElement),
-            new CodeWalkerStatementVisitor<object>(this.VisitStatement),
-            new CodeWalkerExpressionVisitor<object>(this.VisitExpression));
+                codeDocument.WalkDocument(InspectCurrentElement, null, null);
             }
         }
 
-        private bool VisitExpression(Expression expression, Expression parentExpression, Statement parentStatement, CsElement parentElement, object context)
+        private bool InspectCurrentElement(CsElement element, CsElement parentElement, object context)
         {
-            throw new NotImplementedException();
-        }
-
-        private bool VisitElement(CsElement element, CsElement parentElement, object context)
-        {
-            if (element.ElementType == ElementType.Class/* && element.Parent.GetType() == typeof(Controller)  && !element.Name.EndsWith("Controller")*/)
+            if (element is Class cClass && cClass.BaseClass.Contains("Controller"))
             {
-                this.AddViolation(parentElement, element.LineNumber, "ClassMustHavePrefixController");
-            }
-            return false;
-        }
+                var hasMvcUsingParent = parentElement?.ChildElements
+                    .Any(x => x.ElementType == ElementType.UsingDirective && x.Declaration.Name.Equals("System.Web.Mvc", StringComparison.Ordinal)) ?? false;
 
-        private bool VisitStatement(Statement statement, Expression parentExpression, Statement parentStatement, CsElement parentElement, object context)
-        {
-            if (statement.StatementType == StatementType.Block && statement.ChildStatements.Count == 0)
-            {
-                this.AddViolation(parentElement, statement.LineNumber, "BlockStatementsShouldNotBeEmpty");
+                var hasMvcUsingRoot = parentElement.FindParentElement()?.ChildElements
+                    .Any(x => x.ElementType == ElementType.UsingDirective && x.Declaration.Name.Equals("System.Web.Mvc", StringComparison.Ordinal)) ?? false;
+
+                if (hasMvcUsingParent || hasMvcUsingRoot)
+                {
+                    if (!cClass.Name.EndsWith("Controller"))
+                        AddViolation(element, "SystemWebMvcControllerMustHaveSuffixController", "SystemWebMvcControllerMustHaveSuffixController");
+
+                    if (!element.Attributes.Any(x => x.ChildTokens.Any(t => t.Text.Contains("Authorize"))))
+                    {
+                        var publicMethods = element.ChildElements.Where(x =>
+                            x.ElementType == ElementType.Method && x.AccessModifier == AccessModifierType.Public).ToList();
+
+                        var hasNonAutorizePublicMethods = !publicMethods.Any() || publicMethods.Any(x => !x.Attributes.Any(a => a.ChildTokens.Any(t => t.Text.Contains("Authorize"))));
+
+                        if (hasNonAutorizePublicMethods)
+                            AddViolation(element, "SystemWebMvcControllerMustHaveAttribute", "SystemWebMvcControllerMustHaveAttribute");
+                    }
+                }
             }
-            return false;
+
+            if (element.ElementType == ElementType.Namespace && element.Declaration.Name.EndsWith(".Entities"))
+            {
+                var classElements = element.ChildElements.Where(x => x.ElementType == ElementType.Class);
+
+                foreach (var clElement in classElements)
+                {
+                    if (clElement is Class cl)
+                    {
+                        if (cl.AccessModifier != AccessModifierType.Public)
+                            AddViolation(parentElement, "ClassUnderEntitiesNamespaceMustBePublic", "ClassUnderEntitiesNamespaceMustBePublic");
+
+                        if (!clElement.Attributes.Any(x => x.ChildTokens.Any(t => t.Text.Contains("DataContract"))))
+                            AddViolation(parentElement, "ClassUnderEntitiesNamespaceMustHaveAttribute", "ClassUnderEntitiesNamespaceMustHaveAttribute");
+                    }
+
+                    var propElements = clElement.ChildElements.Where(x => x.ElementType == ElementType.Property).ToList();
+
+                    var idElement = propElements.FirstOrDefault(x => x.Declaration.Name.Equals("Id", StringComparison.Ordinal));
+                    if (idElement == null || idElement.AccessModifier != AccessModifierType.Public)
+                        AddViolation(parentElement, "ClassUnderEntitiesNamespaceMustHavePublicId", "ClassUnderEntitiesNamespaceMustHavePublicId");
+
+                    var nameElement = propElements.FirstOrDefault(_ => _.Declaration.Name.Equals("Name", StringComparison.Ordinal));
+                    if (nameElement == null || nameElement.AccessModifier != AccessModifierType.Public)
+                        AddViolation(parentElement, "ClassUnderEntitiesNamespaceMustHavePublicName", "ClassUnderEntitiesNamespaceMustHavePublicName");
+                }
+            }
+            return true;
         }
     }
 }

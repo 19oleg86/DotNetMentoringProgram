@@ -3,14 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.Mvc;
 
 namespace StyleCopCustomRule
 {
-    class Example
+    class Class1 : Controller
     {
-        class MyClass : System.Web.Mvc.Controller
-        {
-
-        }
     }
 }
