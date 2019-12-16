@@ -9,10 +9,6 @@ using System.Threading.Tasks;
 
 namespace StyleCopCustomRule
 {
-    class MyClass : Controller
-    {
-
-    }
     [SourceAnalyzer(typeof(CsParser))]
     public class MyCustomRules : SourceAnalyzer
     {
