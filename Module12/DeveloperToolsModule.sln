@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Task2MaestroNet", "Task2Mae
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyNugetFeed", "MyNugetFeed\MyNugetFeed.csproj", "{FA6A8B6B-F154-4F9F-8CAE-39E79B826BAC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NugetTest", "NugetTest\NugetTest.csproj", "{DA4B589D-7D5B-4555-B108-AA0F3AA3C9FB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{FA6A8B6B-F154-4F9F-8CAE-39E79B826BAC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FA6A8B6B-F154-4F9F-8CAE-39E79B826BAC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FA6A8B6B-F154-4F9F-8CAE-39E79B826BAC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DA4B589D-7D5B-4555-B108-AA0F3AA3C9FB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DA4B589D-7D5B-4555-B108-AA0F3AA3C9FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DA4B589D-7D5B-4555-B108-AA0F3AA3C9FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DA4B589D-7D5B-4555-B108-AA0F3AA3C9FB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
