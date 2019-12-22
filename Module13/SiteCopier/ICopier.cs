@@ -8,6 +8,6 @@ namespace SiteCopier
 {
     interface ICopier
     {
-        void SaveSiteCopy(string siteUrl, string destination);
+        void SaveSiteCopy();
     }
 }
