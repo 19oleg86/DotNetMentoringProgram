@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SiteCopier", "SiteCopier\Si
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MainHost", "MainHost\MainHost.csproj", "{BFBA1B5F-0913-4DA1-B482-CBEC07F6DE99}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleHttpHandler", "SimpleHttpHandler\SimpleHttpHandler.csproj", "{79B9A15B-FBB6-4AC3-9C2F-DA9802830904}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{BFBA1B5F-0913-4DA1-B482-CBEC07F6DE99}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BFBA1B5F-0913-4DA1-B482-CBEC07F6DE99}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BFBA1B5F-0913-4DA1-B482-CBEC07F6DE99}.Release|Any CPU.Build.0 = Release|Any CPU
+		{79B9A15B-FBB6-4AC3-9C2F-DA9802830904}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{79B9A15B-FBB6-4AC3-9C2F-DA9802830904}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{79B9A15B-FBB6-4AC3-9C2F-DA9802830904}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{79B9A15B-FBB6-4AC3-9C2F-DA9802830904}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
