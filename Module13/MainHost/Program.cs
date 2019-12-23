@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using SiteCopier;
 
 namespace MainHost
@@ -16,7 +12,8 @@ namespace MainHost
             DirectoryInfo projectDirectory = new DirectoryInfo(@"..\..");
             var pathToSaveSite = projectDirectory.FullName + @"\PathToSaveSite\";
             var pathToSaveCss = projectDirectory.FullName + @"\PathToSaveSite\style\";
-            Copier copier = new Copier(address, pathToSaveSite, pathToSaveCss);
+            var pathToSaveImages = projectDirectory.FullName + @"\PathToSaveSite\images\";
+            Copier copier = new Copier(address, pathToSaveSite, pathToSaveCss, pathToSaveImages);
             copier.SaveSiteCopy();
 
             Console.ReadLine();

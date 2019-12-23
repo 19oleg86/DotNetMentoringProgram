@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Net.Http;
 using HtmlAgilityPack;
 using System.IO;
@@ -19,15 +16,19 @@ namespace SiteCopier
         string finalPath = string.Empty;
         string cssAddress = string.Empty;
         string sccFinalFolder = string.Empty;
+        string imageAddress = string.Empty;
+        string imageFinalFolder = string.Empty;
+
         static Copier()
         {
             client = new HttpClient();
         }
-        public Copier(string path, string destination, string cssDestination)
+        public Copier(string path, string destination, string cssDestination, string imageDestination)
         {
             uri = path;
             _destination = destination;
             sccFinalFolder = cssDestination;
+            imageFinalFolder = imageDestination;
         }
         public async void SaveSiteCopy()
         {
@@ -40,20 +41,38 @@ namespace SiteCopier
                 HtmlDocument hap = new HtmlDocument();
                 hap.LoadHtml(responseBody);
 
+                //collecting all css
                 CQ cq = CQ.CreateFromUrl(uri);
                 var cssHrefs = cq["link[rel=stylesheet]"].Select(q => q.GetAttribute("href")).ToArray();
                 WebClient webClient = new WebClient();
                 sccFinalFolder += @"style.css";
                 for (int i = 0; i < cssHrefs.Length; i++)
                 {
-                    cssAddress = uri += cssHrefs[i];
+                    cssAddress = uri;
+                    cssAddress += cssHrefs[i];
                     webClient.DownloadFile(cssAddress, sccFinalFolder);
                 }
 
+                //collecting all images
+                cq = CQ.CreateFromUrl(uri);
+                var images = cq.Find("img").Select(q => q.GetAttribute("src")).ToArray();
+                for (int i = 0; i < images.Length; i++)
+                {
+                    imageAddress = uri;
+                    if (images[i].StartsWith("/"))
+                        images[i] = images[i].Substring(1);
+                    imageAddress += images[i];
+                    imageFinalFolder += images[i];
+                    if (imageFinalFolder.Contains("/"))
+                        imageFinalFolder = imageFinalFolder.Replace("/", "-");
+                    webClient.DownloadFile(imageAddress, imageFinalFolder);
+                }
+
+                //collecting all URLs 
                 HtmlNodeCollection linkNodes = hap.DocumentNode.SelectNodes("//a");
                 if (linkNodes != null)
                     foreach (HtmlNode node in linkNodes)
-                    {
+                    { 
                         if (!node.InnerText.Contains("\n"))
                         { 
                             finalPath = $"{_destination}{node.InnerText}.html"; 
@@ -61,11 +80,6 @@ namespace SiteCopier
                             finalPath = string.Empty;
                         }
                     }
-
-                //Console.WriteLine(node.GetAttributeValue("href", null));
-                //File.WriteAllText(_destination + "res.html", responseBody);
-                //Console.WriteLine(responseBody);
-
             }
             catch (HttpRequestException e)
             {
