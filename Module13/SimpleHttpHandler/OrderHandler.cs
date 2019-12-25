@@ -3,6 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Configuration;
+using System.Collections.Specialized;
+using System.IO;
 
 namespace SimpleHttpHandler
 {
@@ -15,7 +18,11 @@ namespace SimpleHttpHandler
     }
     public class OrderHandler : IHttpHandler
     {
+        static NameValueCollection section = (NameValueCollection)ConfigurationManager.GetSection("secureAppSettings");
+        string pathForXlsx = section["reportPath"];
+        
         //   https://localhost:port + /handler/?OrderCode=abc&ReturnOrders=3&SkipOrders=1
+
         List<Order> orders = new List<Order>()
         {
             new Order(){ OrderId = 1, OrderCode = "abc", DateFrom = DateTime.Now, DateTo = DateTime.Now},
@@ -61,10 +68,26 @@ namespace SimpleHttpHandler
                         worksheet.Cell("A" + counter.ToString()).Value = item.OrderId.ToString();
                         counter++;
                     } 
-                    workbook.SaveAs(@"D:\Report.xlsx");
+                    workbook.SaveAs(pathForXlsx + "Report.xlsx");
                 }
             }
-            
+
+            string filePath = section["reportPath"] + "Report.xlsx";
+
+            string contentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+            context.Response.ContentType = contentType;
+
+            FileStream stream = File.OpenRead(filePath);
+
+            int b;
+            context.Response.Clear();
+            context.Response.ClearHeaders();
+            context.Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+            while ((b = stream.ReadByte()) != -1)
+            {
+                context.Response.OutputStream.WriteByte((byte)b);
+            }
+            context.Response.OutputStream.Flush();
         }
     }
 }

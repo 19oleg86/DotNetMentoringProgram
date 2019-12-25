@@ -48,9 +48,10 @@ namespace SiteCopier
                 sccFinalFolder += @"style.css";
                 for (int i = 0; i < cssHrefs.Length; i++)
                 {
-                    cssAddress = uri;
+                    cssAddress = uri + @"/";
                     cssAddress += cssHrefs[i];
                     webClient.DownloadFile(cssAddress, sccFinalFolder);
+                    cssAddress = string.Empty;
                 }
 
                 //collecting all images
@@ -58,7 +59,7 @@ namespace SiteCopier
                 var images = cq.Find("img").Select(q => q.GetAttribute("src")).ToArray();
                 for (int i = 0; i < images.Length; i++)
                 {
-                    imageAddress = uri;
+                    imageAddress = uri + @"/";
                     if (images[i].StartsWith("/"))
                         images[i] = images[i].Substring(1);
                     imageAddress += images[i];
@@ -66,20 +67,29 @@ namespace SiteCopier
                     if (imageFinalFolder.Contains("/"))
                         imageFinalFolder = imageFinalFolder.Replace("/", "-");
                     webClient.DownloadFile(imageAddress, imageFinalFolder);
+                    imageAddress = string.Empty;
                 }
 
-                //collecting all URLs 
+                //collecting all URLs
                 HtmlNodeCollection linkNodes = hap.DocumentNode.SelectNodes("//a");
                 if (linkNodes != null)
+                {
                     foreach (HtmlNode node in linkNodes)
-                    { 
+                    {
                         if (!node.InnerText.Contains("\n"))
-                        { 
-                            finalPath = $"{_destination}{node.InnerText}.html"; 
-                            File.WriteAllText(finalPath, node.OuterHtml);
-                            finalPath = string.Empty;
+                        {
+                            if (node.OuterHtml.Contains("href=\"/"))
+                            {
+                                HttpResponseMessage innerrResponse = await client.GetAsync(uri + node.GetAttributeValue("href", null));
+                                innerrResponse.EnsureSuccessStatusCode();
+                                string innerResponseBody = await innerrResponse.Content.ReadAsStringAsync();
+                                finalPath = $"{_destination}{node.InnerText}.html";
+                                File.WriteAllText(finalPath, innerResponseBody);
+                                finalPath = string.Empty;
+                            }
                         }
                     }
+                } 
             }
             catch (HttpRequestException e)
             {
