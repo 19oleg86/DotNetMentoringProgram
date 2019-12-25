@@ -2,6 +2,6 @@
 {
     interface ICopier
     {
-        void SaveSiteCopy();
+        void SaveSiteCopyAsync();
     }
 }

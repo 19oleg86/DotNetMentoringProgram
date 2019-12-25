@@ -30,7 +30,7 @@ namespace SiteCopier
             sccFinalFolder = cssDestination;
             imageFinalFolder = imageDestination;
         }
-        public async void SaveSiteCopy()
+        public async void SaveSiteCopyAsync()
         {
             try
             {
