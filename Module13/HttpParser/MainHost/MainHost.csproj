@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{BFBA1B5F-0913-4DA1-B482-CBEC07F6DE99}</ProjectGuid>
+    <ProjectGuid>{DDBE2D1E-5F18-41DF-93DA-1616960FB5F6}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <RootNamespace>MainHost</RootNamespace>
     <AssemblyName>MainHost</AssemblyName>
@@ -50,14 +50,13 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SiteCopier\SiteCopier.csproj">
-      <Project>{70123e39-a896-4392-bd4d-c2c419ce7d84}</Project>
-      <Name>SiteCopier</Name>
-    </ProjectReference>
+    <Folder Include="PathToSaveSite\" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="PathToSaveSite2\" />
-    <Folder Include="PathToSaveSite\" />
+    <ProjectReference Include="..\SiteCopier\SiteCopier.csproj">
+      <Project>{92560497-fd21-4608-990e-3bb1125f9bff}</Project>
+      <Name>SiteCopier</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

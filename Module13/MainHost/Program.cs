@@ -19,7 +19,8 @@ namespace MainHost
             string address = "https://docs.microsoft.com/";
             DirectoryInfo projectDirectory = new DirectoryInfo(@"..\..");
             var pathToSaveSite = projectDirectory.FullName + @"\PathToSaveSite2\";
-            Copier2 copier = new Copier2(address, pathToSaveSite/*, pathToSaveCss, pathToSaveImages*/);
+            var pathToSaveCss = projectDirectory.FullName + @"\PathToSaveSite\files\";
+            Copier2 copier = new Copier2(address, pathToSaveSite, pathToSaveCss/*, pathToSaveImages*/);
             copier.SaveSiteCopyAsync();
 
             Console.WriteLine("Site is in saving process, you can chech PathToSaveSite directory in MainHost project");
