@@ -31,42 +31,42 @@ namespace SiteCopier
         }
         public async void SaveSiteCopy()
         {
-            //HttpResponseMessage response = await client.GetAsync(address);
-            //response.EnsureSuccessStatusCode();
-            //string responseBody = await response.Content.ReadAsStringAsync();
+            HttpResponseMessage response = await client.GetAsync(address);
+            response.EnsureSuccessStatusCode();
+            string responseBody = await response.Content.ReadAsStringAsync();
 
-            //string responseBodyUTF = responseBody.Replace("windows-1251", "utf-8");
+            string responseBodyUTF = responseBody.Replace("windows-1251", "utf-8");
 
-            //File.WriteAllText(passToSaveSite + "index.html", responseBodyUTF);
+            File.WriteAllText(passToSaveSite + "index.html", responseBodyUTF);
 
-            //HtmlDocument hap = new HtmlDocument();
-            //hap.LoadHtml(responseBody);
+            HtmlDocument hap = new HtmlDocument();
+            hap.LoadHtml(responseBody);
 
-            ////collecting css
+            //collecting css
             CQ cq = CQ.CreateFromUrl(address);
-            //var cssHrefs = cq["link[rel=stylesheet]"].Select(q => q.GetAttribute("href")).ToArray();
+            var cssHrefs = cq["link[rel=stylesheet]"].Select(q => q.GetAttribute("href")).ToArray();
             WebClient webClient = new WebClient();
-            //for (int i = 0; i < cssHrefs.Length; i++)
-            //{
-            //    if (!cssHrefs[i].StartsWith("//"))
-            //    {
-            //        webClient.DownloadFile(cssHrefs[i], passToSaveFiles + "style.css");
-            //    }
-            //}
-
-            //collecting images
-            //cq = CQ.CreateFromUrl(address);
-            var images = cq.Find("//body/div/img").Select(q => q.GetAttribute("src")).ToArray();
-            for (int i = 0; i < images.Length; i++)
+            for (int i = 0; i < cssHrefs.Length; i++)
             {
-                if (!images[i].StartsWith("//"))
+                if (!cssHrefs[i].StartsWith("//"))
                 {
-                    imageFinalFolder = passToSaveFiles + images[i];
-                    webClient.DownloadFile(images[i], imageFinalFolder);
+                    webClient.DownloadFile(cssHrefs[i], passToSaveFiles + "style.css");
                 }
             }
 
-
+            //collecting images
+            cq = CQ.CreateFromUrl(address);
+            var html = cq.Render();
+            var images = cq["img"].Select(q => q.GetAttribute("data-src"));
+            foreach (var image in images)
+            {
+                if (image != null)
+                {
+                    int index = image.LastIndexOf("/");
+                    string finalName = image.Substring(index + 1);
+                    webClient.DownloadFile(image, passToSaveFiles + finalName);
+                }
+            }
         }
     }
 }
