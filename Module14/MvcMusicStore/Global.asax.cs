@@ -1,7 +1,9 @@
 ﻿using Autofac;
 using Autofac.Integration.Mvc;
 using MvcMusicStore.Controllers;
+using MvcMusicStore.Infrastructure;
 using NLog;
+using PerformanceCounterHelper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -35,6 +37,20 @@ namespace MvcMusicStore
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
             logger.Info("Application Started");
+
+            using (var counterHelper = PerformanceHelper.CreateCounterHelper<Counters>("Enter Home counter instance"))
+            {
+                counterHelper.RawValue(Counters.GoToHome, 0);
+            }
+            using (var counterHelper = PerformanceHelper.CreateCounterHelper<Counters>("Successful Log in counter instance"))
+            {
+                counterHelper.RawValue(Counters.SuccessLogIn, 0); 
+            }
+            using (var counterHelper = PerformanceHelper.CreateCounterHelper<Counters>("Successful Log off counter instance"))
+            {
+                counterHelper.RawValue(Counters.successLogOff, 0);
+            }
+
         }
 
         protected void Application_Error()

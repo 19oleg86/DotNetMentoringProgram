@@ -2,8 +2,10 @@
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using MvcMusicStore.Infrastructure;
 using MvcMusicStore.Models;
 using NLog;
+using PerformanceCounterHelper;
 
 namespace MvcMusicStore.Controllers
 {
@@ -12,6 +14,12 @@ namespace MvcMusicStore.Controllers
         private readonly MusicStoreEntities _storeContext = new MusicStoreEntities();
 
         private readonly ILogger logger;
+
+        static CounterHelper<Counters> counterHelper;
+        static HomeController()
+        {
+            counterHelper = PerformanceHelper.CreateCounterHelper<Counters>("Enter Home counter instance");
+        }
 
         public HomeController(ILogger logger)
         {
@@ -22,6 +30,8 @@ namespace MvcMusicStore.Controllers
         public async Task<ActionResult> Index()
         {
             logger.Debug("Enter to Home page is made");
+
+            counterHelper.Increment(Counters.GoToHome);
 
             return View(await _storeContext.Albums
                 .OrderByDescending(a => a.OrderDetails.Count())

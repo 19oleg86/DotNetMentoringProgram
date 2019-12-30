@@ -5,7 +5,9 @@ using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin.Security;
+using MvcMusicStore.Infrastructure;
 using MvcMusicStore.Models;
+using PerformanceCounterHelper;
 
 namespace MvcMusicStore.Controllers
 {
@@ -23,6 +25,17 @@ namespace MvcMusicStore.Controllers
         private const string XsrfKey = "XsrfId";
 
         private UserManager<ApplicationUser> _userManager;
+
+        static CounterHelper<Counters> counterHelperLogIn;
+        static CounterHelper<Counters> counterHelperLogOff;
+
+        static AccountController()
+        {
+            counterHelperLogIn = PerformanceHelper.CreateCounterHelper<Counters>("Successful Log in counter instance");
+            counterHelperLogOff = PerformanceHelper.CreateCounterHelper<Counters>("Successful Log off counter instance");
+        }
+
+        
 
         public AccountController()
             : this(new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext())))
@@ -61,6 +74,7 @@ namespace MvcMusicStore.Controllers
             ViewBag.ReturnUrl = returnUrl;
 
             return View();
+
         }
 
         // POST: /Account/Login
@@ -75,14 +89,15 @@ namespace MvcMusicStore.Controllers
                 if (user != null)
                 {
                     await SignInAsync(user, model.RememberMe);
-
+                    counterHelperLogIn.Increment(Counters.SuccessLogIn);
                     return RedirectToLocal(returnUrl);
                 }
 
                 ModelState.AddModelError("", "Invalid username or password.");
             }
-
+            
             return View(model);
+            
         }
 
         // GET: /Account/Register
@@ -322,8 +337,9 @@ namespace MvcMusicStore.Controllers
         public ActionResult LogOff()
         {
             AuthenticationManager.SignOut();
-
+            counterHelperLogOff.Increment(Counters.successLogOff);
             return RedirectToAction("Index", "Home");
+            
         }
 
         // GET: /Account/ExternalLoginFailure
