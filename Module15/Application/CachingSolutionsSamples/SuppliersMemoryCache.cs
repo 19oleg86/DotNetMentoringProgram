@@ -19,7 +19,7 @@ namespace CachingSolutionsSamples
 
         public void Set(string forUser, IEnumerable<Supplier> employees)
         {
-            cache.Set(prefix + forUser, employees, ObjectCache.InfiniteAbsoluteExpiration);
+            cache.Set(prefix + forUser, employees, ObjectCache.InfiniteAbsoluteExpiration); 
         }
     }
 }
