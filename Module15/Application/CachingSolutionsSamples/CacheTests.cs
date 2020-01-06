@@ -10,7 +10,7 @@ namespace CachingSolutionsSamples
 	public class CacheTests
 	{
 		[TestMethod]
-		public void MemoryCache()
+		public void MemoryCacheCategory()
 		{
 			var categoryManager = new CategoriesManager(new CategoriesMemoryCache());
 
@@ -21,14 +21,38 @@ namespace CachingSolutionsSamples
 			}
 		}
 
+		//[TestMethod]
+		//public void RedisCache()
+		//{
+		//	var categoryManager = new CategoriesManager(new CategoriesRedisCache("localhost"));
+
+		//	for (var i = 0; i < 10; i++)
+		//	{
+		//		Console.WriteLine(categoryManager.GetCategories().Count());
+		//		Thread.Sleep(100);
+		//	}
+		//}
+
 		[TestMethod]
-		public void RedisCache()
+		public void MemoryCacheEmployee()
 		{
-			var categoryManager = new CategoriesManager(new CategoriesRedisCache("localhost"));
+			var employeeManager = new EmployeesManager(new EmployeesMemoryCache());
 
 			for (var i = 0; i < 10; i++)
 			{
-				Console.WriteLine(categoryManager.GetCategories().Count());
+				Console.WriteLine(employeeManager.GetEmployees().Count());
+				Thread.Sleep(100);
+			}
+		}
+
+		[TestMethod]
+		public void MemoryCacheSupplier()
+		{
+			var supplierManager = new SuppliersManager(new SuppliersMemoryCache());
+
+			for (var i = 0; i < 10; i++)
+			{
+				Console.WriteLine(supplierManager.GetSuppliers().Count());
 				Thread.Sleep(100);
 			}
 		}

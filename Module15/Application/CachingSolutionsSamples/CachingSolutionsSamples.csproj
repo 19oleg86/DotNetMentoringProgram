@@ -69,9 +69,15 @@
     <Compile Include="CategoriesManager.cs" />
     <Compile Include="CategoriesMemoryCache.cs" />
     <Compile Include="CategoriesRedisCache.cs" />
+    <Compile Include="EmployeesManager.cs" />
+    <Compile Include="EmployeesMemoryCache.cs" />
     <Compile Include="ICategoriesCache.cs" />
     <Compile Include="CacheTests.cs" />
+    <Compile Include="IEmployeesCache.cs" />
+    <Compile Include="ISuppliersCache.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SuppliersManager.cs" />
+    <Compile Include="SuppliersMemoryCache.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
