@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.Caching;
 
 namespace Task1FibonacciCache
 {
@@ -10,30 +11,51 @@ namespace Task1FibonacciCache
     {
         static void Main(string[] args)
         {
-
+            List<int> finalList;
+            finalList = Fibonacci.GetCachedFibonacci(10);
+            int result;
+            foreach (var item in finalList)
+            {
+                result = (int)Fibonacci.cache.Get(item.ToString());
+                if (result != 0)
+                {
+                    Console.WriteLine(result + " - from cache");
+                }
+                else
+                {
+                    result = 0;
+                }
+            }
+            Console.ReadLine();
         }
-        
-        
     }
 
     class Fibonacci
     {
-        public List<int> listOfNumbers = new List<int>();
-
-        public int GetCachedFibonacci(int n)
+        public static int first = 1;
+        public static int second = 1;
+        public static int next;
+        public static List<int> listOfNumbers = new List<int>();
+        public static Cache cache = new Cache();
+        public static List<int> GetCachedFibonacci(int n)
         {
-            if (n == 0 || n == 1)
+            if (first == second)
             {
-                return n;
+                listOfNumbers.Add(first);
+                listOfNumbers.Add(second);
+                cache.Insert(first.ToString(), first);
+                cache.Insert(second.ToString(), second);
             }
-            else
+            while (listOfNumbers.Count < n)
             {
-                return GetCachedFibonacci(n - 1) + GetCachedFibonacci(n - 2);
+                next = first + second;
+                listOfNumbers.Add(next);
+                cache.Insert(next.ToString(), next);
+                first = second;
+                second = next;
             }
-            
-            //.Add(firstNumber);
 
-
+            return listOfNumbers;
         }
     }
 }
