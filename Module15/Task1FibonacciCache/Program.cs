@@ -58,7 +58,7 @@ namespace Task1FibonacciCache
                         var innerDict = (Dictionary<int, int>)cache.Get("CN");
                         int result;
                         innerDict.TryGetValue(item, out result);
-                        Console.WriteLine( result + " - from cache");
+                        //Console.WriteLine( result + " - from cache");
                         break;
                     }
                 }
