@@ -11,20 +11,32 @@ namespace Task1FibonacciCache
     {
         static void Main(string[] args)
         {
+            // Fibonacci row - 1, 1, 2, 3, 5, 8, 13, 21, 34, 55
             List<int> finalList;
-            finalList = Fibonacci.GetCachedFibonacci(10);
-            int result;
-            foreach (var item in finalList)
+            List<int> tryToFind = new List<int>() { 3, 8, 5 };
+            Dictionary<string, int> dict = new Dictionary<string, int>();
+           
+            // Trying to get 3 then 8 and then 5 from Fibonacci row
+            foreach (var item in tryToFind)
             {
-                result = (int)Fibonacci.cache.Get(item.ToString());
-                if (result != 0)
+                foreach (var digit in Fibonacci.cache)
                 {
-                    Console.WriteLine(result + " - from cache");
+
+                    if (dict.ContainsValue(item))
+                    {
+                        Console.WriteLine((int)Fibonacci.cache.Get(item.ToString()) + " - from cache");
+                        break;
+                    }
                 }
-                else
+                finalList = Fibonacci.GetCachedFibonacci(item);
+                foreach (var number in finalList)
                 {
-                    result = 0;
+                    if (dict.Keys.Contains(number.ToString()))
+                        continue;
+                    dict.Add(number.ToString(), number);
+                    Console.WriteLine(number + " - not from cache");
                 }
+                Console.WriteLine();
             }
             Console.ReadLine();
         }
@@ -46,7 +58,7 @@ namespace Task1FibonacciCache
                 cache.Insert(first.ToString(), first);
                 cache.Insert(second.ToString(), second);
             }
-            while (listOfNumbers.Count < n)
+            while (!listOfNumbers.Contains(n))
             {
                 next = first + second;
                 listOfNumbers.Add(next);

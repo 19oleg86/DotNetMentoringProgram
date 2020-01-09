@@ -21,17 +21,17 @@ namespace CachingSolutionsSamples
 			}
 		}
 
-		//[TestMethod]
-		//public void RedisCache()
-		//{
-		//	var categoryManager = new CategoriesManager(new CategoriesRedisCache("localhost"));
+		[TestMethod]
+		public void RedisCache()
+		{
+			var categoryManager = new CategoriesManager(new CategoriesRedisCache("localhost"));
 
-		//	for (var i = 0; i < 10; i++)
-		//	{
-		//		Console.WriteLine(categoryManager.GetCategories().Count());
-		//		Thread.Sleep(100);
-		//	}
-		//}
+			for (var i = 0; i < 10; i++)
+			{
+				Console.WriteLine(categoryManager.GetCategories().Count());
+				Thread.Sleep(100);
+			}
+		}
 
 		[TestMethod]
 		public void MemoryCacheEmployee()
