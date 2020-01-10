@@ -32,6 +32,7 @@ namespace Task1FibonacciCache
         public static void GetCachedFibonacci(List<int> searchNumbers)
         {
             cache.Insert("CN", dict);
+            Dictionary<int, int> innerDict;
             foreach (var item in searchNumbers)
             {
                 if (first == second)
@@ -40,7 +41,7 @@ namespace Task1FibonacciCache
                     listOfNumbers.Add(second);
                     dict.Add(first, first);
                     if (!dict.Keys.Contains(second))
-                    dict.Add(second, second);
+                        dict.Add(second, second);
                 }
                 while (!listOfNumbers.Contains(item))
                 {
@@ -55,19 +56,18 @@ namespace Task1FibonacciCache
                 {
                     if (digit == item)
                     {
-                        var innerDict = (Dictionary<int, int>)cache.Get("CN");
+                        innerDict = (Dictionary<int, int>)cache.Get("CN");
                         int result;
                         innerDict.TryGetValue(item, out result);
-                        //Console.WriteLine( result + " - from cache");
+                        if (innerDict.Last().Value != item)
+                            Console.WriteLine(item + " - from cache");
+                        Console.WriteLine();
                         break;
                     }
                 }
 
                 foreach (var number in listOfNumbers)
                 {
-                    //if (dict.Keys.Contains(number.ToString()))
-                    //    continue;
-                    //dict.Add(number.ToString(), number);
                     Console.WriteLine(number + " - not from cache");
                 }
                 Console.WriteLine();
