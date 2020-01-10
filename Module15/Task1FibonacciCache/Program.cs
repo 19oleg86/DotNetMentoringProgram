@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Web.Caching;
 
 namespace Task1FibonacciCache
@@ -15,63 +13,63 @@ namespace Task1FibonacciCache
             // Trying to get 3 then 8 and then 5 from Fibonacci row
 
             List<int> tryToFind = new List<int>() { 3, 8, 5 };
-            Fibonacci.GetCachedFibonacci(tryToFind);
+            List<int> finalList = new List<int>();
+
+            foreach (int digit in tryToFind)
+            {
+                finalList = Fibonacci.GetCachedFibonacci(digit);
+                foreach (var item in finalList)
+                {
+                    Console.Write(item + ", ");
+                }
+                Console.WriteLine();
+            }
 
             Console.ReadLine();
         }
     }
 
-    class Fibonacci
+    public class Fibonacci
     {
         public static int first = 1;
         public static int second = 1;
         public static int next;
         public static List<int> listOfNumbers = new List<int>();
+        public static List<int> cachedListOfNumbers = new List<int>();
         public static Cache cache = new Cache();
         public static Dictionary<int, int> dict = new Dictionary<int, int>();
-        public static void GetCachedFibonacci(List<int> searchNumbers)
+        static Fibonacci()
         {
             cache.Insert("CN", dict);
-            Dictionary<int, int> innerDict;
-            foreach (var item in searchNumbers)
+        }
+        public static List<int> GetCachedFibonacci(int searchNumber)
+        {
+            foreach (var digit in dict.Values)
             {
-                if (first == second)
+                if (digit == searchNumber)
                 {
-                    listOfNumbers.Add(first);
-                    listOfNumbers.Add(second);
-                    dict.Add(first, first);
-                    if (!dict.Keys.Contains(second))
-                        dict.Add(second, second);
+                    cachedListOfNumbers.Add(dict[searchNumber]);
+                    return cachedListOfNumbers;     
                 }
-                while (!listOfNumbers.Contains(item))
-                {
-                    next = first + second;
-                    listOfNumbers.Add(next);
-                    dict.Add(next, next);
-                    first = second;
-                    second = next;
-                }
-
-                foreach (var digit in dict.Values)
-                {
-                    if (digit == item)
-                    {
-                        innerDict = (Dictionary<int, int>)cache.Get("CN");
-                        int result;
-                        innerDict.TryGetValue(item, out result);
-                        if (innerDict.Last().Value != item)
-                            Console.WriteLine(item + " - from cache");
-                        Console.WriteLine();
-                        break;
-                    }
-                }
-
-                foreach (var number in listOfNumbers)
-                {
-                    Console.WriteLine(number + " - not from cache");
-                }
-                Console.WriteLine();
             }
+
+            if (first == second)
+            {
+                listOfNumbers.Add(first);
+                listOfNumbers.Add(second);
+                dict.Add(first, first);
+                if(!dict.Keys.Contains(second))
+                dict.Add(second, second);
+            }
+            while (!listOfNumbers.Contains(searchNumber))
+            {
+                next = first + second;
+                listOfNumbers.Add(next);
+                dict.Add(next, next);
+                first = second;
+                second = next;
+            }
+            return listOfNumbers;
         }
     }
 }
