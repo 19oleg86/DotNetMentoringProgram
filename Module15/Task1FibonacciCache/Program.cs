@@ -37,35 +37,32 @@ namespace Task1FibonacciCache
         public static List<int> listOfNumbers = new List<int>();
         public static List<int> cachedListOfNumbers = new List<int>();
         public static Cache cache = new Cache();
-        public static Dictionary<int, int> dict = new Dictionary<int, int>();
         static Fibonacci()
         {
-            cache.Insert("CN", dict);
+            cache.Insert("CN", new Dictionary<int, int>());
         }
         public static List<int> GetCachedFibonacci(int searchNumber)
         {
-            foreach (var digit in dict.Values)
+            var cachedDict = (Dictionary<int, int>)cache["CN"];
+            if (cachedDict.ContainsKey(searchNumber))
             {
-                if (digit == searchNumber)
-                {
-                    cachedListOfNumbers.Add(dict[searchNumber]);
-                    return cachedListOfNumbers;     
-                }
+                cachedListOfNumbers.Add(cachedDict[searchNumber]);
+                return cachedListOfNumbers;
             }
 
             if (first == second)
             {
                 listOfNumbers.Add(first);
                 listOfNumbers.Add(second);
-                dict.Add(first, first);
-                if(!dict.Keys.Contains(second))
-                dict.Add(second, second);
+                cachedDict.Add(first, first);
+                if(!cachedDict.Keys.Contains(second))
+                    cachedDict.Add(second, second);
             }
             while (!listOfNumbers.Contains(searchNumber))
             {
                 next = first + second;
                 listOfNumbers.Add(next);
-                dict.Add(next, next);
+                cachedDict.Add(next, next);
                 first = second;
                 second = next;
             }
