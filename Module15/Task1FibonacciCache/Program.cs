@@ -13,60 +13,56 @@ namespace Task1FibonacciCache
             // Trying to get 3 then 8 and then 5 from Fibonacci row
 
             List<int> tryToFind = new List<int>() { 3, 8, 5 };
-            List<int> finalList = new List<int>();
+            Dictionary<int, int> finalList;
+
+            Fibonacci fibonacci = new Fibonacci();
 
             foreach (int digit in tryToFind)
             {
-                finalList = Fibonacci.GetCachedFibonacci(digit);
+                finalList = fibonacci.GetCachedFibonacci(digit);
                 foreach (var item in finalList)
                 {
-                    Console.Write(item + ", ");
+                    Console.Write(item.Value + ", ");
                 }
                 Console.WriteLine();
             }
-
             Console.ReadLine();
         }
     }
 
     public class Fibonacci
     {
-        public static int first = 1;
-        public static int second = 1;
-        public static int next;
-        public static List<int> listOfNumbers = new List<int>();
-        public static List<int> cachedListOfNumbers = new List<int>();
-        public static Cache cache = new Cache();
-        static Fibonacci()
+        public int first = 1;
+        public int second = 1;
+        public int next;
+        public Cache cache = new Cache();
+
+        public Fibonacci()
         {
             cache.Insert("CN", new Dictionary<int, int>());
         }
-        public static List<int> GetCachedFibonacci(int searchNumber)
+        public Dictionary<int, int> GetCachedFibonacci(int searchNumber)
         {
             var cachedDict = (Dictionary<int, int>)cache["CN"];
             if (cachedDict.ContainsKey(searchNumber))
             {
-                cachedListOfNumbers.Add(cachedDict[searchNumber]);
-                return cachedListOfNumbers;
+                return cachedDict;
             }
 
             if (first == second)
             {
-                listOfNumbers.Add(first);
-                listOfNumbers.Add(second);
                 cachedDict.Add(first, first);
-                if(!cachedDict.Keys.Contains(second))
+                if (!cachedDict.Keys.Contains(second))
                     cachedDict.Add(second, second);
             }
-            while (!listOfNumbers.Contains(searchNumber))
+            while (!cachedDict.Keys.Contains(searchNumber))
             {
                 next = first + second;
-                listOfNumbers.Add(next);
                 cachedDict.Add(next, next);
                 first = second;
                 second = next;
             }
-            return listOfNumbers;
+            return cachedDict;
         }
     }
 }
