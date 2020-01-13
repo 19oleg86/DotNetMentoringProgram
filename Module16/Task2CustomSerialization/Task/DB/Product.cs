@@ -5,6 +5,7 @@ namespace Task.DB
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
+    using System.Runtime.Serialization;
 
     public partial class Product
     {
@@ -13,7 +14,6 @@ namespace Task.DB
         {
             Order_Details = new HashSet<Order_Detail>();
         }
-
         public int ProductID { get; set; }
 
         [Required]

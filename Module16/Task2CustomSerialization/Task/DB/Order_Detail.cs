@@ -5,6 +5,7 @@ namespace Task.DB
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
+    using System.Runtime.Serialization;
 
     [Table("Order Details")]
     public partial class Order_Detail
@@ -21,13 +22,9 @@ namespace Task.DB
 
         [Column(TypeName = "money")]
         public decimal UnitPrice { get; set; }
-
         public short Quantity { get; set; }
-
         public float Discount { get; set; }
-
         public virtual Order Order { get; set; }
-
         public virtual Product Product { get; set; }
     }
 }
