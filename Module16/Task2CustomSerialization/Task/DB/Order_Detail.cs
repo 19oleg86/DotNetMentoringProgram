@@ -7,6 +7,7 @@ namespace Task.DB
     using System.Data.Entity.Spatial;
     using System.Runtime.Serialization;
 
+    [Serializable]
     [Table("Order Details")]
     public partial class Order_Detail
     {

@@ -6,6 +6,7 @@ using System.Runtime.Serialization;
 using System.Linq;
 using System.Collections.Generic;
 using System.Data.Entity.Infrastructure;
+using System.Data.Entity;
 
 namespace Task
 {
@@ -34,6 +35,8 @@ namespace Task
 			{
 				t.LoadProperty(category, x => x.Products);
 			}
+
+			dbContext.Categories.Include(x => x.Products).ToList();
 			
 			tester.SerializeAndDeserialize(categories);
 		}
@@ -48,9 +51,13 @@ namespace Task
 
 			var t = (dbContext as IObjectContextAdapter).ObjectContext;
 
-			var p = products.First();
+			foreach (var product in products)
+			{
+				t.LoadProperty(product, x => x.Order_Details);
+			}
 
-			t.LoadProperty(p, x => x.Order_Details);
+			dbContext.Products.Include(x => x.Category).ToList();
+			dbContext.Products.Include(x => x.Supplier).ToList();
 
 			tester.SerializeAndDeserialize(products);
 		}
@@ -63,6 +70,9 @@ namespace Task
 			var tester = new XmlDataContractSerializerTester<IEnumerable<Order_Detail>>(new NetDataContractSerializer(), true);
 			var orderDetails = dbContext.Order_Details.ToList();
 
+			dbContext.Order_Details.Include(x => x.Order).ToList();
+			dbContext.Order_Details.Include(x => x.Product).ToList();
+
 			tester.SerializeAndDeserialize(orderDetails);
 		}
 
@@ -71,8 +81,22 @@ namespace Task
 		{
 			dbContext.Configuration.ProxyCreationEnabled = true;
 			dbContext.Configuration.LazyLoadingEnabled = true;
+			List<Type> knownTypes = new List<Type>();
+			
+			knownTypes.Add(typeof(Category));
+			knownTypes.Add(typeof(Customer));
+			knownTypes.Add(typeof(CustomerDemographic));
+			knownTypes.Add(typeof(Employee));
+			knownTypes.Add(typeof(Northwind));
+			knownTypes.Add(typeof(Order));
+			knownTypes.Add(typeof(Order_Detail));
+			knownTypes.Add(typeof(Product));
+			knownTypes.Add(typeof(Region));
+			knownTypes.Add(typeof(Shipper));
+			knownTypes.Add(typeof(Supplier));
+			knownTypes.Add(typeof(Territory));
 
-			var tester = new XmlDataContractSerializerTester<IEnumerable<Order>>(new DataContractSerializer(typeof(IEnumerable<Order>)), true);
+			var tester = new XmlDataContractSerializerTester<IEnumerable<Order>>(new DataContractSerializer(typeof(IEnumerable<Order>), knownTypes), true);
 			var orders = dbContext.Orders.ToList();
 
 			tester.SerializeAndDeserialize(orders);
