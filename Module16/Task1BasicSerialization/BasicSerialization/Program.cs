@@ -65,8 +65,8 @@ namespace BasicSerialization
 
                 for (int i = 0; i < desCatalog.innerArray.Length; i++)
                 {
-                    Console.WriteLine($"Desirialized Object is:\n ISBN: {desCatalog.innerArray[0].Isbn},\n Author: {desCatalog.innerArray[0].Author},\n Title: {desCatalog.innerArray[0].Title},\n Genre: {desCatalog.innerArray[0].Genre},\n Publisher: {desCatalog.innerArray[0].Publisher},\n " +
-                $"Publish Date: {desCatalog.innerArray[0].PublishDate},\n Description: {desCatalog.innerArray[0].Description},\n Registration Date: {desCatalog.innerArray[0].RegistrationDate}");
+                    Console.WriteLine($"Desirialized Object is:\n ISBN: {desCatalog.innerArray[i].Isbn},\n Author: {desCatalog.innerArray[i].Author},\n Title: {desCatalog.innerArray[i].Title},\n Genre: {desCatalog.innerArray[i].Genre},\n Publisher: {desCatalog.innerArray[i].Publisher},\n " +
+                $"Publish Date: {desCatalog.innerArray[i].PublishDate},\n Description: {desCatalog.innerArray[i].Description},\n Registration Date: {desCatalog.innerArray[i].RegistrationDate}");
                 }
             }
 
@@ -81,8 +81,8 @@ namespace BasicSerialization
         public Book book1;
         public Book book2;
         public Book book3;
-        [NonSerialized]
         public Book[] innerArray = new Book[3];
+        
         public Catalog()
         {
         }

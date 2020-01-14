@@ -29,11 +29,12 @@ namespace Task
 			var categories = dbContext.Categories.ToList();
 
 			var t = (dbContext as IObjectContextAdapter).ObjectContext;
+
+			foreach (var category in categories)
+			{
+				t.LoadProperty(category, x => x.Products);
+			}
 			
-			var c = categories.First();
-
-			t.LoadProperty(c, x => x.Products);
-
 			tester.SerializeAndDeserialize(categories);
 		}
 
@@ -68,8 +69,8 @@ namespace Task
 		[TestMethod]
 		public void IDataContractSurrogate()
 		{
-			dbContext.Configuration.ProxyCreationEnabled = false;
-			dbContext.Configuration.LazyLoadingEnabled = false;
+			dbContext.Configuration.ProxyCreationEnabled = true;
+			dbContext.Configuration.LazyLoadingEnabled = true;
 
 			var tester = new XmlDataContractSerializerTester<IEnumerable<Order>>(new DataContractSerializer(typeof(IEnumerable<Order>)), true);
 			var orders = dbContext.Orders.ToList();
