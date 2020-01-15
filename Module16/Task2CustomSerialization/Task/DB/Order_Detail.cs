@@ -8,7 +8,7 @@ namespace Task.DB
     using System.Runtime.Serialization;
 
     [DataContract]
-    //[Serializable]
+    [Serializable]
     [Table("Order Details")]
     public partial class Order_Detail
     {

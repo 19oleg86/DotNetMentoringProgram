@@ -7,6 +7,7 @@ namespace Task.DB
     using System.Data.Entity.Spatial;
     using System.Runtime.Serialization;
 
+    [Serializable]
     public partial class CustomerDemographic
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]

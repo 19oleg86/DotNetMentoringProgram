@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Data.Entity.Infrastructure;
 using System.Data.Entity;
 using System.Data.Entity.Core.Objects;
+using System.Runtime.Serialization.Formatters.Binary;
 
 namespace Task
 {
@@ -47,20 +48,14 @@ namespace Task
         {
             dbContext.Configuration.ProxyCreationEnabled = false;
 
-            var tester = new XmlDataContractSerializerTester<IEnumerable<Product>>(new NetDataContractSerializer(), true);
-            var products = dbContext.Products.ToList();
+            string fileName = "dataStuff.xml";
 
-            var t = (dbContext as IObjectContextAdapter).ObjectContext;
+            IFormatter formatter = new BinaryFormatter();
 
-            foreach (var product in products)
-            {
-                t.LoadProperty(product, x => x.Order_Details);
-            }
-
-            dbContext.Products.Include(x => x.Category).ToList();
-            dbContext.Products.Include(x => x.Supplier).ToList();
-
-            tester.SerializeAndDeserialize(products);
+            MethodsOfISerializable.SerializeItem(fileName, formatter);
+            MethodsOfISerializable.DeserializeItem(fileName, formatter);
+            Console.WriteLine("Done");
+            
         }
 
         [TestMethod]
@@ -68,13 +63,14 @@ namespace Task
         {
             dbContext.Configuration.ProxyCreationEnabled = false;
 
-            var tester = new XmlDataContractSerializerTester<IEnumerable<Order_Detail>>(new NetDataContractSerializer(), true);
+            var tester = new OrderSurrogateMethods();
             var orderDetails = dbContext.Order_Details.ToList();
 
             dbContext.Order_Details.Include(x => x.Order).ToList();
             dbContext.Order_Details.Include(x => x.Product).ToList();
 
-            tester.SerializeAndDeserialize(orderDetails);
+            var bytes = tester.SerializeData(orderDetails);
+            var deserializedData = tester.DeserializeData(bytes);
         }
 
         [TestMethod]
