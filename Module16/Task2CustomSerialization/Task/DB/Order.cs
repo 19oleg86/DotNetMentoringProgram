@@ -16,7 +16,7 @@ namespace Task.DB
         {
             Order_Details = new HashSet<Order_Detail>();
         }
-
+        
         [DataMember]
         public int OrderID { get; set; }
 

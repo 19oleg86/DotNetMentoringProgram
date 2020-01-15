@@ -6,7 +6,7 @@ namespace Task.DB
 	using System.Linq;
     using System.Runtime.Serialization;
 
-    
+	
 	public partial class Northwind : DbContext
 	{
 		public Northwind()
@@ -14,16 +14,27 @@ namespace Task.DB
 		{
 		}
 
+		[DataMember]
 		public virtual DbSet<Category> Categories { get; set; }
+		[DataMember]
 		public virtual DbSet<CustomerDemographic> CustomerDemographics { get; set; }
+		[DataMember]
 		public virtual DbSet<Customer> Customers { get; set; }
+		[DataMember]
 		public virtual DbSet<Employee> Employees { get; set; }
+		[DataMember]
 		public virtual DbSet<Order_Detail> Order_Details { get; set; }
+		[DataMember]
 		public virtual DbSet<Order> Orders { get; set; }
+		[DataMember]
 		public virtual DbSet<Product> Products { get; set; }
+		[DataMember]
 		public virtual DbSet<Region> Regions { get; set; }
+		[DataMember]
 		public virtual DbSet<Shipper> Shippers { get; set; }
+		[DataMember]
 		public virtual DbSet<Supplier> Suppliers { get; set; }
+		[DataMember]
 		public virtual DbSet<Territory> Territories { get; set; }
 
 		protected override void OnModelCreating(DbModelBuilder modelBuilder)
