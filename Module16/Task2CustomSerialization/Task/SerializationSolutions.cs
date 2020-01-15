@@ -9,6 +9,7 @@ using System.Data.Entity.Infrastructure;
 using System.Data.Entity;
 using System.Data.Entity.Core.Objects;
 using System.Runtime.Serialization.Formatters.Binary;
+using System.IO;
 
 namespace Task
 {
@@ -21,6 +22,55 @@ namespace Task
         public void Initialize()
         {
             dbContext = new Northwind();
+        }
+
+        [TestMethod]
+        public void RealSerializationCallbacks()
+        {
+            dbContext.Configuration.ProxyCreationEnabled = false;
+
+            Category tester = new Category();
+
+            Console.WriteLine("\n Before serialization the object contains: ");
+            tester.Print();
+
+            Stream stream = File.Open("DataFile.xml", FileMode.Create);
+            BinaryFormatter formatter = new BinaryFormatter();
+
+            try
+            {
+                formatter.Serialize(stream, tester);
+
+                Console.WriteLine("\n After serialization the object contains: ");
+                tester.Print();
+
+                tester = null;
+                stream.Close();
+
+                stream = File.Open("DataFile.xml", FileMode.Open);
+
+                tester = (Category)formatter.Deserialize(stream);
+
+                Console.WriteLine("\n After deserialization the object contains: ");
+                tester.Print();
+                
+            }
+            catch (SerializationException se)
+            {
+                Console.WriteLine("Failed to serialize. Reason: " + se.Message);
+                throw;
+            }
+            catch (Exception exc)
+            {
+                Console.WriteLine("An exception occurred. Reason: " + exc.Message);
+                throw;
+            }
+            finally
+            {
+                stream.Close();
+                stream = null;
+                formatter = null;
+            }
         }
 
         [TestMethod]
