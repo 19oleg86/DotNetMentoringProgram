@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Xml.Serialization;
 
@@ -9,8 +8,8 @@ namespace BasicSerialization
     {
         static void Main(string[] args)
         {
-            Book[] listOfBooks = new Book[3];
-            Book book1 = new Book("0-596-00103-7",
+            Book book1 = new Book("bk101", 
+                                  "0-596-00103-7",
                                   "Löwy, Juval",
                                   "COM and .NET Component Services",
                                   Genre.Computer,
@@ -18,7 +17,8 @@ namespace BasicSerialization
                                   DateTime.Now,
                                   "COM &amp; .NET Component Services provides both traditional COM programmers and new .NET component developers with the information they need to begin developing applications that take full advantage of COM + services. This book focuses on COM + services, including support for transactions, queued components, events, concurrency management, and security",
                                   DateTime.Now);
-            Book book2 = new Book(null,
+            Book book2 = new Book("bk102", 
+                                   null,
                                   "Ralls, Kim",
                                   "Midnight Rain",
                                   Genre.Fantasy,
@@ -26,7 +26,8 @@ namespace BasicSerialization
                                   DateTime.Now,
                                   "A former architect battles corporate zombies, an evil sorceress, and her own childhood to become queen of the world.",
                                   DateTime.Now);
-            Book book3 = new Book(null,
+            Book book3 = new Book("bk103", 
+                                   null,
                                   "Corets, Eva",
                                   "Maeve Ascendant",
                                   Genre.Fantasy,
@@ -34,14 +35,13 @@ namespace BasicSerialization
                                   DateTime.Now,
                                   "After the collapse of a nanotechnology society in England, the young survivors lay the foundation for a new society.",
                                   DateTime.Now);
-            listOfBooks.SetValue(book1, 0);
-            listOfBooks.SetValue(book2, 1);
-            listOfBooks.SetValue(book3, 2);
+            Book[] book = new Book[] { book1, book2, book3 };
 
 
             // Serializing object
-            Catalog catalog = new Catalog(listOfBooks);
-
+            Catalog catalog = new Catalog();
+            catalog.book = new Book[] { book1, book2, book3 };
+            
             Console.WriteLine("Object is Created");
             Console.WriteLine();
 
@@ -55,7 +55,7 @@ namespace BasicSerialization
                 Console.WriteLine();
             }
 
-            // Deserializing object
+            //Deserializing object
             using (FileStream fs = new FileStream("outputXmlBooks.xml", FileMode.OpenOrCreate))
             {
                 Catalog desCatalog = (Catalog)formatter.Deserialize(fs);
@@ -63,10 +63,10 @@ namespace BasicSerialization
                 Console.WriteLine("Object is Deserialized");
                 Console.WriteLine();
 
-                for (int i = 0; i < desCatalog.innerArray.Length; i++)
+                for (int i = 0; i < catalog.book.Length; i++)
                 {
-                    Console.WriteLine($"Desirialized Object is:\n ISBN: {desCatalog.innerArray[i].Isbn},\n Author: {desCatalog.innerArray[i].Author},\n Title: {desCatalog.innerArray[i].Title},\n Genre: {desCatalog.innerArray[i].Genre},\n Publisher: {desCatalog.innerArray[i].Publisher},\n " +
-                $"Publish Date: {desCatalog.innerArray[i].PublishDate},\n Description: {desCatalog.innerArray[i].Description},\n Registration Date: {desCatalog.innerArray[i].RegistrationDate}");
+                    Console.WriteLine($"Desirialized Object is:\n ISBN: {catalog.book[i].Isbn},\n Author: {catalog.book[i].Author},\n Title: {catalog.book[i].Title},\n Genre: {catalog.book[i].Genre},\n Publisher: {catalog.book[i].Publisher},\n " +
+                $"Publish Date: {catalog.book[i].PublishDate},\n Description: {catalog.book[i].Description},\n Registration Date: {catalog.book[i].RegistrationDate}");
                 }
             }
 
@@ -74,31 +74,21 @@ namespace BasicSerialization
         }
     }
 
-    [XmlRoot("Catalog", Namespace = "http://library.by/catalog")]
-    [Serializable]
     public class Catalog
     {
-        public Book book1;
-        public Book book2;
-        public Book book3;
-        public Book[] innerArray = new Book[3];
-        
+        [XmlElement]
+        public Book[] book = new Book[3];
+
         public Catalog()
         {
-        }
-
-        public Catalog(Book[] books)
-        {
-            innerArray.SetValue(books[0], 0);
-            innerArray.SetValue(books[1], 1);
-            innerArray.SetValue(books[2], 2);
         }
     }
 
     [Serializable]
     public class Book
     {
-        public string Catalog { get; set; }
+        [XmlAttribute]
+        public string id { get; set; }
         public string Isbn { get; set; }
         public string Author { get; set; }
         public string Title { get; set; }
@@ -111,8 +101,9 @@ namespace BasicSerialization
         {
         }
 
-        public Book(string isbn, string author, string title, Genre genre, string publisher, DateTime publishDate, string description, DateTime registrationDate)
+        public Book(string id, string isbn, string author, string title, Genre genre, string publisher, DateTime publishDate, string description, DateTime registrationDate)
         {
+            this.id = id;
             Isbn = isbn;
             Author = author;
             Title = title;
